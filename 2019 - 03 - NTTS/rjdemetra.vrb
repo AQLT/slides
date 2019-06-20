@@ -1,0 +1,13 @@
+\frametitle{rjdqa}
+\protect\hypertarget{rjdqa}{}
+
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(rjdqa}\OperatorTok{::}\KeywordTok{sa_dashboard}\NormalTok{(x13_mod))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{img/markdown-unnamed-chunk-18-1.pdf}
+
