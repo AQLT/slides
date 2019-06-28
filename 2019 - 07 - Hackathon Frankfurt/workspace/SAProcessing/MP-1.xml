@@ -54,6 +54,13 @@
     <family>Modelling</family>
 </method>
                             </item>
+                            <item name="transform">
+<subset>
+    <item name="function">
+        <string>Auto</string>
+    </item>
+</subset>
+                            </item>
                             <item name="arima">
 <subset>
     <item name="theta">
@@ -98,9 +105,6 @@
             <item name="leapyear">
                 <string>LeapYear</string>
             </item>
-            <item name="autoadjust">
-                <boolean>false</boolean>
-            </item>
             <item name="test">
                 <string>Remove</string>
             </item>
@@ -116,21 +120,6 @@
             </item>
             <item name="test">
                 <string>Add</string>
-            </item>
-        </subset>
-    </item>
-    <item name="outliers">
-        <strings>
-            <items>LS.2008-10-01 AO.2002-01-01</items>
-        </strings>
-    </item>
-    <item name="fixedcoefficients">
-        <subset>
-            <item name="LS (2008-10-01)">
-                <double>36.0</double>
-            </item>
-            <item name="AO (2002-01-01)">
-                <double>14.0</double>
             </item>
         </subset>
     </item>
@@ -203,7 +192,7 @@
 <subset>
     <item name="types">
         <strings>
-            <items>AO TC LS</items>
+            <items>AO LS TC</items>
         </strings>
     </item>
 </subset>
