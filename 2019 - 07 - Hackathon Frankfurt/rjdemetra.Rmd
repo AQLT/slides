@@ -1,6 +1,6 @@
 ---
 title: "RJDemetra: an R interface to JDemetra+"
-subtitle: "SAEG & SACE, 11 March 2019"
+subtitle: "Hackathon on RJDemetra: 1 & 2 July"
 author: "Alain Quartier-la-Tente and Anna Michalek"
 division: "Insee, Seasonal Adjustment Centre of Excellence (AQLT) and European Central Bank (AM)"
 departement: "alain.quartier-la-tente@insee.fr"
@@ -371,6 +371,23 @@ See the installation manual: https://github.com/jdemetra/rjdemetra/wiki/Installa
 - Carry out studies on SA: Ladiray D., Quartier-la-Tente A., "(In)Stability of Reg-ARIMA Models for Seasonal Adjustment"
 
 - Non explore topics: we will see after the hackathon
+
+### Ideas for the hackathon
+
+- Export/import specifications as a data.frame
+
+- RJDemetran and chain-linking (KIX)
+
+- Revision Analysis
+
+- Tool for direct/indirect adjustment
+
+- Shiny app for interactively changing specification 
+
+- Automatic report of a model/workspace: PDF, markdown (html, docx...)
+
+- Additional features importing/exporting workpaces: handle error when there are comments, get metadata (and set?), import of intervention variables/Ramp effect
+
 
 ### Thank you for your attention
 
