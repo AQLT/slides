@@ -49,6 +49,8 @@ options(enable_print_style = FALSE)
 
 ### Purpose of the RJDemetra package
 
+(slides: https://github.com/AQLT/slides folder "2019 - 07 - Hackathon Frankfurt")
+
 
 RJDemetra is an \large\faRProject{} \normalsize interface to JDemetra+ based on the \large\faJava{} \normalsize libraries of JDemetra+
 
