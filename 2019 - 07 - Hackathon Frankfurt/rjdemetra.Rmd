@@ -76,7 +76,7 @@ RJDemetra is an \large\faRProject{} \normalsize interface to JDemetra+ based on 
     
 $\rightarrow$ Programing-choice: not manipulate the Java object and use S3 classes (more simple)
     
-    \pause
+\pause
 \medskip
    
 - Manipulate JD+ workspaces:  
