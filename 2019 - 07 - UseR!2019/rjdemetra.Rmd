@@ -1,0 +1,387 @@
+---
+title: "RJDemetra: an R interface to JDemetra+"
+subtitle: "useR!2019"
+author: "Alain Quartier-la-Tente"
+division: "Insee, Seasonal Adjustment Centre of Excellence"
+departement: "alain.quartier-la-tente@insee.fr"
+logo: "img/SACElogo.jpg"
+output:
+    beamer_presentation:
+        template: template.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+header-includes:
+- \usepackage{wrapfig}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage[table]{xcolor}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{animate}
+- \usepackage{fontawesome5}
+themeoptions: "coding=utf8,language=english"
+classoption: 'usepdftitle=false,french'
+fontsize: 10pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                        fig.path = "img/markdown-")
+library(AQLTools)
+library(RJDemetra)
+options(enable_print_style = FALSE)
+```
+
+
+# Introduction to seasonal adjustment
+
+### Introduction to seasonal adjustment
+
+```{r, echo = FALSE, fig.height = 6,fig.cap="Industrial production index in France"}
+graph_ts(window(ipi_c_eu[, "FR"], start = 2010))
+```
+
+### Introduction to seasonal adjustment (2/3)
+
+Purpose of seasonal adjustment:
+
+- Time comparison (outlook, short-term evolution...)  
+- Spatial comparison
+
+\bigskip
+\pause
+Two leading methods:
+
+- TRAMO/SEATS+ (Bank of Spain)  
+- X-12ARIMA/X-13ARIMA-SEATS (US-Census Bureau).
+
+\bigskip
+\pause
+
+$\rightarrow$ proceed in two steps:
+
+1. Pre-adjusting the series of deterministics effects with a RegARIMA model
+
+2. Decomposition: to extract seasonal component
+
+### What's JDemetra+\bcquestion 
+
+\includegraphics[width=2cm]{img/jdemetra+.png} TRAMO/SEATS+ and X-13ARIMA-SEATS are implemented in JDemetra+ (JD+)
+
+\bigskip
+\large\faThumbsUp{} \normalsize Software [officially recommended](https://ec.europa.eu/eurostat/cros/system/files/Jdemetra_%20release.pdf) by Eurostat and the ECB for seasonal and calendar adjustment of official statistics
+
+\bigskip
+$\rightarrow$ RJDemetra is an \large\faRProject{} \normalsize interface to JDemetra+ based on the \large\faJava{} \normalsize libraries of JD+
+
+
+# RJDemetra
+
+## Current status
+### Current status
+
+- RegARIMA, TRAMO-SEATS and X-13-ARIMA:  
+    + pre-defined and user-defined specifications: outliers detection, ARIMA detection, userdefined regressors, transformation function...  
+    + S3 classes with plot, summary, print methods
+    
+\medskip
+
+- Manipulate JD+ workspaces:  
+    + Import JD+ workspace to get input raw series or SA model
+    + Export R models created via RJDemetra
+    
+\medskip
+
+- Include a dataset: industrial production indices in manufacturing in the European Union
+
+### Object structure
+
+A `SA` object is a `list()` of 5 elements:
+
+\includegraphics{img/sa_obj_struct.png}
+
+### Create your first model
+
+Like in JD+ users can defined their own specification or use a pre-defined one:
+
+\footnotesize
+```{r}
+library(RJDemetra)
+ipi_fr <- ipi_c_eu[, "FR"]
+ts_mod <- tramoseats(ipi_fr, spec = "RSAfull")
+x13_usr_spec <- x13_spec(spec = c("RSA5c"),
+                         usrdef.outliersEnabled = TRUE,
+                         usrdef.outliersType = c("LS", "AO"),
+                         usrdef.outliersDate = c("2008-10-01",
+                                                 "2002-01-01"),
+                         usrdef.outliersCoef = c(36, 14),
+                         transform.function = "None")
+x13_mod <- x13(ipi_fr, x13_usr_spec, userdefined = "diagnostics.ic-ratio")
+```
+
+Use `user_defined_variables()` to get the names of the user-defined variables
+
+## RegARIMA examples
+
+### RegARIMA examples (1/2)
+\footnotesize
+
+```{r}
+summary(x13_mod$regarima)
+```
+
+### RegARIMA examples (2/2)
+
+```{r, echo = FALSE}
+def.par <- par(no.readonly = TRUE)
+par(mai = c(0,0.82,0,0.42))
+```
+
+```{r, fig.height = 6 }
+layout(matrix(1:6, 3, 2));plot(x13_mod$regarima, ask = FALSE)
+```
+
+## Seasonal adjustment examples
+
+### Seasonal adjustment examples (1/7): decomposition
+
+\footnotesize
+
+```{r}
+x13_mod$decomposition
+```
+
+### Seasonal adjustment examples (2/7): decomposition
+
+\footnotesize
+
+```{r}
+ts_mod$decomposition
+```
+
+
+### Seasonal adjustment examples (3/7)
+
+```{r, fig.height=6}
+plot(x13_mod$decomposition)
+```
+
+### Seasonal adjustment examples (4/7)
+
+\footnotesize
+
+```{r}
+x13_mod$final
+```
+
+### Seasonal adjustment examples (5/7)
+
+```{r,fig.height=6}
+plot(x13_mod$final, first_date = 2012, type_chart = "sa-trend")
+```
+
+### Seasonal adjustment examples (6/7)
+
+```{r,fig.height=6}
+plot(x13_mod$final, last_date = 2000, type_chart = "cal-seas-irr")
+```
+
+### Seasonal adjustment examples (7/7)
+
+\footnotesize
+```{r,fig.height=6}
+x13_mod$diagnostics
+```
+
+## Export a JD+ workspace
+### Export a workspace
+
+\footnotesize
+```{r, echo= TRUE, message = FALSE}
+wk <- new_workspace()
+new_multiprocessing(wk, name = "MP-1")
+add_sa_item(wk, multiprocessing = "MP-1",
+            sa_obj = x13_mod, name =  "SA with X13 model 1 ")
+add_sa_item(wk, multiprocessing =  "MP-1",
+            sa_obj = ts_mod, name = "SA with TramoSeats model 1")
+save_workspace(wk, "workspace.xml")
+```
+
+\includegraphics{img/workspace.png}
+
+## Import a JD+ workspace
+
+### Import a workspace
+\footnotesize
+
+```{r}
+wk <- load_workspace("workspace.xml")
+compute(wk) # Important to get the Sa model
+models <- get_model(wk, progress_bar = FALSE) # get all models
+# Or to get one specific model:
+mp <- get_object(wk, 1)
+count(mp)
+sa2 <- get_object(mp, 2)
+get_name(sa2)
+mod <- get_model(sa2, wk)
+```
+
+## Reduce time computation
+
+### Manipulate \faJava{} objects (1/2)
+
+\footnotesize
+Default functions can be time consuming (computation of outputs)... Especially if you only need one specific parameter
+
+$\rightarrow$ "Manipulate" java models: `jx13`, `jtramoseats`, `jregarima`, `jregarima_x13`, `jregarima_tramoseats` and `get_jmodel`
+
+```{r}
+jx13_mod <- jx13(ipi_fr, x13_usr_spec)
+# To get the available outputs:
+tail(get_dictionary(jx13_mod), 2)
+# To get an indicator:
+get_indicators(jx13_mod, "diagnostics.td-res-all", "diagnostics.ic-ratio")
+# To get the previous R output
+x13_mod <- jSA2R(jx13_mod)
+```
+
+$\rightarrow$ The output can be customize by every user/institute  
+
+# Around RJDemetra and JDemetra+
+
+## Around RJDemetra
+
+### Examples of current use of RJDemetra
+
+- ggdemetra: ggplot2 extension for 'RJDemetra' 
+
+\faGithub{} https://github.com/AQLT/rjdqa
+
+- rjdqa: package to help quality assessment (dashboard and quality report matrix)
+
+\faGithub{} https://github.com/AQLT/rjdqa
+
+- persephone: enable easy processing during production of SA series (interactive plots, dashboards...)
+
+\faGithub{} https://github.com/statistikat/persephone
+
+- rjdmarkown: nice rmarkdown outputs for RJDemetra
+
+\faGithub{} https://github.com/AQLT/rjdmarkdown
+
+- Carry out studies on SA: Ladiray D., Quartier-la-Tente A., "(In)Stability of Reg-ARIMA Models for Seasonal Adjustment"
+
+## Around JDemetra+
+### Around JDemetra+
+- State space framework of JD+:  
+\faGithub{} https://github.com/nbbrd/rjdssf
+
+\medskip
+
+- Benchmarking and temporal disaggregation:  
+\faGithub{} https://github.com/palatej/rjdbench
+
+\medskip
+
+- R interface to the JWSACruncher (console tool to refresh the models of a JD+ workspace:  
+\faGithub{} https://github.com/AQLT/rjwsacruncher
+
+
+# Installation and future developments
+## How to install the package?
+
+### How to install the package?
+
+The package is available on \large\faGithub\normalsize: https://github.com/jdemetra/rjdemetra
+
+It has also it's own website: https://jdemetra.github.io/rjdemetra/
+
+```{r, eval = FALSE}
+# Cran release
+install.packages("RJDemetra")
+
+# Development version
+devtools::install_github("jdemetra/rjdemetra")
+```
+
+\bcinfo To install it you need Java8:  in case you don't, install a portable version of Java8 and set the `JAVA_HOME` path.
+
+See the installation manual: https://github.com/jdemetra/rjdemetra/wiki/Installation-manual
+
+### Why use RJDemetra \bcquestion
+
+- Methods used are recommended by Eurostat
+
+- Performance and integration in production with JDemetra+
+
+- Lots of \large\faRProject{} \normalsize developments around `RJDemetra`
+
+- `RJDemetra` evolves with JDemetra+: will integrate new developments on SA methods
+
+## Future developments
+
+### What's next? \bcpanchant
+
+- documentation: article for the Journal of Statistical Software + cheat sheet
+
+- shiny app to change the specification
+
+With JD+ 3.0.0 (by the end of 2020):
+
+- Function to "refresh" the model
+
+- Compatibility with all frequencies (JD+ daily, weekly, etc.)
+
+### Thank you for your attention...
+
+... And don't forget your stickers!
+
+\bigskip
+
+\begin{columns}
+\begin{column}{0.33\textwidth}
+\begin{center}
+\includegraphics[width=\textwidth]{img/rjdemetra_logo.png}
+\end{center}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{center}
+\includegraphics[width=3cm]{img/jdemetra+.png}
+\end{center}
+\end{column}
+\begin{column}{0.33\textwidth} 
+\begin{center}
+\includegraphics[width=3cm]{img/ggdemetra_logo.png}
+\end{center}
+\end{column}
+\end{columns}
+
+\bigskip
+\bigskip
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+Alain Quartier-la-Tente
+
+
+\href{mailto:alain.quartier-la-tente@insee.fr}{\faEnvelope{} alain.quartier-la-tente@insee.fr} 
+\end{column}
+\begin{column}{0.5\textwidth} 
+\href{https://github.com/jdemetra/rjdemetra}{\faGithub{} jdemetra/rjdemetra}  
+
+\href{https://twitter.com/JDemetraPlus}{\faTwitter{} @JdemetraPlus}
+
+\end{column}
+\end{columns}
+
+
