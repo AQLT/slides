@@ -313,7 +313,7 @@ plot(rjdqa::sa_dashboard(x13_mod))
 ```
 
 ### ggdemetra
-
+\animategraphics[loop, autoplay, width=\linewidth]{1}{img/gif/ggdemetra/}{1}{7}
 
 ## Around JDemetra+
 ### Around JDemetra+
