@@ -176,19 +176,41 @@
 \section{Introduction to seasonal
 adjustment}\label{introduction-to-seasonal-adjustment}}
 
-\begin{frame}{Introduction to seasonal adjustment}
-\protect\hypertarget{introduction-to-seasonal-adjustment-1}{}
+\begin{frame}{Introduction to seasonal adjustment (1/3)}
+\protect\hypertarget{introduction-to-seasonal-adjustment-13}{}
 
 \begin{figure}
 \centering
 \includegraphics{img/markdown-unnamed-chunk-1-1.pdf}
-\caption{Industrial production index in France}
+\caption{Monthly CRAN downloads of ggplot2}
 \end{figure}
 
 \end{frame}
 
 \begin{frame}{Introduction to seasonal adjustment (2/3)}
 \protect\hypertarget{introduction-to-seasonal-adjustment-23}{}
+
+\begin{table}
+\begin{tabular}{cc}
+\toprule
+Weekday & Average CRAN downloads \\
+\midrule
+Monday & 14628\\
+Tuesday & 15941\\
+Wednesday & 15706\\
+Thursday & 15206\\
+Friday & 12948\\
+Saturday & 7038\\
+Sunday & 7104\\
+\bottomrule
+\end{tabular}
+\caption{Average of CRAN downloads of ggplot2 per weekday since 2015}
+\end{table}
+
+\end{frame}
+
+\begin{frame}{Introduction to seasonal adjustment (3/3)}
+\protect\hypertarget{introduction-to-seasonal-adjustment-33}{}
 
 Purpose of seasonal adjustment:
 
@@ -713,16 +735,11 @@ Especially if you only need one specific parameter
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# To get an indicator:}
-\KeywordTok{get_indicators}\NormalTok{(jx13_mod, }\StringTok{"diagnostics.td-res-all"}\NormalTok{, }\StringTok{"diagnostics.ic-ratio"}\NormalTok{)}
+\KeywordTok{get_indicators}\NormalTok{(jx13_mod, }\StringTok{"diagnostics.ic-ratio"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## $`diagnostics.td-res-all`
-## [1] 3.020374254 0.006933563
-## attr(,"description")
-## [1] "F with 6 degrees of freedom in the nominator and 317 degrees of freedom in the denominator"
-## 
 ## $`diagnostics.ic-ratio`
 ## [1] 4.356533
 \end{verbatim}
@@ -788,6 +805,26 @@ JDemetra+}\label{around-rjdemetra-and-jdemetra}}
   Carry out studies on SA: Ladiray D., Quartier-la-Tente A.,
   ``(In)Stability of Reg-ARIMA Models for Seasonal Adjustment''
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{rjdqa}
+\protect\hypertarget{rjdqa}{}
+
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(rjdqa}\OperatorTok{::}\KeywordTok{sa_dashboard}\NormalTok{(x13_mod))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{img/markdown-unnamed-chunk-16-1.pdf}
+
+\end{frame}
+
+\begin{frame}{ggdemetra}
+\protect\hypertarget{ggdemetra}{}
 
 \end{frame}
 
@@ -860,8 +897,11 @@ See the installation manual:
 
 \end{frame}
 
+\hypertarget{why-use-rjdemetra}{%
+\subsection{Why use RJDemetra?}\label{why-use-rjdemetra}}
+
 \begin{frame}[fragile]{Why use RJDemetra \bcquestion}
-\protect\hypertarget{why-use-rjdemetra}{}
+\protect\hypertarget{why-use-rjdemetra-1}{}
 
 \begin{itemize}
 \item
@@ -908,7 +948,7 @@ With JD+ 3.0.0 (by the end of 2020):
 
 \ldots{} And don't forget your stickers!
 
-\medskip
+\bigskip
 
 \begin{columns}
 \begin{column}{0.33\textwidth}

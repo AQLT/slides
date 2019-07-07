@@ -208,6 +208,7 @@ $if(section-titles)$
   \let\partname\relax
   \frame{\partpage}
 }
+$if(automaticcontents)$
 \AtBeginSection{
   \ifbibliography
   \else
@@ -216,6 +217,7 @@ $if(section-titles)$
     \end{frame}
   \fi
 }
+$endif$
 $endif$
 $endif$
 $if(links-as-notes)$
