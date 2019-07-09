@@ -37,7 +37,8 @@ fontsize: 10pt
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                        fig.path = "img/markdown-")
+                        fig.path = "img/markdown-",
+                      cache = TRUE)
 library(AQLTools)
 library(RJDemetra)
 options(enable_print_style = FALSE)
@@ -53,7 +54,13 @@ dataGraph <- readRDS("ggplot2.RDS")
 ggplot(data = dataGraph, aes(x = date, y = value)) +
   geom_line(size=0.70) + theme_bw() + 
   labs(x = NULL, y = "Monthly downloads (/1000)",
-       title = "ggplot2")
+       title = "ggplot2")+
+  theme(
+    axis.title.x = element_text(size = 16),
+    axis.text.x = element_text(size = 16),
+    axis.title.y = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    title = element_text(size = 16))
 ```
 
 
@@ -270,6 +277,9 @@ Default functions can be time consuming (computation of outputs)... Especially i
 
 $\rightarrow$ "Manipulate" java models: `jx13`, `jtramoseats`, `jregarima`, `jregarima_x13`, `jregarima_tramoseats` and `get_jmodel`
 
+\medskip
+\pause
+
 ```{r}
 jx13_mod <- jx13(ipi_fr, x13_usr_spec)
 # To get the available outputs:
@@ -285,6 +295,15 @@ $\rightarrow$ The output can be customize by every user/institute
 # Around RJDemetra and JDemetra+
 
 ## Around RJDemetra
+
+### {.plain}
+
+\vspace{1.5cm}\hspace{-1cm}
+\begin{tikzpicture}%
+\node[overlay] at (current page.south)
+          {\includegraphics[keepaspectratio,width=1.23\paperwidth,
+          height=1.23\paperheight]{img/lotr.png}};
+\end{tikzpicture}
 
 ### Examples of current use of RJDemetra
 
@@ -312,8 +331,10 @@ $\rightarrow$ The output can be customize by every user/institute
 plot(rjdqa::sa_dashboard(x13_mod))
 ```
 
-### ggdemetra
-\animategraphics[loop, autoplay, width=\linewidth]{1}{img/gif/ggdemetra/}{1}{7}
+### ggdemetra \includegraphics[height=1.5cm]{img/ggdemetra_logo.png}
+
+
+\animategraphics[loop, autoplay, width=\linewidth]{0.5}{img/gif/ggdemetra/}{1}{7}
 
 ## Around JDemetra+
 ### Around JDemetra+
@@ -387,17 +408,17 @@ With JD+ 3.0.0 (by the end of 2020):
 \begin{columns}
 \begin{column}{0.33\textwidth}
 \begin{center}
-\includegraphics[width=\textwidth]{img/rjdemetra_logo.png}
+\includegraphics[width=0.9\textwidth]{img/rjdemetra_logo.png}
 \end{center}
 \end{column}
 \begin{column}{0.33\textwidth}
 \begin{center}
-\includegraphics[width=3cm]{img/jdemetra+.png}
+\includegraphics[width=0.9\textwidth]{img/jdemetra+.png}
 \end{center}
 \end{column}
 \begin{column}{0.33\textwidth} 
 \begin{center}
-\includegraphics[width=3cm]{img/ggdemetra_logo.png}
+\includegraphics[width=0.9\textwidth]{img/ggdemetra_logo.png}
 \end{center}
 \end{column}
 \end{columns}
