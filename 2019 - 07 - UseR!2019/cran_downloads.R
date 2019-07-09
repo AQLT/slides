@@ -1,5 +1,6 @@
 library(lubridate)
 library(dplyr)
+library(ggplot2)
 Sys.setlocale("LC_TIME", "English")
 
 data <- cranlogs::cran_downloads("ggplot2", from = "2015-01-01")
@@ -74,4 +75,74 @@ for(i in seq_along(all_graphs)){
   ggsave(filename = sprintf("2019 - 07 - UseR!2019/img/gif/ggdemetra/%i.png", i),
          plot = all_graphs[[i]])
 }
+
+#####################
+library(lubridate)
+library(dplyr)
+Sys.setlocale("LC_TIME", "English")
+package <- "officer"
+data <- cranlogs::cran_downloads(package, from = "2015-01-01")
+data$date <- ymd(data$date)
+data$year <- year(data$date)
+data$month <- month(data$date)
+data$quarter <- quarter(data$date)
+data$weekday <- wday(data$date, label = TRUE,abbr = FALSE,week_start = 1)
+data <- data[!(data$year == 2019 & data$month == 7),]
+monthly_data <- data %>%  
+  group_by(year, month) %>% 
+  summarise(downloads = sum(count))
+wday_data <- data %>%  
+  filter(count != 0) %>% 
+  group_by(weekday) %>% 
+  summarise(downloads = sum((count)))
+colnames(wday_data) <- c("Weekday", "CRAN downloads")
+wday_data
+
+monthly_ts <- ts(monthly_data$downloads,start=2015, frequency = 12)
+monthly_ts <- window(monthly_ts, 2016)/1000
+dataGraph <- data.frame(date = as.numeric(time(monthly_ts)),
+                        value = as.numeric(monthly_ts))
+# saveRDS(dataGraph, "2019 - 07 - UseR!2019/ggplot2.RDS")
+ggplot(data = dataGraph, aes(x = date, y = value)) +
+  geom_line(size=0.70) + theme_bw() + 
+  labs(x = NULL, y = "Monthly downloads (/1000)",
+       title = package) +
+  scale_y_continuous(labels = function(x) format(x))+
+  scale_x_continuous(labels = function(x) zoo::as.yearmon(x))
+
+
+\begin{table}
+\begin{tabular}{cc}
+\toprule
+Weekday & Average CRAN downloads \\
+\midrule
+Monday & 14628\\
+Tuesday & 15941\\
+Wednesday & 15706\\
+Thursday & 15206\\
+Friday & 12948\\
+Saturday & 7038\\
+Sunday & 7104\\
+\bottomrule
+\end{tabular}
+\caption{Average of CRAN downloads of ggplot2 per weekday since 2015}
+\end{table}
+
+
+\begin{table}
+\begin{tabular}{cc}
+\toprule
+Weekday & CRAN downloads \\
+\midrule
+Monday & 40217\\
+Tuesday & 42991\\
+Wednesday & 44177\\
+Thursday & 41672\\
+Friday & 35544\\
+Saturday & 15481\\
+Sunday & 16081\\
+\bottomrule
+\end{tabular}
+\caption{CRAN downloads of officer per weekday since 2017-03}
+\end{table}
 
