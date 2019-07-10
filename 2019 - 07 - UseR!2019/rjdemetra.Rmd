@@ -94,7 +94,7 @@ Saturday & 15481\\
 Sunday & 16081\\
 \bottomrule
 \end{tabular}
-\caption{Total CRAN downloads of \href{https://CRAN.R-project.org/package=officer}{officer} per weekday since 2017-03}
+\caption{Total CRAN downloads of \href{https://CRAN.R-project.org/package=officer}{\texttt{officer}} per weekday since 2017-03}
 \end{table}
 
 ### Why and how perform seasonal adjustment?
@@ -128,7 +128,7 @@ $\rightarrow$ proceed in two steps:
 \large\faThumbsUp{} \normalsize Software [officially recommended](https://ec.europa.eu/eurostat/cros/system/files/Jdemetra_%20release.pdf) by Eurostat and the ECB for seasonal and calendar adjustment of official statistics
 
 \bigskip
-$\rightarrow$ RJDemetra is an \large\faRProject{} \normalsize interface to JDemetra+ based on the \large\faJava{} \normalsize libraries of JD+
+$\rightarrow$ \texttt{RJDemetra} is an \large\faRProject{} \normalsize interface to JDemetra+ based on the \large\faJava{} \normalsize libraries of JD+
 
 
 # RJDemetra
@@ -321,19 +321,19 @@ $\rightarrow$ The output can be customize by every user/institute
 
 ### Examples of current use of RJDemetra
 
-- ggdemetra: ggplot2 extension for 'RJDemetra' 
+- `ggdemetra`: ggplot2 extension for 'RJDemetra' 
 
 \faGithub{} https://github.com/AQLT/rjdqa
 
-- rjdqa: package to help quality assessment (dashboard and quality report matrix)
+- `rjdqa`: package to help quality assessment (dashboard and quality report matrix)
 
 \faGithub{} https://github.com/AQLT/rjdqa
 
-- persephone: enable easy processing during production of SA series (interactive plots, dashboards...)
+- `persephone`: enable easy processing during production of SA series (interactive plots, dashboards...)
 
 \faGithub{} https://github.com/statistikat/persephone
 
-- rjdmarkown: nice rmarkdown outputs for RJDemetra
+- `rjdmarkown`: nice rmarkdown outputs for RJDemetra
 
 \faGithub{} https://github.com/AQLT/rjdmarkdown
 
