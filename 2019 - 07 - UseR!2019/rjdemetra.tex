@@ -145,7 +145,7 @@
 \usepackage{fontawesome5}
 
 \title{RJDemetra: an R interface to JDemetra+}
-\ateneo{useR!2019}
+\ateneo{useR! 2019}
 \author{Alain Quartier-la-Tente}
 \date{}
 
@@ -155,9 +155,9 @@
 \setcandidatelabel{}
 
 \rel{}
-\division{Insee, Seasonal Adjustment Centre of Excellence}
+\division{Insee, Seasonal Adjustment Centre of Excellence (SACE)}
 
-\departement{\href{mailto:alain.quartier-la-tente@insee.fr}{\nolinkurl{alain.quartier-la-tente@insee.fr}}}
+\departement{\href{mailto:alain.quartier@yahoo.fr}{\nolinkurl{alain.quartier@yahoo.fr}}}
 \makeatletter
 \let\@@magyar@captionfix\relax
 \makeatother
@@ -172,47 +172,59 @@
 \titlepage
 \end{frame}
 
-\hypertarget{introduction-to-seasonal-adjustment}{%
-\section{Introduction to seasonal
-adjustment}\label{introduction-to-seasonal-adjustment}}
+\hypertarget{introduction-to-seasonal-adjustment-sa}{%
+\section{Introduction to seasonal adjustment
+(SA)}\label{introduction-to-seasonal-adjustment-sa}}
 
-\begin{frame}{Introduction to seasonal adjustment (1/3)}
-\protect\hypertarget{introduction-to-seasonal-adjustment-13}{}
+\begin{frame}{Introduction to SA with a boring example? \bcsmmh}
+\protect\hypertarget{introduction-to-sa-with-a-boring-example}{}
 
 \begin{figure}
 \centering
 \includegraphics{img/markdown-unnamed-chunk-1-1.pdf}
+\caption{Industrial production index in France}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Introduction to SA with an \faRProject{} example}
+\protect\hypertarget{introduction-to-sa-with-an-example}{}
+
+\begin{figure}
+\centering
+\includegraphics{img/markdown-unnamed-chunk-2-1.pdf}
 \caption{Monthly CRAN downloads of ggplot2}
 \end{figure}
 
 \end{frame}
 
-\begin{frame}{Introduction to seasonal adjustment (2/3)}
-\protect\hypertarget{introduction-to-seasonal-adjustment-23}{}
+\begin{frame}{Introduction to trading days adjustment}
+\protect\hypertarget{introduction-to-trading-days-adjustment}{}
 
 \begin{table}
 \begin{tabular}{cc}
 \toprule
-Weekday & Average CRAN downloads \\
+Weekday & CRAN downloads \\
 \midrule
-Monday & 14628\\
-Tuesday & 15941\\
-Wednesday & 15706\\
-Thursday & 15206\\
-Friday & 12948\\
-Saturday & 7038\\
-Sunday & 7104\\
+Monday & 40217\\
+Tuesday & 42991\\
+Wednesday & 44177\\
+Thursday & 41672\\
+Friday & 35544\\
+Saturday & 15481\\
+Sunday & 16081\\
 \bottomrule
 \end{tabular}
-\caption{Average of CRAN downloads of ggplot2 per weekday since 2015}
+\caption{Total CRAN downloads of \href{https://CRAN.R-project.org/package=officer}{officer} per weekday since 2017-03}
 \end{table}
 
 \end{frame}
 
-\begin{frame}{Introduction to seasonal adjustment (3/3)}
-\protect\hypertarget{introduction-to-seasonal-adjustment-33}{}
+\begin{frame}{Why and how perform seasonal adjustment?}
+\protect\hypertarget{why-and-how-perform-seasonal-adjustment}{}
 
-Purpose of seasonal adjustment:
+Purpose of seasonal adjustment: analyse the CRAN downloads of your
+package but also\ldots{}
 
 \begin{itemize}
 \tightlist
@@ -423,7 +435,7 @@ user-defined variables
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{img/markdown-unnamed-chunk-5-1.pdf}
+\includegraphics{img/markdown-unnamed-chunk-6-1.pdf}
 
 \end{frame}
 
@@ -517,7 +529,7 @@ decomposition}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{img/markdown-unnamed-chunk-8-1.pdf}
+\includegraphics{img/markdown-unnamed-chunk-9-1.pdf}
 
 \end{frame}
 
@@ -575,7 +587,7 @@ decomposition}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{img/markdown-unnamed-chunk-10-1.pdf}
+\includegraphics{img/markdown-unnamed-chunk-11-1.pdf}
 
 \end{frame}
 
@@ -588,7 +600,7 @@ decomposition}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{img/markdown-unnamed-chunk-11-1.pdf}
+\includegraphics{img/markdown-unnamed-chunk-12-1.pdf}
 
 \end{frame}
 
@@ -834,15 +846,15 @@ JDemetra+}\label{around-rjdemetra-and-jdemetra}}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{img/markdown-unnamed-chunk-16-1.pdf}
+\includegraphics{img/markdown-unnamed-chunk-17-1.pdf}
 
 \end{frame}
 
 \begin{frame}{ggdemetra
-\includegraphics[height=1.5cm]{img/ggdemetra_logo.png}}
+\includegraphics[height=1cm]{img/ggdemetra_logo.png}}
 \protect\hypertarget{ggdemetra}{}
 
-\animategraphics[loop, autoplay, width=\linewidth]{0.5}{img/gif/ggdemetra/}{1}{7}
+\animategraphics[loop, autoplay, width=\linewidth]{1}{img/gif/ggdemetra/}{1}{7}
 
 \end{frame}
 
@@ -874,7 +886,7 @@ JDemetra+}\label{around-rjdemetra-and-jdemetra}}
 \tightlist
 \item
   R interface to the JWSACruncher (console tool to refresh the models of
-  a JD+ workspace:\\
+  a JD+ workspace):\\
   \faGithub{} \url{https://github.com/AQLT/rjwsacruncher}
 \end{itemize}
 
@@ -894,9 +906,6 @@ package?}\label{how-to-install-the-package}}
 The package is available on \large\faGithub\normalsize:
 \url{https://github.com/jdemetra/rjdemetra}
 
-It has also it's own website:
-\url{https://jdemetra.github.io/rjdemetra/}
-
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# Cran release}
@@ -907,10 +916,8 @@ It has also it's own website:
 \end{Highlighting}
 \end{Shaded}
 
-\bcinfo To install it you need Java8: in case you don't, install a
-portable version of Java8 and set the \texttt{JAVA\_HOME} path.
-
-See the installation manual:
+\bcinfo To install it you need Java8: in case you don't, see the
+installation manual\\
 \url{https://github.com/jdemetra/rjdemetra/wiki/Installation-manual}
 
 \end{frame}
@@ -993,8 +1000,8 @@ With JD+ 3.0.0 (by the end of 2020):
 \begin{column}{0.5\textwidth}
 Alain Quartier-la-Tente
 
-
-\href{mailto:alain.quartier-la-tente@insee.fr}{\faEnvelope{} alain.quartier-la-tente@insee.fr} 
+\href{mailto:alain.quartier@yahoo.fr}{\faEnvelope{} alain.quartier@yahoo.fr} 
+\href{https://twitter.com/AlainQlt}{\faTwitter{} @AlainQlt}
 \end{column}
 \begin{column}{0.5\textwidth} 
 \href{https://github.com/jdemetra/rjdemetra}{\faGithub{} jdemetra/rjdemetra}  

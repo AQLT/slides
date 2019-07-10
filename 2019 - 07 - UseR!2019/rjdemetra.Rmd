@@ -1,9 +1,9 @@
 ---
 title: "RJDemetra: an R interface to JDemetra+"
-subtitle: "useR!2019"
+subtitle: "useR! 2019"
 author: "Alain Quartier-la-Tente"
-division: "Insee, Seasonal Adjustment Centre of Excellence"
-departement: "alain.quartier-la-tente@insee.fr"
+division: "Insee, Seasonal Adjustment Centre of Excellence (SACE)"
+departement: "alain.quartier@yahoo.fr"
 logo: "img/SACElogo.jpg"
 automaticcontents: true
 output:
@@ -45,16 +45,12 @@ options(enable_print_style = FALSE)
 ```
 
 
-# Introduction to seasonal adjustment
+# Introduction to seasonal adjustment (SA)
 
-### Introduction to seasonal adjustment (1/3)
+### Introduction to SA with a boring example? \bcsmmh
 
-```{r, echo = FALSE, fig.height = 6,fig.cap="Monthly CRAN downloads of ggplot2"}
-dataGraph <- readRDS("ggplot2.RDS")
-ggplot(data = dataGraph, aes(x = date, y = value)) +
-  geom_line(size=0.70) + theme_bw() + 
-  labs(x = NULL, y = "Monthly downloads (/1000)",
-       title = "ggplot2")+
+```{r, echo = FALSE, fig.height = 6,fig.cap="Industrial production index in France"}
+graph_ts(window(ipi_c_eu[, "FR"], start = 2010)) +
   theme(
     axis.title.x = element_text(size = 16),
     axis.text.x = element_text(size = 16),
@@ -63,29 +59,47 @@ ggplot(data = dataGraph, aes(x = date, y = value)) +
     title = element_text(size = 16))
 ```
 
+### Introduction to SA with an \faRProject{} example
 
-### Introduction to seasonal adjustment (2/3)
+```{r, echo = FALSE, fig.height = 6,fig.cap="Monthly CRAN downloads of ggplot2"}
+dataGraph <- readRDS("ggplot2.RDS")
+ggplot(data = dataGraph, aes(x = date, y = value,
+                             color = "red")) +
+  geom_line(size=0.70) + theme_bw() + 
+  labs(x = NULL, y = "Monthly downloads (/1000)",
+       title = "ggplot2") +
+  theme(
+    axis.title.x = element_text(size = 16),
+    axis.text.x = element_text(size = 16),
+    axis.title.y = element_text(size = 16),
+    axis.text.y = element_text(size = 16),
+    title = element_text(size = 16),
+    legend.position = "none")
+```
+
+
+### Introduction to trading days adjustment
 
 \begin{table}
 \begin{tabular}{cc}
 \toprule
-Weekday & Average CRAN downloads \\
+Weekday & CRAN downloads \\
 \midrule
-Monday & 14628\\
-Tuesday & 15941\\
-Wednesday & 15706\\
-Thursday & 15206\\
-Friday & 12948\\
-Saturday & 7038\\
-Sunday & 7104\\
+Monday & 40217\\
+Tuesday & 42991\\
+Wednesday & 44177\\
+Thursday & 41672\\
+Friday & 35544\\
+Saturday & 15481\\
+Sunday & 16081\\
 \bottomrule
 \end{tabular}
-\caption{Average of CRAN downloads of ggplot2 per weekday since 2015}
+\caption{Total CRAN downloads of \href{https://CRAN.R-project.org/package=officer}{officer} per weekday since 2017-03}
 \end{table}
 
-### Introduction to seasonal adjustment (3/3)
+### Why and how perform seasonal adjustment?
 
-Purpose of seasonal adjustment:
+Purpose of seasonal adjustment: analyse the CRAN downloads of your package but also...
 
 - Time comparison (outlook, short-term evolution...)  
 - Spatial comparison
@@ -331,10 +345,10 @@ $\rightarrow$ The output can be customize by every user/institute
 plot(rjdqa::sa_dashboard(x13_mod))
 ```
 
-### ggdemetra \includegraphics[height=1.5cm]{img/ggdemetra_logo.png}
+### ggdemetra \includegraphics[height=1cm]{img/ggdemetra_logo.png}
 
 
-\animategraphics[loop, autoplay, width=\linewidth]{0.5}{img/gif/ggdemetra/}{1}{7}
+\animategraphics[loop, autoplay, width=\linewidth]{1}{img/gif/ggdemetra/}{1}{7}
 
 ## Around JDemetra+
 ### Around JDemetra+
@@ -348,7 +362,7 @@ plot(rjdqa::sa_dashboard(x13_mod))
 
 \medskip
 
-- R interface to the JWSACruncher (console tool to refresh the models of a JD+ workspace:  
+- R interface to the JWSACruncher (console tool to refresh the models of a JD+ workspace):  
 \faGithub{} https://github.com/AQLT/rjwsacruncher
 
 
@@ -359,8 +373,6 @@ plot(rjdqa::sa_dashboard(x13_mod))
 
 The package is available on \large\faGithub\normalsize: https://github.com/jdemetra/rjdemetra
 
-It has also it's own website: https://jdemetra.github.io/rjdemetra/
-
 ```{r, eval = FALSE}
 # Cran release
 install.packages("RJDemetra")
@@ -369,9 +381,8 @@ install.packages("RJDemetra")
 devtools::install_github("jdemetra/rjdemetra")
 ```
 
-\bcinfo To install it you need Java8:  in case you don't, install a portable version of Java8 and set the `JAVA_HOME` path.
-
-See the installation manual: https://github.com/jdemetra/rjdemetra/wiki/Installation-manual
+\bcinfo To install it you need Java8: in case you don't, see the installation manual  
+https://github.com/jdemetra/rjdemetra/wiki/Installation-manual
 
 ## Why use RJDemetra?
 
@@ -430,8 +441,8 @@ With JD+ 3.0.0 (by the end of 2020):
 \begin{column}{0.5\textwidth}
 Alain Quartier-la-Tente
 
-
-\href{mailto:alain.quartier-la-tente@insee.fr}{\faEnvelope{} alain.quartier-la-tente@insee.fr} 
+\href{mailto:alain.quartier@yahoo.fr}{\faEnvelope{} alain.quartier@yahoo.fr} 
+\href{https://twitter.com/AlainQlt}{\faTwitter{} @AlainQlt}
 \end{column}
 \begin{column}{0.5\textwidth} 
 \href{https://github.com/jdemetra/rjdemetra}{\faGithub{} jdemetra/rjdemetra}  
