@@ -333,7 +333,7 @@ $\rightarrow$ The output can be customize by every user/institute
 
 \faGithub{} https://github.com/statistikat/persephone
 
-- `rjdmarkown`: nice rmarkdown outputs for RJDemetra
+- `rjdmarkdown`: nice rmarkdown outputs for RJDemetra
 
 \faGithub{} https://github.com/AQLT/rjdmarkdown
 
