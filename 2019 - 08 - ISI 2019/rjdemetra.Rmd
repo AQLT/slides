@@ -1,8 +1,8 @@
 ---
 title: "RJDemetra: an R interface to JDemetra+"
 subtitle: "ISI 2019"
-author: "Alain Quartier-la-Tente"
-division: "Insee, Seasonal Adjustment Centre of Excellence (SACE)"
+author: "Alain Quartier-la-Tente and Dario Buono"
+division: "Insee, Seasonal Adjustment Centre of Excellence (SACE; AQLT) and Eurostat, SACE (DB)"
 departement: "alain.quartier@yahoo.fr"
 logo: "img/SACElogo.jpg"
 automaticcontents: true
@@ -45,7 +45,7 @@ options(enable_print_style = FALSE)
 ```
 
 
-# Introduction to seasonal adjustment (SA)
+# Introduction to seasonal adjustment
 
 ### Introduction to seasonal adjustment
 
