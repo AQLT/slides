@@ -140,6 +140,9 @@
                     </item>
                     <item name="x11">
                         <subset>
+                            <item name="trendma">
+<integer>13</integer>
+                            </item>
                             <item name="seasonalma">
 <strings>
     <items>Msr</items>
