@@ -1,0 +1,45 @@
+---
+title: "Rapport"
+author: ""
+output:
+  bookdown::pdf_document2:
+        toc: false
+        toc_depth: 3
+        number_sections: true
+        fig_width: 7
+        fig_height: 6
+        fig_caption: true
+        highlight: default
+        keep_tex: yes
+        includes:
+          in_header: preamble.tex
+        citation_package: natbib
+        template: template.tex
+themeoptions: "coding=utf8"
+classoption: 'a4paper'
+lang: "english"
+fontsize: 12pt
+keywords: [seasonal adjustment, test]
+bibliography: [biblio.bib]
+biblio-style: unsrtnat
+natbiboptions: [numbers]
+linkcolor: true
+---
+test
+<!-- biblio-style: chem-angew -->
+
+
+# Introduction
+
+# Methods
+
+@proietti2008, @ch15HBSA, @trilemmaWMR2019 and @dagumbianconcini2008
+
+# Results
+
+# Conclusions
+
+# References {.unnumbered}
+
+
+

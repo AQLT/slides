@@ -1,0 +1,31 @@
+\begin{thebibliography}{4}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Lamport(1986)]{Lamport89}
+L.~Lamport.
+\newblock \emph{Latex: {A} {D}ocument {P}reparation {S}ystem}.
+\newblock Addison-Wesley Longman Publishing Co., Inc., 1986.
+
+\bibitem[Cod(2018)]{CodePractice18}
+\emph{European Statistics Code of Practice}, 2018.
+\newblock URL
+  \url{http://ec.europa.eu/eurostat/web/products-catalogues/-/KS-02-18-142}.
+\newblock Revised edition 2017.
+
+\bibitem[Rumsey(2015)]{Rumsey15}
+D.R. Rumsey.
+\newblock \emph{Statistics For {D}ummies}.
+\newblock John Wiley \& Sons, 2015.
+
+\bibitem[Cohen(1938)]{Cohen38}
+J.B. Cohen.
+\newblock Misuse of statistics.
+\newblock \emph{Journal of the American Statistical Association}, 33\penalty0
+  (204):\penalty0 657–674, 1938.
+\newblock \doi{10.1080/01621459.1938.10502344}.
+
+\end{thebibliography}
