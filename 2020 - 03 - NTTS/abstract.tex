@@ -7,11 +7,11 @@
   ,
   a4paper]{article}
 \def\thetitle{%
-Performance of asymmetric filters for trend-cycle estimation during the COVID-19 crisis%
+Performance of asymmetric filters for trend-cycle extraction, application to the COVID-19 crisis%
 }
 \def\thekeywords{%
 %%
-trend estimation, seasonal adjustment, Henderson filter, asymmetric filters, R%
+trend-cycle extraction, asymmetric filters, R, seasonal adjustment%
 }
 \def\theauthors{%
 %
@@ -45,7 +45,7 @@ trend estimation, seasonal adjustment, Henderson filter, asymmetric filters, R%
 }
 \hypersetup{pdfauthor={\theauthors}, pdftitle={\thetitle},
   pdflang={english},
-  pdfkeywords={trend estimation, seasonal adjustment, Henderson filter, asymmetric filters, R},
+  pdfkeywords={trend-cycle extraction, asymmetric filters, R, seasonal adjustment},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -249,7 +249,7 @@ M_\theta(X_t)=\sum_{k=-p}^{+q}\theta_kX_{t+k}
 Therefore, applying a moving average \(M_\theta\) to the time series \(X_t\) consists in applying a rolling weighted mean to a times series: for each date it computes a weighted mean of \(p\) past points and \(q\) future points.
 
 For trend-cycle extraction, the moving averages usually used are \emph{symmetric}: \(p=q\) and \(\forall k:\:\theta_{-k} = \theta_k\).
-The \textbf{Henderson filter} is a filter widely: it's for example the filter used in the seasonal adjustment algorithm X-12ARIMA.
+The \textbf{Henderson filter} is a filter widely used: it's for example the filter used in the seasonal adjustment algorithm X-12ARIMA.
 
 When it comes to the estimates of the most recent points, the \(q\) future points are not available.
 The filters that are used are called asymmetric filters because \(q\leq p\): for \(q=0\), a real-time estimation is done.
@@ -291,21 +291,22 @@ xticklabels={0,$\pi$,$2\pi$,$3\pi$,$4\pi$,$5\pi$}
 \caption{Smoothing of the time series $y_t=\sin(\omega t)$ by the moving average $M_{\theta_0}y_t=\frac{1}{2}y_{t-1}+\frac{1}{2}y_{t}$ for $\omega=\pi/2$.}\label{fig:exgainPhase}
 \end{figure}
 
-Whereas symmetric filters do not create phase-shift, asymmetric filters.
+Whereas symmetric filters do not create phase-shift, asymmetric filters do.
 The different methods used to build asymmetric filters make a tradeoff between minimizing the phase-shift and minimizing the revisions to the symmetric filter.
 Here we consider three recent approaches to build asymmetric filters:
 
 \begin{itemize}
 \item
-  The one developed by \citet{proietti2008} that consists in locally approximated the trend by a polynomial trend. In this paper, three asymmetric filters are considered:
+  The one developed by \citet{proietti2008} that consists in locally approximated the trend by a polynomial trend.
+  In this paper, three asymmetric filters are considered:
 
   \begin{itemize}
   \item
     The direct asymmetric filter (DAF): it's the filter directly obtained by estimating a local polynomial of degree 3 on the \(p+q+1\) observations.
   \item
-    Linear-Constant (LC) filter: it's computed by assuming that trend of the input time series is linear and imposing that the symmetric filter preserves constant trends.
+    Linear-Constant (LC) filter: it's computed by assuming that trend of the input time series is linear and imposing that the asymmetric filter preserves constant trends.
   \item
-    Quadratic-Linear (QL) filter: it's computed by assuming that trend of the input time series is quadratic and imposing that the symmetric filter preserves linear trends.
+    Quadratic-Linear (QL) filter: it's computed by assuming that trend of the input time series is quadratic and imposing that the asymmetric filter preserves linear trends.
   \end{itemize}
 \item
   \citet{ch15HBSA} defined a general approach to derive linear filters, minimizing a weighted sum of three criteria subject to some constraints (usually polynomial preservation).
@@ -314,19 +315,19 @@ Here we consider three recent approaches to build asymmetric filters:
   This filter will be defined as the ``FST'' filter.
 \item
   \citet{dagumbianconcini2008} developed a general approach to derive linear filters based on Reproducing Kernel Hilbert Space (RKHS) methodology.
-  The weight of the filters depends on a time-invariant global bandwidth parameter thant can be chosen by optimization of some criteria.
+  The weight of the filters depends on a time-invariant global bandwidth parameter that can be chosen by optimization of some criteria.
   We defined as \(b_{q,\phi}\) filter the one obtained with the bandwidth that produce asymmetric filters that minimize the phase shift.
 \end{itemize}
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-The figure \ref{fig:cl2all} compares the different asymmetric filters applying them to the seasonally adjusted series of French industrial production index of the manufacturing industry\footnote{This series is produced by the INSEE, the French National Statistical Office, and is available at \url{https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/010537946}.}.
+The figure \ref{fig:ipi} compares the different asymmetric filters applying them to the seasonally adjusted series of French industrial production index of the manufacturing industry\footnote{This series is produced by the INSEE, the French National Statistical Office, and is available at \url{https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/010537946}.}.
 The French industrial production is strongly impact by the COVID-19 economic crisis, in particular due to the mandatory lockdown of the population from March 17th to May 11th.
 
 \begin{figure}[!ht]
 \animategraphics[autoplay,loop,width=0.99\textwidth,controls]{2}{img/illustrationfr_}{1}{5}
-\caption{Application of asymmetric filters to the French industrial production index (IPI) of manufacturing industry.}\label{fig:cl2all}\footnotesize
+\caption{Application of asymmetric filters to the French industrial production index (IPI) of manufacturing industry.}\label{fig:ipi}\footnotesize
 \emph{Note: The symmetric trend is the one computed by a symmetric 13-terms Henderson filter.}
 
 \emph{To see the animation, the PDF must be open with Acrobat Reader, KDE Okular, PDF-XChange or Foxit Reader.
@@ -337,7 +338,7 @@ In this example, we can notice that the estimates of DAF, QL and FST filters hav
 Therefore, the real-time estimates are highly revised for those methods.
 
 LC and \(b_{q,\phi}\) filters produce much smoother estimates.
-However, we can expect more bias for those methods since the asymmetric filters only preserve constant trends, and so they distort the turning points.
+However, we can expect more bias for those methods since the asymmetric filters only preserve constant trends, and so they distort the trend around turning points.
 
 Except the DAF filter, all the methods detect an upturn in May 2020 and produce similar results when more than two future points are available (\(q\geq 2\)).
 Besides, the estimates are much closer to the estimates of the symmetric filter (when it can be computed) than the DAF estimates.
@@ -356,10 +357,11 @@ Consequently, there is no need to seek to preserve polynomial trends of degree m
 
 Only focusing on the timeliness criteria (FST filter), highly increases the variance of the estimates: a tradeoff with other criteria must be maid.
 
-Finally, for the last-points estimates of the trend-cycle component, the choice off the asymmetric filter should also take into account an economic analysis to decide if the estimates are economically plausible.
+Finally, for the last-points estimates of the trend-cycle component, the choice off the asymmetric filter should also take into account an economic analysis to decide which estimates are economically plausible.
 
-This study could be extended in many ways.
-Firstly studying the impact of the different methods on the seasonal adjustment process. Secondly studying the impact of atypical points on the estimates and exploring new kinds of asymmetric filters based on robust methods (like robust local regressions).
+This study could, for example, be extended in two ways.
+Firstly studying the impact of the different methods on the seasonal adjustment process.
+Secondly studying the impact of atypical points on the estimates and exploring new kinds of asymmetric filters based on robust methods (like robust local regressions).
 
 \renewcommand\refname{References}
   \bibliography{biblio.bib}
