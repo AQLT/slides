@@ -7,11 +7,11 @@
   ,
   a4paper]{article}
 \def\thetitle{%
-Rapport%
+Performance of asymmetric filters for trend-cycle estimation during the COVID-19 crisis%
 }
 \def\thekeywords{%
 %%
-seasonal adjustment, test%
+trend estimation, seasonal adjustment, Henderson filter, asymmetric filters, R%
 }
 \def\theauthors{%
 %
@@ -45,10 +45,28 @@ seasonal adjustment, test%
 }
 \hypersetup{pdfauthor={\theauthors}, pdftitle={\thetitle},
   pdflang={english},
-  pdfkeywords={seasonal adjustment, test},
+  pdfkeywords={trend estimation, seasonal adjustment, Henderson filter, asymmetric filters, R},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+%% PLEASE KEEP AT LIST THESE SETTINGS
+\def\thepaperheight{29.9cm} 	% original: {11.99in}
+\def\thepaperwidth{21.08cm} 	% 		{8.3in}
+\def\theleft{2.79cm} 			% 		{1.1in}
+\def\theright{2.99cm} 			%		{1.18in}
+\def\thetop{1.7cm} 			% 		{0.51in}
+\def\thebottom{1.6cm} 		% 		{0.71in}
+\def\theheadheight{2.54cm} 	% 		(1in}
+\usepackage[
+   a4paper,
+   paperheight=\thepaperheight,
+   paperwidth=\thepaperwidth,
+   left=\theleft,
+   right=\theright,
+   top=\thetop,
+   bottom=\thebottom,
+   headheight=\theheadheight
+]{geometry} % in particular, do not change the dimensions of the document
 \usepackage{longtable,booktabs}
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -173,6 +191,15 @@ seasonal adjustment, test%
 \vspace{-5ex}
 }
 \date{}
+
+\newcommand*{\doi}[1]{DOI: \href{https://doi.org/\detokenize{#1}}{\detokenize{#1}}} 
+\newcommand*{\arxiv}[1]{arXiv: \href{https://arxiv.org/abs/\detokenize{#1}}{\detokenize{#1}}} 
+
+% Ajout AQLT
+\usepackage{fontawesome5}
+\usepackage{stmaryrd}
+\DeclareMathOperator{\e}{e}
+\usepackage{animate, dsfont, here, xspace}
 \ifxetex
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
@@ -196,21 +223,143 @@ seasonal adjustment, test%
 {\fontsize{10pt}{12.0pt}\selectfont \textbf{\uline{Keywords}:} \thekeywords\par}\par
 
 
-test
-
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
+
+With the COVID-19 crisis, one of the major questions on the economy was when it will collapse and when it will recover.
+It illustrates that business cycle analysis, and in particular the early detection of turning points in a series, is a major topic in the analysis of economic outlook.
+
+Moving averages, or linear filters, are ubiquitous in business cycle extraction and seasonal adjustment methods.
+For example, the X-12ARIMA seasonal adjustment method uses Henderson moving averages and composite moving averages to estimate the main components of a time series, while TRAMO-SEATS uses Wiener-Kolmogorov filters.
+Symmetric filters are applied to the center of the series, but when it comes to estimate the most recent points, all of these methods must rely on asymmetric filters.
+For example, even if X-12ARIMA or TRAMO-SEATS apply symmetrical averages to the forecasts obtained from an ARIMA model of the series, in reality it consists in applying asymmetric filters at the end of the series, because the predicted values are linear combinations of past values.
+
+If the classic asymmetric moving averages have good properties regarding the future revisions induced by the process, they create phase shifts that impact the real-time estimation of turning points, introducing time delay in the detection.
+
+This report aims to describe and compare the recent approaches around trend-cycle extraction and asymmetric filters, applying them to the COVID-19 economic crisis.
+All the methods being implemented in the \faIcon{r-project} package \texttt{rjdfilters}\footnote{Available at \url{https://github.com/palatej/rjdfilters}.}, the results can be easily reproduced.
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-\citet{proietti2008}, \citet{ch15HBSA}, \citet{trilemmaWMR2019} and \citet{dagumbianconcini2008}
+Let \(p\) et \(q\) two integers, a moving average \(M_\theta\) is defined by a set of coefficients \(\theta=(\theta_{-p},\dots,\theta_{q})'\) such as for all time series \(X_t\):
+\[
+M_\theta(X_t)=\sum_{k=-p}^{+q}\theta_kX_{t+k}
+\]
+Therefore, applying a moving average \(M_\theta\) to the time series \(X_t\) consists in applying a rolling weighted mean to a times series: for each date it computes a weighted mean of \(p\) past points and \(q\) future points.
+
+For trend-cycle extraction, the moving averages usually used are \emph{symmetric}: \(p=q\) and \(\forall k:\:\theta_{-k} = \theta_k\).
+The \textbf{Henderson filter} is a filter widely: it's for example the filter used in the seasonal adjustment algorithm X-12ARIMA.
+
+When it comes to the estimates of the most recent points, the \(q\) future points are not available.
+The filters that are used are called asymmetric filters because \(q\leq p\): for \(q=0\), a real-time estimation is done.
+
+Applying a moving average to a harmonic times series \(y_t=\e^{-i\omega t}\) can be written as \(M_{\theta_0}y_t=G_\theta(\omega)\e^{-i\Phi_\theta(\omega)}y_t\). It affects the input time series it in in two different ways:
+
+\begin{itemize}
+\item
+  by multiplying it by an amplitude coefficient determined by the gain function \(G_{\theta}\left(\omega\right)\);
+\item
+  by ``shifting'' it in time by the time shift function \(\Phi_\theta(\omega)/\omega\), which directly affects the detection of turning points.
+\end{itemize}
+
+See figure \ref{fig:exgainPhase} for an example.
+
+\begin{figure}[!ht]
+\pgfplotsset{width=\textwidth,height=6cm,every axis legend/.append style={font=\footnotesize,
+  at={(0.5,-0.1)},
+  anchor=north}
+    }
+\begin{tikzpicture}
+\begin{axis}[
+legend columns=2,
+legend style = {fill=none , fill opacity=0, draw opacity=1,text opacity=1},
+xtick={0,3.14159,...,15.70795},
+xticklabels={0,$\pi$,$2\pi$,$3\pi$,$4\pi$,$5\pi$} 
+]
+\addplot[domain=0:5*pi,smooth,samples=300]    plot (\x,{sin(\x * (pi/2) r)});
+\addlegendentry{$X_t(\pi/2)$}
+\addplot[domain=0:5*pi,smooth,samples=300, dashed]    
+  plot (\x,{1/2*sin(\x* pi/2 r )+1/2*sin((\x -1) * pi/2 r)});
+\addlegendentry{$M_{\theta_0}X_t(\pi/2)$}
+\draw[<->](axis cs: 1.5,1)--(axis cs: 1.5,0.7071068)
+  node[pos=0.5, right]{\scriptsize $G_{\theta_0}(\pi/2)$};
+\draw[<->] (axis cs: 3, -0.70710680-0.05)--(axis cs: 3.5,-0.7071068-0.05) 
+  node[pos=0.5, below right]{\scriptsize $\Phi_{\theta_0}(\pi/2)$};
+\end{axis}
+\end{tikzpicture}
+\caption{Smoothing of the time series $y_t=\sin(\omega t)$ by the moving average $M_{\theta_0}y_t=\frac{1}{2}y_{t-1}+\frac{1}{2}y_{t}$ for $\omega=\pi/2$.}\label{fig:exgainPhase}
+\end{figure}
+
+Whereas symmetric filters do not create phase-shift, asymmetric filters.
+The different methods used to build asymmetric filters make a tradeoff between minimizing the phase-shift and minimizing the revisions to the symmetric filter.
+Here we consider three recent approaches to build asymmetric filters:
+
+\begin{itemize}
+\item
+  The one developed by \citet{proietti2008} that consists in locally approximated the trend by a polynomial trend. In this paper, three asymmetric filters are considered:
+
+  \begin{itemize}
+  \item
+    The direct asymmetric filter (DAF): it's the filter directly obtained by estimating a local polynomial of degree 3 on the \(p+q+1\) observations.
+  \item
+    Linear-Constant (LC) filter: it's computed by assuming that trend of the input time series is linear and imposing that the symmetric filter preserves constant trends.
+  \item
+    Quadratic-Linear (QL) filter: it's computed by assuming that trend of the input time series is quadratic and imposing that the symmetric filter preserves linear trends.
+  \end{itemize}
+\item
+  \citet{ch15HBSA} defined a general approach to derive linear filters, minimizing a weighted sum of three criteria subject to some constraints (usually polynomial preservation).
+  The three criteria are: the fidelity (the variance reduction ratio of the filter), the smoothness (measures the flexibility of the coefficient curve of a filter and the smoothness of the trend) and the timeliness (measures the phase shift between input and output series for specific frequencies).\\
+  For simplicity, in this paper we only retain an extreme filter than minimizes the phase shift by (putting a large weight to the timeliness) and that preserves linear trends, as defined by \citet{ch15HBSA}.
+  This filter will be defined as the ``FST'' filter.
+\item
+  \citet{dagumbianconcini2008} developed a general approach to derive linear filters based on Reproducing Kernel Hilbert Space (RKHS) methodology.
+  The weight of the filters depends on a time-invariant global bandwidth parameter thant can be chosen by optimization of some criteria.
+  We defined as \(b_{q,\phi}\) filter the one obtained with the bandwidth that produce asymmetric filters that minimize the phase shift.
+\end{itemize}
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
+The figure \ref{fig:cl2all} compares the different asymmetric filters applying them to the seasonally adjusted series of French industrial production index of the manufacturing industry\footnote{This series is produced by the INSEE, the French National Statistical Office, and is available at \url{https://bdm.insee.fr/series/sdmx/data/SERIES_BDM/010537946}.}.
+The French industrial production is strongly impact by the COVID-19 economic crisis, in particular due to the mandatory lockdown of the population from March 17th to May 11th.
+
+\begin{figure}[!ht]
+\animategraphics[autoplay,loop,width=0.99\textwidth,controls]{2}{img/illustrationfr_}{1}{5}
+\caption{Application of asymmetric filters to the French industrial production index (IPI) of manufacturing industry.}\label{fig:cl2all}\footnotesize
+\emph{Note: The symmetric trend is the one computed by a symmetric 13-terms Henderson filter.}
+
+\emph{To see the animation, the PDF must be open with Acrobat Reader, KDE Okular, PDF-XChange or Foxit Reader.
+Otherwise you will only be able to see the results for the DAF filter.}
+\end{figure}
+
+In this example, we can notice that the estimates of DAF, QL and FST filters have much more variability than the others: the real-time (\(q=0\)) trend-cycle estimates of April and May 2020 being very low.
+Therefore, the real-time estimates are highly revised for those methods.
+
+LC and \(b_{q,\phi}\) filters produce much smoother estimates.
+However, we can expect more bias for those methods since the asymmetric filters only preserve constant trends, and so they distort the turning points.
+
+Except the DAF filter, all the methods detect an upturn in May 2020 and produce similar results when more than two future points are available (\(q\geq 2\)).
+Besides, the estimates are much closer to the estimates of the symmetric filter (when it can be computed) than the DAF estimates.
+Consequently, the DAF estimates will certainly be more revised than the other ones.
+
+Those results should be taken with precaution: the series used is seasonally adjusted and in this process the last estimates are made with an asymmetric filter.
+Moreover, during the COVID crisis the last points are considered as outliers and are corrected for the decomposition process.
+Therefore, this study should be extend to see the impact of the different asymmetric filters also on the seasonally adjusted series.
+
 \hypertarget{conclusions}{%
 \section{Conclusions}\label{conclusions}}
+
+To sum up, the different methods can lead to very different trend-cycle estimates.
+However, all the methods produce better results than the direct asymmetric filters.
+Consequently, there is no need to seek to preserve polynomial trends of degree more than one to build asymmetric filters.
+
+Only focusing on the timeliness criteria (FST filter), highly increases the variance of the estimates: a tradeoff with other criteria must be maid.
+
+Finally, for the last-points estimates of the trend-cycle component, the choice off the asymmetric filter should also take into account an economic analysis to decide if the estimates are economically plausible.
+
+This study could be extended in many ways.
+Firstly studying the impact of the different methods on the seasonal adjustment process. Secondly studying the impact of atypical points on the estimates and exploring new kinds of asymmetric filters based on robust methods (like robust local regressions).
 
 \renewcommand\refname{References}
   \bibliography{biblio.bib}
