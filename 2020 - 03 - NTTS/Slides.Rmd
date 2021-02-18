@@ -7,6 +7,7 @@ author: "Alain Quartier-la-Tente"
 departement: ""
 division: |
     | Insee, LEMNA
+    | Work done during an internship at the NBB
 logo: "img/SACElogo.jpg"
 automaticcontents: false
 output:
@@ -38,7 +39,7 @@ library(kableExtra)
 
 ###  Introduction
 
-Moving averages are ubiquitous in trend-cycle extraction and seasonal adjustment (e.g. : X-12-ARIMA):
+\highlight{Moving averages} (or \highlight{linear filters}) are ubiquitous in trend-cycle extraction and seasonal adjustment (e.g. : X-12-ARIMA):
 $$
 M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k}
 $$
@@ -46,27 +47,27 @@ $$
 
 \pause \bigskip
 
-\faArrowCircleRight{} In general, *symmetric* moving averages ($p=f$ et $\theta_{-i}=\theta_i$) 
+\faArrowCircleRight{} In general, \highlight{symmetric} moving averages ($p=f$ et $\theta_{-i}=\theta_i$) 
 
 \bigskip
 
-\faArrowCircleRight{} For **real-time** estimates, we must rely on *asymmetric* filters: revisions and delay in turning points detections
+\faArrowCircleRight{} For \highlightbf{real-time estimates}, we must rely on \highlight{asymmetric} filters: revisions and delay in turning points detections
 
 # Methods
 # Multiple methods for trend-cycle estimation
 
-###  Comparison of three methods
+###  Comparison of five methods
 
 - Local polynomial filters by @proietti2008
 
-  * Direct asymmetric filter (DAF): local polynomial of degree 3 \faArrowCircleRight{} used in STL
+  * Direct asymmetric filter (\highlightbf{DAF}): local polynomial of degree 3 (as for symmetric filters) \faArrowCircleRight{} used in STL
   
-  * Linear-Constant (LC) filter: trend is of degree 1 and asymmetric filter preserves of degree 0 (constant) \faArrowCircleRight{} Musgrave filters
+  * Linear-Constant (\highlightbf{LC}) filter: trend is of degree 1 and asymmetric filter preserves of degree 0 (constant) \faArrowCircleRight{} Musgrave filters
   
-  * Quadratic-Linear (QL) filter: trend is of degree 2 and asymmetric filter preserves trends of degree 1.
+  * Quadratic-Linear (\highlightbf{QL}) filter: trend is of degree 2 and asymmetric filter preserves trends of degree 1
   
 \pause
-- Fidelity-Smoothness-Timeliness minimization approach of @ch15HBSA \faArrowCircleRight{} FST = filter that minimizes the Timeliness
+- Fidelity-Smoothness-Timeliness (\highlightbf{FST}) minimization approach of @ch15HBSA \faArrowCircleRight{} FST = filter that preserves linear trends and minimizes the Timeliness
 
 \pause
  \faArrowCircleRight{} Methods implemented in the \faIcon{r-project} package `rjdfilters` available at \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}  
@@ -83,7 +84,7 @@ $$
 
 \animategraphics[loop,width=0.99\textwidth,controls]{2}{img/illustration_slides_}{1}{5}
 
-Final estimate: Henderson filter of order 13 ($p=q=6$).
+Final estimate: Henderson filter of order 13 ($p=q=6$)
 
 \footnotesize
 
@@ -96,15 +97,15 @@ Final estimate: Henderson filter of order 13 ($p=q=6$).
 
 - Different methods can lead to very different trend-cycle estimates
 
-- \bcattention Methods should also be compared in the seasonal adjustment process
+- \bcattention Seasonal adjustment process already uses asymmetric filters: methods should also be compared in the seasonal adjustment process.
 
 - \bclampe More series should be studied and more investigations on the different parameters (especially with FST)
 
-- \bcattention Outliers impact the decomposition process: during the COVID crisis several AO \faArrowCircleRight{} study of asymmetric filters based on robust methods \bclampe
+- \bcattention Outliers impact on exctraction methods: during the COVID-19 crisis several AO \faArrowCircleRight{} study of asymmetric filters based on robust methods \bclampe
 
 
 
-### Thank you for your attention...
+### Thank you for your attention... {.noframenumbering}
 
 <!-- \bigskip -->
 
@@ -130,13 +131,15 @@ Final estimate: Henderson filter of order 13 ($p=q=6$).
 <!-- \bigskip -->
 
 \begin{columns}
-\begin{column}{0.5\textwidth}
+\begin{column}{0.4\textwidth}
 \href{mailto:alain.quartier@yahoo.fr}{\faEnvelope{} alain.quartier [at] yahoo.fr} 
 
 \href{https://twitter.com/AlainQlt}{\faTwitter{} @AlainQlt}
 \end{column}
-\begin{column}{0.5\textwidth} 
+\begin{column}{0.6\textwidth} 
 \faIcon{r-project} package : \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}  
+
+\href{https://aqlt.github.io/AsymmetricFilters/Rapport\%20de\%20stage/Rapport.pdf}{\bccrayon Click here for a more detailed study}
 \end{column}
 \end{columns}
 
