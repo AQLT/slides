@@ -1,0 +1,145 @@
+---
+title: |
+ | Performance of asymmetric filters for trend-cycle extraction 
+ | Application to the COVID-19 crisis
+subtitle: "NTTS 2021"
+author: "Alain Quartier-la-Tente"
+departement: ""
+division: |
+    | Insee, LEMNA
+logo: "img/SACElogo.jpg"
+automaticcontents: false
+output:
+    beamer_presentation:
+        template: template2.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+        includes:
+          in_header: preamble_beamer.tex
+themeoptions: "coding=utf8,language=english"
+classoption: 'usepdftitle=false,english'
+fontsize: 10pt
+bibliography: [biblio.bib]
+biblio-style: unsrtnat
+natbiboptions: [numbers]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = FALSE)
+library(knitr)
+library(kableExtra)
+```
+
+# Introduction
+
+## Moving averages
+
+###  Introduction
+
+Moving averages are ubiquitous in trend-cycle extraction and seasonal adjustment (e.g. : X-12-ARIMA):
+$$
+M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k}
+$$
+
+
+\pause \bigskip
+
+\faArrowCircleRight{} In general, *symmetric* moving averages ($p=f$ et $\theta_{-i}=\theta_i$) 
+
+\bigskip
+
+\faArrowCircleRight{} For **real-time** estimates, we must rely on *asymmetric* filters: revisions and delay in turning points detections
+
+# Methods
+# Multiple methods for trend-cycle estimation
+
+###  Comparison of three methods
+
+- Local polynomial filters by @proietti2008
+
+  * Direct asymmetric filter (DAF): local polynomial of degree 3 \faArrowCircleRight{} used in STL
+  
+  * Linear-Constant (LC) filter: trend is of degree 1 and asymmetric filter preserves of degree 0 (constant) \faArrowCircleRight{} Musgrave filters
+  
+  * Quadratic-Linear (QL) filter: trend is of degree 2 and asymmetric filter preserves trends of degree 1.
+  
+\pause
+- Fidelity-Smoothness-Timeliness minimization approach of @ch15HBSA \faArrowCircleRight{} FST = filter that minimizes the Timeliness
+
+\pause
+ \faArrowCircleRight{} Methods implemented in the \faIcon{r-project} package `rjdfilters` available at \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}  
+
+\pause
+- Filters based on Reproducing Kernel Hilbert Space (RKHS) methodology by @dagumbianconcini2008 
+\faArrowCircleRight{} $b_{q,\phi}$ = filters with a "bandwidth" that minimizes phase shift.
+
+# Example
+
+## French industrial production index (IPI) of manufacturing industry
+
+### Example with the French IPI
+
+\animategraphics[loop,width=0.99\textwidth,controls]{2}{img/illustration_slides_}{1}{5}
+
+Final estimate: Henderson filter of order 13 ($p=q=6$).
+
+\footnotesize
+
+*Note: To see the animation, the PDF must be open with Acrobat Reader, KDE Okular, PDF-XChange or Foxit Reader.*
+
+# Conclusion
+
+
+### Conclusion and improvements
+
+- Different methods can lead to very different trend-cycle estimates
+
+- \bcattention Methods should also be compared in the seasonal adjustment process
+
+- \bclampe More series should be studied and more investigations on the different parameters (especially with FST)
+
+- \bcattention Outliers impact the decomposition process: during the COVID crisis several AO \faArrowCircleRight{} study of asymmetric filters based on robust methods \bclampe
+
+
+
+### Thank you for your attention...
+
+<!-- \bigskip -->
+
+<!-- \begin{columns} -->
+<!-- \begin{column}{0.33\textwidth} -->
+<!-- \begin{center} -->
+<!-- %\includegraphics[width=0.9\textwidth]{img/rjdemetra_logo.png} -->
+<!-- \end{center} -->
+<!-- \end{column} -->
+<!-- \begin{column}{0.33\textwidth} -->
+<!-- \begin{center} -->
+<!-- %\includegraphics[width=0.9\textwidth]{img/jdemetra+.png} -->
+<!-- \end{center} -->
+<!-- \end{column} -->
+<!-- \begin{column}{0.33\textwidth}  -->
+<!-- \begin{center} -->
+<!-- %\includegraphics[width=0.9\textwidth]{img/ggdemetra_logo.png} -->
+<!-- \end{center} -->
+<!-- \end{column} -->
+<!-- \end{columns} -->
+
+<!-- \bigskip -->
+<!-- \bigskip -->
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\href{mailto:alain.quartier@yahoo.fr}{\faEnvelope{} alain.quartier [at] yahoo.fr} 
+
+\href{https://twitter.com/AlainQlt}{\faTwitter{} @AlainQlt}
+\end{column}
+\begin{column}{0.5\textwidth} 
+\faIcon{r-project} package : \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}  
+\end{column}
+\end{columns}
+
+**Bibliography**:
+
+
