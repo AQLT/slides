@@ -29,7 +29,6 @@ $endif$
 \usepackage{amssymb,amsmath,mathtools,multirow}
 \usepackage{float,hhline}
 \usepackage{tikz}
-\usepackage[tikz]{bclogo}
 \usepackage{mathtools}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
@@ -164,6 +163,21 @@ $endif$
 $if(beamer)$
 \newif\ifbibliography
 $endif$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
@@ -366,10 +380,6 @@ $endif$
 \makeatother
 $endif$
 
-\DeclareMathOperator{\Cov}{Cov}
-\newcommand{\E}[1]{\mathbb{E}\left[ #1 \right]}
-\newcommand{\V}[1]{\mathbb{V}\left[ #1 \right]}
-\newcommand{\cov}[2]{\Cov\left( #1\,,\,#2 \right)}
 
 \begin{document}
 $if(title)$

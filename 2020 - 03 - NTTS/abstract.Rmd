@@ -161,7 +161,7 @@ Consequently, there is no need to seek to preserve polynomial trends of degree m
 
 Only focusing on the timeliness criteria (FST filter), highly increases the variance of the estimates: a tradeoff with other criteria must be maid.
 
-Finally, for the last-points estimates of the trend-cycle component, the choice off the asymmetric filter should also take into account an economic analysis to decide which estimates are economically plausible.
+Finally, for the last-points estimates of the trend-cycle component, the choice of the asymmetric filter should also take into account an economic analysis to decide which estimates are economically plausible.
 
 This study could, for example, be extended in two ways. 
 Firstly studying the impact of the different methods on the seasonal adjustment process.
