@@ -1,0 +1,6 @@
+\babel@toc {english}{}
+\beamer@sectionintoc {1}{Introduction}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Moving averages}{2}{0}{1}
+\beamer@sectionintoc {2}{Method and example}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{French industrial production index (IPI) of manufacturing industry}{5}{0}{2}
+\beamer@sectionintoc {3}{Conclusion}{10}{0}{3}
