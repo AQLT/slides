@@ -2,7 +2,7 @@
 
 ## 2021
 
-- August 2021: [JSM](https://aqlt.github.io/slides/2021%20-%2008%20-%20JSM/Slides.pdf)
+- August 2021: [JSM](https://aqlt.github.io/slides/2021%20-%2008%20-%20JSM/Slides_AQLT.pdf)
 
 - March 2021: [NTTS](https://aqlt.github.io/slides/2021%20-%2003%20-%20NTTS/Slides.pdf)
 

@@ -13,7 +13,7 @@ logo: "img/logojsm.png"
 automaticcontents: false
 output:
     beamer_presentation:
-        template: template2.tex
+        template: template_Beamer.tex
         keep_tex: yes
         theme: TorinoTh
         slide_level: 3
