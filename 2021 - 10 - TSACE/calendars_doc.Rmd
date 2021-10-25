@@ -1,0 +1,152 @@
+---
+title: "rjd3modelling and documentation"
+subtitle: "TSACE, October 26, 2021"
+author: "Alain Quartier-la-Tente"
+division: "Insee)"
+departement: "alain.quartier-la-tente@insee.fr"
+logo: "img/SACElogo"
+output:
+    beamer_presentation:
+        template: template.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+header-includes:
+- \usepackage{wrapfig}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage[table]{xcolor}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{animate}
+- \usepackage{fontawesome5}
+themeoptions: "coding=utf8,language=english"
+classoption: 'usepdftitle=false,french'
+fontsize: 10pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                        fig.path = "img/markdown-")
+library(AQLTools)
+```
+
+
+# rjd3modelling
+
+### What is available in `rjd3modelling`?
+
+Package available on GitHub:
+```{r, eval=FALSE}
+remotes::install_github("palatej/rjd3toolkit")
+remotes::install_github("palatej/rjd3modelling")
+```
+
+. . .
+
+- create trading-days variables with a **user-defined calendar**: easter related days (`calendar.easter`), fixed days (`calendar.fixedday`) and from specific holidays `calendar.holiday` \faArrowCircleRight{} see `?calendar.new` for a complete example.
+
+. . .
+
+- create **common regressors**: stock trading days (`stock.td`), leap year regressors (`lp.variable`),
+easter regressors (`easter.variable`),
+outliers (`ao.variable`, `ls.variable`, `tc.variable`, `so.variable`), ramp (`ramp.variable`),  intervention variables (`intervention.variable`), periodic dummies (`periodic.dummies`) and contrast (`periodic.contrasts`), trigonometric variables (`trigonometric.variables`)
+
+. . .
+
+\bcquestion How do you get started with these tools?
+
+# Documentation
+## Static document
+
+### Vignette/Word/PDF documentation
+
+Usual documentation, already available for JDemetra+
+
+\animategraphics[loop, autoplay, width=\linewidth]{2}{img/gif/docx/docx_}{1}{8}
+
+### HTML/PDF tutorials with `unilur` {.allowframebreaks}
+
+Use `unilur` (github.com/koncina/unilur) to create tutorials/practicals or examination papers with `rmarkdown`
+
+```
+---
+output:
+  unilur::tutorial_html: default # without solutions
+  unilur::tutorial_html_solution: default # with solutions
+  unilur::tutorial_pdf: default
+  unilur::tutorial_pdf_solutionn: default
+---
+```
+
+````md
+```{r, solution = TRUE}`r ''`
+frenchCalendar <- calendar.new()
+```
+````
+
+\animategraphics[loop, autoplay, width=\linewidth]{2}{img/gif/unilur/unilur_}{1}{23}
+
+## Dynamic tutorial
+
+### Create interactive tutorials with `learnr` {.allowframebreaks}
+
+Tutorials includes in a R package (`remotes::install_github("AQLT/rjd3tutorials")`)
+
+````md
+```{r regressors, exercise = TRUE}`r ''`
+frenchCalendar <- calendar.new()
+```
+
+```{r regressors-hint}`r ''`
+# define Saturday and Sunday as contrast
+groups <- c(1, 1, 1, 1, 1, 0, 0)
+```
+
+```{r regressors-solution}`r ''`
+
+```
+
+````
+
+\animategraphics[loop, autoplay, width=\linewidth]{2}{img/gif/learnr/learnr_}{1}{44}
+
+### Thank you for your attention
+
+
+\begin{columns}
+\begin{column}{0.4\textwidth}
+\faIcon{r-project} packages:
+\begin{itemize}
+\item \href{https://github.com/palatej/rjd3toolkit}{\faGithub{} palatej/rjd3toolkit}
+
+\item \href{https://github.com/palatej/rjd3modelling}{\faGithub{} palatej/rjd3modelling}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\textwidth}
+Tutorials:
+\begin{itemize}
+\item \href{https://github.com/AQLT/rjd3tutorials}{\faGithub{} AQLT/rjd3tutorials}
+
+\item example with unilur: \href{https://aqlt-formation-rte.netlify.app/TP/Enonces/R-2-CJO_solution.html}{https://aqlt-formation-rte.netlify.app/TP/Enonces/R-2-CJO\_solution.html}
+\end{itemize}
+\end{column}
+\end{columns}
+
+
+
+\vfill
+Contact:
+\href{mailto:alain.quartier-la-tente@insee.fr}{\faEnvelope{} alain.quartier-la-tente [at] insee.fr}
+
+
+

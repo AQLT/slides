@@ -1,0 +1,309 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[10pt,xcolor=table,color={dvipsnames,usenames},ignorenonframetext,usepdftitle=false,french]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{caption}
+\captionsetup{skip=0pt,belowskip=0pt}
+%\setlength\abovecaptionskip{-15pt}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath,mathtools,multirow}
+\usepackage{float,hhline}
+\usepackage{tikz}
+\usepackage[tikz]{bclogo}
+\usepackage{mathtools}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme[coding=utf8,language=english,
+,titlepagelogo=img/SACElogo
+]{TorinoTh}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={rjd3modelling and documentation},
+            pdfauthor={Alain Quartier-la-Tente},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\newif\ifbibliography
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \let\insertpartnumber\relax
+  \let\partname\relax
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \begin{frame}{Sommaire}
+    \tableofcontents[currentsection, hideothersubsections]
+    \end{frame}
+  \fi
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  %\setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+  }
+\setcounter{secnumdepth}{0}
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{animate}
+\usepackage{fontawesome5}
+
+\title{rjd3modelling and documentation}
+\ateneo{TSACE, October 26, 2021}
+\author{Alain Quartier-la-Tente}
+\date{}
+
+
+\setrellabel{}
+
+\setcandidatelabel{}
+
+\rel{}
+\division{Insee)}
+
+\departement{\href{mailto:alain.quartier-la-tente@insee.fr}{\nolinkurl{alain.quartier-la-tente@insee.fr}}}
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}[1]{\mathbb{E}\left[ #1 \right]}
+\newcommand{\V}[1]{\mathbb{V}\left[ #1 \right]}
+\newcommand{\cov}[2]{\Cov\left( #1\,,\,#2 \right)}
+
+\begin{document}
+\begin{frame}[plain,noframenumbering]
+\titlepage
+\end{frame}
+
+\hypertarget{rjd3modelling}{%
+\section{rjd3modelling}\label{rjd3modelling}}
+
+\begin{frame}[fragile]{What is available in \texttt{rjd3modelling}?}
+\protect\hypertarget{what-is-available-in-rjd3modelling}{}
+Package available on GitHub:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"palatej/rjd3toolkit"}\NormalTok{)}
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"palatej/rjd3modelling"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  create trading-days variables with a \textbf{user-defined calendar}:
+  easter related days (\texttt{calendar.easter}), fixed days
+  (\texttt{calendar.fixedday}) and from specific holidays
+  \texttt{calendar.holiday} \faArrowCircleRight{} see
+  \texttt{?calendar.new} for a complete example.
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  create \textbf{common regressors}: stock trading days
+  (\texttt{stock.td}), leap year regressors (\texttt{lp.variable}),
+  easter regressors (\texttt{easter.variable}), outliers
+  (\texttt{ao.variable}, \texttt{ls.variable}, \texttt{tc.variable},
+  \texttt{so.variable}), ramp (\texttt{ramp.variable}), intervention
+  variables (\texttt{intervention.variable}), periodic dummies
+  (\texttt{periodic.dummies}) and contrast
+  (\texttt{periodic.contrasts}), trigonometric variables
+  (\texttt{trigonometric.variables})
+\end{itemize}
+
+\pause
+
+\bcquestion How do you get started with these tools?
+\end{frame}
+
+\hypertarget{documentation}{%
+\section{Documentation}\label{documentation}}
+
+\hypertarget{static-document}{%
+\subsection{Static document}\label{static-document}}
+
+\begin{frame}{Vignette/Word/PDF documentation}
+\protect\hypertarget{vignettewordpdf-documentation}{}
+Usual documentation, already available for JDemetra+
+
+\animategraphics[loop, autoplay, width=\linewidth]{2}{img/gif/docx/docx_}{1}{8}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]{HTML/PDF tutorials with
+\texttt{unilur}}
+\protect\hypertarget{htmlpdf-tutorials-with-unilur}{}
+Use \texttt{unilur} (github.com/koncina/unilur) to create
+tutorials/practicals or examination papers with \texttt{rmarkdown}
+
+\begin{verbatim}
+---
+output:
+  unilur::tutorial_html: default # without solutions
+  unilur::tutorial_html_solution: default # with solutions
+  unilur::tutorial_pdf: default
+  unilur::tutorial_pdf_solutionn: default
+---
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r, solution = TRUE\}}
+\InformationTok{frenchCalendar \textless{}{-} calendar.new()}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\animategraphics[loop, autoplay, width=\linewidth]{2}{img/gif/unilur/unilur_}{1}{23}
+\end{frame}
+
+\hypertarget{dynamic-tutorial}{%
+\subsection{Dynamic tutorial}\label{dynamic-tutorial}}
+
+\begin{frame}[fragile,allowframebreaks]{Create interactive tutorials
+with \texttt{learnr}}
+\protect\hypertarget{create-interactive-tutorials-with-learnr}{}
+Tutorials includes in a R package
+(\texttt{remotes::install\_github("AQLT/rjd3tutorials")})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r regressors, exercise = TRUE\}}
+\InformationTok{frenchCalendar \textless{}{-} calendar.new()}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r regressors{-}hint\}}
+\InformationTok{\# define Saturday and Sunday as contrast}
+\InformationTok{groups \textless{}{-} c(1, 1, 1, 1, 1, 0, 0)}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r regressors{-}solution\}}
+
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\animategraphics[loop, autoplay, width=\linewidth]{2}{img/gif/learnr/learnr_}{1}{44}
+\end{frame}
+
+\begin{frame}{Thank you for your attention}
+\protect\hypertarget{thank-you-for-your-attention}{}
+\begin{columns}
+\begin{column}{0.4\textwidth}
+\faIcon{r-project} packages:
+\begin{itemize}
+\item \href{https://github.com/palatej/rjd3toolkit}{\faGithub{} palatej/rjd3toolkit}
+
+\item \href{https://github.com/palatej/rjd3modelling}{\faGithub{} palatej/rjd3modelling}
+\end{itemize}
+\end{column}
+\begin{column}{0.6\textwidth}
+Tutorials:
+\begin{itemize}
+\item \href{https://github.com/AQLT/rjd3tutorials}{\faGithub{} AQLT/rjd3tutorials}
+
+\item example with unilur: \href{https://aqlt-formation-rte.netlify.app/TP/Enonces/R-2-CJO_solution.html}{https://aqlt-formation-rte.netlify.app/TP/Enonces/R-2-CJO\_solution.html}
+\end{itemize}
+\end{column}
+\end{columns}
+
+\vfill
+
+Contact:
+\href{mailto:alain.quartier-la-tente@insee.fr}{\faEnvelope{} alain.quartier-la-tente [at] insee.fr}
+\end{frame}
+
+\end{document}
