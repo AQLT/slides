@@ -1,0 +1,34 @@
+\frametitle{Conclusion}
+\protect\hypertarget{conclusion-2}{}
+\begin{itemize}
+\tightlist
+\item
+  Dans la construction des filtres asymétriques, on peut se restreindre
+  à ceux qui conservent les polynômes de degré au plus 1 (et exclure les
+  filtres QL, CQ et DAF)
+\end{itemize}
+
+\bigskip
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  RKHS semble permettre un bon compris déphasage/révisions (\(b_{q,G}\))
+  mais potentiellement problèmes de calibration avec estimations
+  intermédiaires erratiques (\(b_{q,\varphi}\))
+\end{itemize}
+
+\bigskip
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Dans certains cas des méthodes alternatives à la prévision ARIMA
+  peuvent être utilisées \faIcon{arrow-circle-right} \texttt{rjdfilters}
+  peut aider à comparer les résultats (\texttt{rjdfilters::x11()} pour
+  les intégrer dans X-11)
+\end{itemize}

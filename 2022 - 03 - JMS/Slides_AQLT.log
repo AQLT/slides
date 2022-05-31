@@ -1,0 +1,2489 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1 Portable) (preloaded format=pdflatex 2022.2.15)  29 MAR 2022 23:53
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./Slides_AQLT.tex
+(Slides_AQLT.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-02-05> (C:\Software\Miktex\texmfs\install\tex/latex/
+beamer\beamer.cls
+Document Class: beamer 2022/01/21 v3.65 A class for typesetting presentations
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasemodes.sty (C:\Sof
+tware\Miktex\texmfs\install\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count185
+)
+\beamer@tempbox=\box50
+\beamer@tempcount=\count186
+\c@beamerpauses=\count187
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasedecode.sty
+\beamer@slideinframe=\count188
+\beamer@minimum=\count189
+\beamer@decode@box=\box51
+)
+\beamer@commentbox=\box52
+\beamer@modecount=\count190
+) (C:\Software\Miktex\texmfs\install\tex/generic/iftex\ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+(C:\Software\Miktex\texmfs\install\tex/generic/iftex\iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\headdp=\dimen138
+\footheight=\dimen139
+\sidebarheight=\dimen140
+\beamer@tempdim=\dimen141
+\beamer@finalheight=\dimen142
+\beamer@animht=\dimen143
+\beamer@animdp=\dimen144
+\beamer@animwd=\dimen145
+\beamer@leftmargin=\dimen146
+\beamer@rightmargin=\dimen147
+\beamer@leftsidebar=\dimen148
+\beamer@rightsidebar=\dimen149
+\beamer@boxsize=\dimen150
+\beamer@vboxoffset=\dimen151
+\beamer@descdefault=\dimen152
+\beamer@descriptionwidth=\dimen153
+\beamer@lastskip=\skip47
+\beamer@areabox=\box53
+\beamer@animcurrent=\box54
+\beamer@animshowbox=\box55
+\beamer@sectionbox=\box56
+\beamer@logobox=\box57
+\beamer@linebox=\box58
+\beamer@sectioncount=\count191
+\beamer@subsubsectionmax=\count192
+\beamer@subsectionmax=\count193
+\beamer@sectionmax=\count194
+\beamer@totalheads=\count195
+\beamer@headcounter=\count196
+\beamer@partstartpage=\count197
+\beamer@sectionstartpage=\count198
+\beamer@subsectionstartpage=\count199
+\beamer@animationtempa=\count266
+\beamer@animationtempb=\count267
+\beamer@xpos=\count268
+\beamer@ypos=\count269
+\beamer@ypos@offset=\count270
+\beamer@showpartnumber=\count271
+\beamer@currentsubsection=\count272
+\beamer@coveringdepth=\count273
+\beamer@sectionadjust=\count274
+\beamer@toclastsection=\count275
+\beamer@tocsectionnumber=\count276
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaseoptions.sty (C:\S
+oftware\Miktex\texmfs\install\tex/latex/graphics\keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+))
+\beamer@paperwidth=\skip48
+\beamer@paperheight=\skip49
+(C:\Software\Miktex\texmfs\install\tex/latex/geometry\geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(C:\Software\Miktex\texmfs\install\tex/generic/iftex\ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count277
+\Gm@cntv=\count278
+\c@Gm@tempcnt=\count279
+\Gm@bindingoffset=\dimen154
+\Gm@wd@mp=\dimen155
+\Gm@odd@mp=\dimen156
+\Gm@even@mp=\dimen157
+\Gm@layoutwidth=\dimen158
+\Gm@layoutheight=\dimen159
+\Gm@layouthoffset=\dimen160
+\Gm@layoutvoffset=\dimen161
+\Gm@dimlist=\toks17
+(C:\Software\Miktex\texmfs\install\tex/latex/geometry\geometry.cfg)) (C:\Softwa
+re\Miktex\texmfs\install\tex/latex/pgf/basiclayer\pgfcore.sty (C:\Software\Mikt
+ex\texmfs\install\tex/latex/graphics\graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+(C:\Software\Miktex\texmfs\install\tex/latex/graphics\graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+(C:\Software\Miktex\texmfs\install\tex/latex/graphics\trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (C:\Software\Miktex\texmfs\install\tex/latex/graphics-cfg\graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+(C:\Software\Miktex\texmfs\install\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen162
+\Gin@req@width=\dimen163
+) (C:\Software\Miktex\texmfs\install\tex/latex/pgf/systemlayer\pgfsys.sty (C:\S
+oftware\Miktex\texmfs\install\tex/latex/pgf/utilities\pgfrcs.sty
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/utilities\pgfutil-common.tex
+\pgfutil@everybye=\toks18
+\pgfutil@tempdima=\dimen164
+\pgfutil@tempdimb=\dimen165
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/utilities\pgfutil-common-lis
+ts.tex)) (C:\Software\Miktex\texmfs\install\tex/generic/pgf/utilities\pgfutil-l
+atex.def
+\pgfutil@abb=\box59
+) (C:\Software\Miktex\texmfs\install\tex/generic/pgf/utilities\pgfrcs.code.tex 
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf\pgf.revision.tex)
+Package: pgfrcs 2021/05/15 v3.1.9a (3.1.9a)
+)) (C:\Software\Miktex\texmfs\install\tex/generic/pgf/systemlayer\pgfsys.code.t
+ex
+Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/utilities\pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks19
+\pgfkeys@temptoks=\toks20
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/utilities\pgfkeysfiltered.co
+de.tex
+\pgfkeys@tmptoks=\toks21
+))
+\pgf@x=\dimen166
+\pgf@y=\dimen167
+\pgf@xa=\dimen168
+\pgf@ya=\dimen169
+\pgf@xb=\dimen170
+\pgf@yb=\dimen171
+\pgf@xc=\dimen172
+\pgf@yc=\dimen173
+\pgf@xd=\dimen174
+\pgf@yd=\dimen175
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count280
+\c@pgf@countb=\count281
+\c@pgf@countc=\count282
+\c@pgf@countd=\count283
+\t@pgf@toka=\toks22
+\t@pgf@tokb=\toks23
+\t@pgf@tokc=\toks24
+\pgf@sys@id@count=\count284
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/systemlayer\pgf.cfg
+File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/systemlayer\pgfsys-pdftex.de
+f
+File: pgfsys-pdftex.def 2021/05/15 v3.1.9a (3.1.9a)
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/systemlayer\pgfsys-common-pd
+f.def
+File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
+)))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/systemlayer\pgfsyssoftpath.c
+ode.tex
+File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfsyssoftpath@smallbuffer@items=\count285
+\pgfsyssoftpath@bigbuffer@items=\count286
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/systemlayer\pgfsysprotocol.c
+ode.tex
+File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)) (C:\Software\Miktex\texmfs\install\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
+(C:\Software\Miktex\texmfs\install\tex/latex/graphics-cfg\color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
+) (C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcore.code.te
+x
+Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmath.code.tex (C:\So
+ftware\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathcalc.code.tex (C:\Soft
+ware\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathutil.code.tex) (C:\Softw
+are\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathparser.code.tex
+\pgfmath@dimen=\dimen176
+\pgfmath@count=\count287
+\pgfmath@box=\box60
+\pgfmath@toks=\toks25
+\pgfmath@stack@operand=\toks26
+\pgfmath@stack@operation=\toks27
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.code.t
+ex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.basic.
+code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.trigon
+ometric.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.random
+.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.compar
+ison.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.base.c
+ode.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.round.
+code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.misc.c
+ode.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmathfunctions.intege
+rarithmetics.code.tex))) (C:\Software\Miktex\texmfs\install\tex/generic/pgf/mat
+h\pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count288
+)) (C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfint.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorepoints.cod
+e.tex
+File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@picminx=\dimen177
+\pgf@picmaxx=\dimen178
+\pgf@picminy=\dimen179
+\pgf@picmaxy=\dimen180
+\pgf@pathminx=\dimen181
+\pgf@pathmaxx=\dimen182
+\pgf@pathminy=\dimen183
+\pgf@pathmaxy=\dimen184
+\pgf@xx=\dimen185
+\pgf@xy=\dimen186
+\pgf@yx=\dimen187
+\pgf@yy=\dimen188
+\pgf@zx=\dimen189
+\pgf@zy=\dimen190
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorepathconstr
+uct.code.tex
+File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@path@lastx=\dimen191
+\pgf@path@lasty=\dimen192
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorepathusage.
+code.tex
+File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@shorten@end@additional=\dimen193
+\pgf@shorten@start@additional=\dimen194
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorescopes.cod
+e.tex
+File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfpic=\box61
+\pgf@hbox=\box62
+\pgf@layerbox@main=\box63
+\pgf@picture@serial@count=\count289
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcoregraphicsta
+te.code.tex
+File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgflinewidth=\dimen195
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcoretransforma
+tions.code.tex
+File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@pt@x=\dimen196
+\pgf@pt@y=\dimen197
+\pgf@pt@temp=\dimen198
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorequick.code
+.tex
+File: pgfcorequick.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcoreobjects.co
+de.tex
+File: pgfcoreobjects.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorepathproces
+sing.code.tex
+File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorearrows.cod
+e.tex
+File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfarrowsep=\dimen199
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcoreshade.code
+.tex
+File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@max=\dimen256
+\pgf@sys@shading@range@num=\count290
+\pgf@shadingcount=\count291
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcoreimage.code
+.tex
+File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcoreexternal.c
+ode.tex
+File: pgfcoreexternal.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfexternal@startupbox=\box64
+))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorelayers.cod
+e.tex
+File: pgfcorelayers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcoretransparen
+cy.code.tex
+File: pgfcoretransparency.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorepatterns.c
+ode.tex
+File: pgfcorepatterns.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/basiclayer\pgfcorerdf.code.t
+ex
+File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))) (C:\Software\Miktex\texmfs\install\tex/latex/base\size10.clo
+File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+) (C:\Software\Miktex\texmfs\install\tex/latex/pgf/utilities\xxcolor.sty
+Package: xxcolor 2003/10/24 ver 0.1
+\XC@nummixins=\count292
+\XC@countmixins=\count293
+) (C:\Software\Miktex\texmfs\install\tex/latex/base\atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+) (C:\Software\Miktex\texmfs\install\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+(C:\Software\Miktex\texmfs\install\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (C:\Software\Miktex\texmfs\install\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (C:\Software\Miktex\texmfs\install\tex/generic/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+) (C:\Software\Miktex\texmfs\install\tex/generic/kvdefinekeys\kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (C:\Software\Miktex\texmfs\install\tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (C:\Software\Miktex\texmfs\install\tex/latex/hycolor\hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (C:\Software\Miktex\texmfs\install\tex/latex/letltxmacro\letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (C:\Software\Miktex\texmfs\install\tex/latex/auxhook\auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (C:\Software\Miktex\texmfs\install\tex/latex/kvoptions\kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen257
+\Hy@linkcounter=\count294
+\Hy@pagecounter=\count295
+(C:\Software\Miktex\texmfs\install\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (C:\Software\Miktex\texmfs\install\tex/latex/hyperref\hyperref-langpatches.de
+f
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+) (C:\Software\Miktex\texmfs\install\tex/generic/intcalc\intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (C:\Software\Miktex\texmfs\install\tex/generic/etexcmds\etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count296
+(C:\Software\Miktex\texmfs\install\tex/latex/hyperref\puenc.def
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4073.
+Package hyperref Info: Option `bookmarks' set `true' on input line 4073.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4073.
+Package hyperref Info: Option `implicit' set `false' on input line 4073.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode OFF; no redefinition of LaTeX internals.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count297
+(C:\Software\Miktex\texmfs\install\tex/latex/url\url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen258
+(C:\Software\Miktex\texmfs\install\tex/generic/bitset\bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(C:\Software\Miktex\texmfs\install\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count298
+\Field@Width=\dimen259
+\Fld@charsize=\dimen260
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+\Hy@abspage=\count299
+
+Package hyperref Message: Stopped early.
+
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+(C:\Software\Miktex\texmfs\install\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+(C:\Software\Miktex\texmfs\install\tex/latex/base\atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+\Fld@listcount=\count300
+\c@bookmark@seq@number=\count301
+(C:\Software\Miktex\texmfs\install\tex/latex/rerunfilecheck\rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+(C:\Software\Miktex\texmfs\install\tex/generic/uniquecounter\uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaserequires.sty
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasecompatibility.sty
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasefont.sty (C:\So
+ftware\Miktex\texmfs\install\tex/latex/amsfonts\amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(C:\Software\Miktex\texmfs\install\tex/latex/amsfonts\amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks28
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (C:\Software\Miktex\texmfs\install\tex/latex/sansmathaccent\sansmathaccent.s
+ty
+Package: sansmathaccent 2020/01/31
+(C:\Software\Miktex\texmfs\install\tex/latex/koma-script\scrlfile.sty
+Package: scrlfile 2021/11/13 v3.35 KOMA-Script package (file load hooks)
+(C:\Software\Miktex\texmfs\install\tex/latex/koma-script\scrlfile-hook.sty
+Package: scrlfile-hook 2021/11/13 v3.35 KOMA-Script package (using LaTeX hooks)
+
+(C:\Software\Miktex\texmfs\install\tex/latex/koma-script\scrlogo.sty
+Package: scrlogo 2021/11/13 v3.35 KOMA-Script package (logo)
+))))) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasetranslator.
+sty (C:\Software\Miktex\texmfs\install\tex/latex/translator\translator.sty
+Package: translator 2021-05-31 v1.12d Easy translation of strings in LaTeX
+)) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasemisc.sty) (C:\
+Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasetwoscreens.sty) (C:\S
+oftware\Miktex\texmfs\install\tex/latex/beamer\beamerbaseoverlay.sty
+\beamer@argscount=\count302
+\beamer@lastskipcover=\skip50
+\beamer@trivlistdepth=\count303
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasetitle.sty) (C:\
+Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasesection.sty
+\c@lecture=\count304
+\c@part=\count305
+\c@section=\count306
+\c@subsection=\count307
+\c@subsubsection=\count308
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaseframe.sty
+\beamer@framebox=\box65
+\beamer@frametitlebox=\box66
+\beamer@zoombox=\box67
+\beamer@zoomcount=\count309
+\beamer@zoomframecount=\count310
+\beamer@frametextheight=\dimen261
+\c@subsectionslide=\count311
+\beamer@frametopskip=\skip51
+\beamer@framebottomskip=\skip52
+\beamer@frametopskipautobreak=\skip53
+\beamer@framebottomskipautobreak=\skip54
+\beamer@envbody=\toks29
+\framewidth=\dimen262
+\c@framenumber=\count312
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaseverbatim.sty
+\beamer@verbatimfileout=\write4
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaseframesize.sty
+\beamer@splitbox=\box68
+\beamer@autobreakcount=\count313
+\beamer@autobreaklastheight=\dimen263
+\beamer@frametitletoks=\toks30
+\beamer@framesubtitletoks=\toks31
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaseframecomponents.s
+ty
+\beamer@footins=\box69
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasecolor.sty) (C:\
+Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasenotes.sty
+\beamer@frameboxcopy=\box70
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasetoc.sty) (C:\So
+ftware\Miktex\texmfs\install\tex/latex/beamer\beamerbasetemplates.sty
+\beamer@sbttoks=\toks32
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaseauxtemplates.sty 
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaseboxes.sty
+\bmb@box=\box71
+\bmb@colorbox=\box72
+\bmb@boxwidth=\dimen264
+\bmb@boxheight=\dimen265
+\bmb@prevheight=\dimen266
+\bmb@temp=\dimen267
+\bmb@dima=\dimen268
+\bmb@dimb=\dimen269
+\bmb@prevheight=\dimen270
+)
+\beamer@blockheadheight=\dimen271
+))
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbaselocalstructure.st
+y (C:\Software\Miktex\texmfs\install\tex/latex/tools\enumerate.sty
+Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
+\@enLab=\toks33
+)
+\beamer@bibiconwidth=\skip55
+\c@figure=\count314
+\c@table=\count315
+\abovecaptionskip=\skip56
+\belowcaptionskip=\skip57
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasenavigation.sty
+\beamer@section@min@dim=\dimen272
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasetheorems.sty (C
+:\Software\Miktex\texmfs\install\tex/latex/amsmath\amsmath.sty
+Package: amsmath 2021/10/15 v2.17l AMS math features
+\@mathmargin=\skip58
+For additional information on amsmath, use the `?' option.
+(C:\Software\Miktex\texmfs\install\tex/latex/amsmath\amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+(C:\Software\Miktex\texmfs\install\tex/latex/amsmath\amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks34
+\ex@=\dimen273
+)) (C:\Software\Miktex\texmfs\install\tex/latex/amsmath\amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen274
+) (C:\Software\Miktex\texmfs\install\tex/latex/amsmath\amsopn.sty
+Package: amsopn 2021/08/26 v2.02 operator names
+)
+\inf@bad=\count316
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count317
+\leftroot@=\count318
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count319
+\DOTSCASE@=\count320
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box73
+\strutbox@=\box74
+\big@size=\dimen275
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count321
+\c@MaxMatrixCols=\count322
+\dotsspace@=\muskip17
+\c@parentequation=\count323
+\dspbrk@lvl=\count324
+\tag@help=\toks35
+\row@=\count325
+\column@=\count326
+\maxfields@=\count327
+\andhelp@=\toks36
+\eqnshift@=\dimen276
+\alignsep@=\dimen277
+\tagshift@=\dimen278
+\tagwidth@=\dimen279
+\totwidth@=\dimen280
+\lineht@=\dimen281
+\@envbody=\toks37
+\multlinegap=\skip59
+\multlinetaggap=\skip60
+\mathdisplay@stack=\toks38
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
+) (C:\Software\Miktex\texmfs\install\tex/latex/amscls\amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks39
+\thm@bodyfont=\toks40
+\thm@headfont=\toks41
+\thm@notefont=\toks42
+\thm@headpunct=\toks43
+\thm@preskip=\skip61
+\thm@postskip=\skip62
+\thm@headsep=\skip63
+\dth@everypar=\toks44
+)
+\c@theorem=\count328
+) (C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerbasethemes.sty)) (C
+:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerthemedefault.sty (C:\So
+ftware\Miktex\texmfs\install\tex/latex/beamer\beamerfontthemedefault.sty)
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamercolorthemedefault.sty
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerinnerthemedefault.sty
+\beamer@dima=\dimen282
+\beamer@dimb=\dimen283
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/beamer\beamerouterthemedefault.sty
+))) (C:\Software\Miktex\texmfs\install\tex/latex/caption\caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+(C:\Software\Miktex\texmfs\install\tex/latex/caption\caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen284
+\captionmargin@=\dimen285
+\captionwidth=\dimen286
+\caption@tempdima=\dimen287
+\caption@indent=\dimen288
+\caption@parindent=\dimen289
+\caption@hangindent=\dimen290
+Package caption Info: beamer document class detected.
+(C:\Software\Miktex\texmfs\install\tex/latex/caption\caption-beamer.sto
+File: caption-beamer.sto 2020/08/22 v2.0 Adaption of the caption package to the
+ beamer document classes (AR)
+))
+\c@caption@flags=\count329
+\c@continuedfloat=\count330
+Package caption Info: hyperref package is loaded.
+Package caption Info: Hyperref support is turned off
+(caption)             because hyperref has stopped early.
+) (C:\Software\Miktex\texmfs\install\tex/latex/lm\lmodern.sty
+Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+) (C:\Software\Miktex\texmfs\install\tex/latex/mathtools\mathtools.sty
+Package: mathtools 2022/02/07 v1.28a mathematical typesetting tools
+(C:\Software\Miktex\texmfs\install\tex/latex/tools\calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count331
+\calc@Bcount=\count332
+\calc@Adimen=\dimen291
+\calc@Bdimen=\dimen292
+\calc@Askip=\skip64
+\calc@Bskip=\skip65
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count333
+\calc@Cskip=\skip66
+) (C:\Software\Miktex\texmfs\install\tex/latex/mathtools\mhsetup.sty
+Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
+)
+\g_MT_multlinerow_int=\count334
+\l_MT_multwidth_dim=\dimen293
+\origjot=\skip67
+\l_MT_shortvdotswithinadjustabove_dim=\dimen294
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen295
+\l_MT_above_intertext_sep=\dimen296
+\l_MT_below_intertext_sep=\dimen297
+\l_MT_above_shortintertext_sep=\dimen298
+\l_MT_below_shortintertext_sep=\dimen299
+\xmathstrut@box=\box75
+\xmathstrut@dim=\dimen300
+) (C:\Software\Miktex\texmfs\install\tex/latex/multirow\multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip68
+\multirow@cntb=\count335
+\multirow@dima=\skip69
+\bigstrutjot=\dimen301
+) (C:\Software\Miktex\texmfs\install\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count336
+\float@exts=\toks45
+\float@box=\box76
+\@float@everytoks=\toks46
+\@floatcapt=\box77
+) (C:\Software\Miktex\texmfs\install\tex/latex/tools\hhline.sty
+Package: hhline 2020/01/04 v2.04 Table rule package (DPC)
+) (C:\Software\Miktex\texmfs\install\tex/latex/pgf/frontendlayer\tikz.sty (C:\S
+oftware\Miktex\texmfs\install\tex/latex/pgf/basiclayer\pgf.sty
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/modules\pgfmoduleshapes.code
+.tex
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box78
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/modules\pgfmoduleplot.code.t
+ex
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/pgf/compatibility\pgfcomp-version-
+0-65.sty
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@nodesepstart=\dimen302
+\pgf@nodesepend=\dimen303
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/pgf/compatibility\pgfcomp-version-
+1-18.sty
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
+)) (C:\Software\Miktex\texmfs\install\tex/latex/pgf/utilities\pgffor.sty (C:\So
+ftware\Miktex\texmfs\install\tex/latex/pgf/utilities\pgfkeys.sty (C:\Software\M
+iktex\texmfs\install\tex/generic/pgf/utilities\pgfkeys.code.tex)) (C:\Software\
+Miktex\texmfs\install\tex/latex/pgf/math\pgfmath.sty (C:\Software\Miktex\texmfs
+\install\tex/generic/pgf/math\pgfmath.code.tex)) (C:\Software\Miktex\texmfs\ins
+tall\tex/generic/pgf/utilities\pgffor.code.tex
+Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/math\pgfmath.code.tex)
+\pgffor@iter=\dimen304
+\pgffor@skip=\dimen305
+\pgffor@stack=\toks47
+\pgffor@toks=\toks48
+))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz\tikz.code
+.tex
+Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/libraries\pgflibraryplothand
+lers.code.tex
+File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@plot@mark@count=\count337
+\pgfplotmarksize=\dimen306
+)
+\tikz@lastx=\dimen307
+\tikz@lasty=\dimen308
+\tikz@lastxsaved=\dimen309
+\tikz@lastysaved=\dimen310
+\tikz@lastmovetox=\dimen311
+\tikz@lastmovetoy=\dimen312
+\tikzleveldistance=\dimen313
+\tikzsiblingdistance=\dimen314
+\tikz@figbox=\box79
+\tikz@figbox@bg=\box80
+\tikz@tempbox=\box81
+\tikz@tempbox@bg=\box82
+\tikztreelevel=\count338
+\tikznumberofchildren=\count339
+\tikznumberofcurrentchild=\count340
+\tikz@fig@count=\count341
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/modules\pgfmodulematrix.code
+.tex
+File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfmatrixcurrentrow=\count342
+\pgfmatrixcurrentcolumn=\count343
+\pgf@matrix@numberofcolumns=\count344
+)
+\tikz@expandcount=\count345
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz/libraries
+\tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))) (C:\Software\Miktex\texmfs\install\tex/generic/iftex\ifxetex.sty
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+) (C:\Software\Miktex\texmfs\install\tex/generic/iftex\ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+) (C:\Software\Miktex\texmfs\install\tex/latex/base\fixltx2e.sty
+Package: fixltx2e 2016/12/29 v2.1a fixes to LaTeX (obsolete)
+Applying: [2015/01/01] Old fixltx2e package on input line 46.
+
+Package fixltx2e Warning: fixltx2e is not required with releases after 2015
+(fixltx2e)                All fixes are now in the LaTeX kernel.
+(fixltx2e)                See the latexrelease package for details.
+
+Already applied: [0000/00/00] Old fixltx2e package on input line 53.
+) (C:\Software\Miktex\texmfs\install\tex/latex/base\fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1
+12.
+(C:\Software\Miktex\texmfs\install\tex/latex/lm\t1lmss.fd
+File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)) (C:\Software\Miktex\texmfs\install\tex/latex/base\inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks49
+\inpenc@posthook=\toks50
+) (C:\Software\Miktex\texmfs\install\tex/latex/base\textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (beamerthemeTorinoTh.sty (C:\Software\Miktex\texmfs\install\tex/latex/psnfss\
+pifont.sty
+Package: pifont 2020/03/25 PSNFSS-v9.3 Pi font support (SPQR) 
+LaTeX Font Info:    Trying to load font information for U+pzd on input line 63.
+
+(C:\Software\Miktex\texmfs\install\tex/latex/psnfss\upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+)
+LaTeX Font Info:    Trying to load font information for U+psy on input line 64.
+
+(C:\Software\Miktex\texmfs\install\tex/latex/psnfss\upsy.fd
+File: upsy.fd 2001/06/04 font definitions for U/psy.
+)) (C:\Software\Miktex\texmfs\install\tex/generic/babel\babel.sty
+Package: babel 2022/01/26 3.70 The Babel package
+\babel@savecnt=\count346
+\U@D=\dimen315
+\l@unhyphenated=\language79
+(C:\Software\Miktex\texmfs\install\tex/generic/babel\txtbabel.def)
+\bbl@readstream=\read3
+LaTeX Info: Redefining \textlatin on input line 3967.
+\bbl@dirlevel=\count347
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Software\Miktex\texmfs\install\tex/latex/arabi\bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+) (C:\Software\Miktex\texmfs\install\tex/generic/babel-french\french.ldf
+Language: french 2021/07/20 v3.5m French support from the babel system
+Package babel Info: Hyphen rules for 'acadian' set to \l@french
+(babel)             (\language22). Reported on input line 91.
+Package babel Info: Hyphen rules for 'canadien' set to \l@french
+(babel)             (\language22). Reported on input line 92.
+\FB@nonchar=\count348
+Package babel Info: Making : an active character on input line 430.
+Package babel Info: Making ; an active character on input line 431.
+Package babel Info: Making ! an active character on input line 432.
+Package babel Info: Making ? an active character on input line 433.
+\FBguill@level=\count349
+\FBold@everypar=\toks51
+\FB@Mht=\dimen316
+\mc@charclass=\count350
+\mc@charfam=\count351
+\mc@charslot=\count352
+\std@mcc=\count353
+\dec@mcc=\count354
+\listindentFB=\dimen317
+\descindentFB=\dimen318
+\labelindentFB=\dimen319
+\labelwidthFB=\dimen320
+\leftmarginFB=\dimen321
+\parindentFFN=\dimen322
+\FBfnindent=\dimen323
+)) (C:\Software\Miktex\texmfs\install\tex/latex/carlisle\scalefnt.sty)
+Package french.ldf Info: No list customisation for the beamer class,
+(french.ldf)             reported on input line 86.
+(beamerinnerthemetorinoth.sty
+\beamer@torinoth@normalmargin=\skip70
+) (beamerouterthemetorinoth.sty
+\headerheight=\skip71
+\beamer@torinoth@line=\skip72
+\beamer@torinoth@box=\skip73
+) (beamercolorthemetorinoth.sty) (beamerfontthemetorinoth.sty)
+Package hyperref Info: Option `colorlinks' set `false' on input line 148.
+Package hyperref Info: Option `hyperindex' set `true' on input line 148.
+Package hyperref Info: Option `plainpages' set `false' on input line 148.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\<def>-command' on input line 148.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\inst' on input line 148.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\<def>-command' on input line 148.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\and' on input line 148.
+
+) (C:\Software\Miktex\texmfs\install\tex/latex/upquote\upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+) (C:\Software\Miktex\texmfs\install\tex/latex/microtype\microtype.sty
+Package: microtype 2021/12/10 v3.0b Micro-typographical refinements (RS)
+\MT@toks=\toks52
+\MT@count=\count355
+\MT@tempbox=\box83
+LaTeX Info: Redefining \leftprotrusion on input line 1010.
+LaTeX Info: Redefining \rightprotrusion on input line 1018.
+LaTeX Info: Redefining \textls on input line 1173.
+\MT@outer@kern=\dimen324
+LaTeX Info: Redefining \textmicrotypecontext on input line 1759.
+\MT@listname@count=\count356
+(C:\Software\Miktex\texmfs\install\tex/latex/microtype\microtype-pdftex.def
+File: microtype-pdftex.def 2021/12/10 v3.0b Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 897.
+LaTeX Info: Redefining \lslig on input line 897.
+\MT@outer@space=\skip74
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+(C:\Software\Miktex\texmfs\install\tex/latex/microtype\microtype.cfg
+File: microtype.cfg 2021/12/10 v3.0b microtype main configuration file (RS)
+)) (C:\Software\Miktex\texmfs\install\tex/latex/parskip\parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+)
+Package hyperref Info: Option `breaklinks' set `true' on input line 47.
+\cslhangindent=\skip75
+\csllabelwidth=\skip76
+(C:\Software\Miktex\texmfs\install\tex/latex/fancyvrb\fancyvrb.sty
+Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
+\FV@CodeLineNo=\count357
+\FV@InFile=\read4
+\FV@TabBox=\box84
+\c@FancyVerbLine=\count358
+\FV@StepNumber=\count359
+\FV@OutFile=\write5
+) (C:\Software\Miktex\texmfs\install\tex/latex/framed\framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip77
+\fb@frw=\dimen325
+\fb@frh=\dimen326
+\FrameRule=\dimen327
+\FrameSep=\dimen328
+) (C:\Software\Miktex\texmfs\install\tex/latex/doublestroke\dsfont.sty
+Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+) (C:\Software\Miktex\texmfs\install\tex/latex/stmaryrd\stmaryrd.sty
+Package: stmaryrd 1994/03/03 St Mary's Road symbol package
+\symstmry=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
+(Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
+) (C:\Software\Miktex\texmfs\install\tex/latex/ulem\ulem.sty
+\UL@box=\box85
+\UL@hyphenbox=\box86
+\UL@skip=\skip78
+\UL@hook=\toks53
+\UL@height=\dimen329
+\UL@pe=\count360
+\UL@pixel=\dimen330
+\ULC@box=\box87
+Package: ulem 2019/11/18
+\ULdepth=\dimen331
+) (C:\Software\Miktex\texmfs\install\tex/latex/fontawesome5\fontawesome5.sty (C
+:\Software\Miktex\texmfs\install\tex/latex/l3kernel\expl3.sty
+Package: expl3 2022-02-05 L3 programming layer (loader) 
+(C:\Software\Miktex\texmfs\install\tex/latex/l3backend\l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count361
+\l__pdf_internal_box=\box88
+))
+Package: fontawesome5 2020/03/24 v5.13.0 Font Awesome 5
+(C:\Software\Miktex\texmfs\install\tex/latex/l3packages/l3keys2e\l3keys2e.sty
+Package: l3keys2e 2022-01-12 LaTeX2e option processing using LaTeX3 keys
+) (C:\Software\Miktex\texmfs\install\tex/latex/l3packages/xparse\xparse.sty
+Package: xparse 2022-01-12 L3 Experimental document command parser
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/fontawesome5\fontawesome5-generic-
+helper.sty
+Package: fontawesome5-generic-helper 2020/03/24 v5.13.0 non-uTeX helper for fon
+tawesome5
+
+(C:\Software\Miktex\texmfs\install\tex/latex/fontawesome5\fontawesome5-mapping.
+def))) (C:\Software\Miktex\texmfs\install\tex/latex/pgfplots\pgfplots.sty (C:\S
+oftware\Miktex\texmfs\install\tex/generic/pgfplots\pgfplots.revision.tex)
+Package: pgfplots 2021/05/15 v1.18.1 Data Visualization (1.18.1)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplots.code.tex (C:\S
+oftware\Miktex\texmfs\install\tex/generic/pgfplots\pgfplotscore.code.tex
+\t@pgfplots@toka=\toks54
+\t@pgfplots@tokb=\toks55
+\t@pgfplots@tokc=\toks56
+\pgfplots@tmpa=\dimen332
+\c@pgfplots@coordindex=\count362
+\c@pgfplots@scanlineindex=\count363
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/sys\pgfplotssysgeneric.
+code.tex))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/libs\pgfplotslibrary.co
+de.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/oldpgfcompatib\pgfplots
+oldpgfsupp_loader.code.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/libraries\pgflibraryfpu.code
+.tex))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/util\pgfplotsutil.code.
+tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/liststructure\pgfplotsl
+iststructure.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/liststructure\pgfplotsl
+iststructureext.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/liststructure\pgfplotsa
+rray.code.tex
+\c@pgfplotsarray@tmp=\count364
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/liststructure\pgfplotsm
+atrix.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/numtable\pgfplotstables
+hared.code.tex
+\c@pgfplotstable@counta=\count365
+\t@pgfplotstable@a=\toks57
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/liststructure\pgfplotsd
+eque.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/util\pgfplotsbinary.cod
+e.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/util\pgfplotsbinary.dat
+a.code.tex))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/util\pgfplotsutil.verb.
+code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/libs\pgflibrarypgfplots
+.surfshading.code.tex
+\c@pgfplotslibrarysurf@no=\count366
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/sys\pgflibrarypgfplots.
+surfshading.pgfsys-pdftex.def)))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/util\pgfplotscolormap.c
+ode.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/util\pgfplotscolor.code
+.tex))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplotsstackedplots.co
+de.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplotsplothandlers.co
+de.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplotsmeshplothandler
+.code.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplotsmeshplotimage.c
+ode.tex)))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplots.scaling.code.t
+ex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplotscoordprocessing
+.code.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplots.errorbars.code
+.tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplots.markers.code.t
+ex) (C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplotsticks.code.
+tex)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots\pgfplots.paths.code.tex
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz/libraries
+\tikzlibrarydecorations.code.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/modules\pgfmoduledecorations
+.code.tex
+\pgfdecoratedcompleteddistance=\dimen333
+\pgfdecoratedremainingdistance=\dimen334
+\pgfdecoratedinputsegmentcompleteddistance=\dimen335
+\pgfdecoratedinputsegmentremainingdistance=\dimen336
+\pgf@decorate@distancetomove=\dimen337
+\pgf@decorate@repeatstate=\count367
+\pgfdecorationsegmentamplitude=\dimen338
+\pgfdecorationsegmentlength=\dimen339
+)
+\tikz@lib@dec@box=\box89
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz/libraries
+\tikzlibrarydecorations.pathmorphing.code.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/libraries/decorations\pgflib
+rarydecorations.pathmorphing.code.tex))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz/libraries
+\tikzlibrarydecorations.pathreplacing.code.tex
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/libraries/decorations\pgflib
+rarydecorations.pathreplacing.code.tex))
+(C:\Software\Miktex\texmfs\install\tex/generic/pgfplots/libs\tikzlibrarypgfplot
+s.contourlua.code.tex)
+\pgfplots@numplots=\count368
+\pgfplots@xmin@reg=\dimen340
+\pgfplots@xmax@reg=\dimen341
+\pgfplots@ymin@reg=\dimen342
+\pgfplots@ymax@reg=\dimen343
+\pgfplots@zmin@reg=\dimen344
+\pgfplots@zmax@reg=\dimen345
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz/libraries
+\tikzlibraryplotmarks.code.tex
+File: tikzlibraryplotmarks.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/libraries\pgflibraryplotmark
+s.code.tex
+File: pgflibraryplotmarks.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))) (C:\Software\Miktex\texmfs\install\tex/latex/animate\animate.sty
+Package: animate 2022/02/04 PDF & SVG animations from files and inline graphics
+
+(C:\Software\Miktex\texmfs\install\tex/latex/xkeyval\xkeyval.sty
+Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+(C:\Software\Miktex\texmfs\install\tex/generic/xkeyval\xkeyval.tex (C:\Software
+\Miktex\texmfs\install\tex/generic/xkeyval\xkvutils.tex
+\XKV@toks=\toks58
+\XKV@tempa@toks=\toks59
+)
+\XKV@depth=\count369
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+)) (C:\Software\Miktex\texmfs\install\tex/latex/base\ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+) (C:\Software\Miktex\texmfs\install\tex/latex/oberdiek\ifdraft.sty
+Package: ifdraft 2016/05/16 v1.4 Detect class options draft and final (HO)
+) (C:\Software\Miktex\texmfs\install\tex/latex/zref\zref-abspage.sty
+Package: zref-abspage 2020-07-03 v2.32 Module abspage for zref (HO)
+(C:\Software\Miktex\texmfs\install\tex/latex/zref\zref-base.sty
+Package: zref-base 2020-07-03 v2.32 Module base for zref (HO)
+Package zref Info: New property list: main on input line 764.
+Package zref Info: New property: default on input line 765.
+Package zref Info: New property: page on input line 766.
+)
+\c@abspage=\count370
+Package zref Info: New property: abspage on input line 66.
+) (C:\Software\Miktex\texmfs\install\tex/latex/media9\pdfbase.sty
+Package: pdfbase 2021/09/12 v0.53 driver independent access to low-level PDF fe
+atures
+\g_pbs_page_int=\count371
+\g_pbs_oc_int=\count372
+) (C:\Software\Miktex\texmfs\install\tex/latex/ocgx2\ocgbase.sty
+Package: ocgbase 2021/06/11 v0.20 support package for ocgx2.sty
+\g_ocgbase_nd_int=\count373
+)
+\@anim@box=\box90
+\@anim@measbox=\box91
+\@anim@tmpdima=\dimen346
+\@anim@tmpdimb=\dimen347
+\@anim@num=\count374
+\@anim@curframe=\count375
+\@anim@curframe@zb=\count376
+\@anim@resizeflags=\count377
+\@anim@skipfram=\count378
+\@anim@mulframecnt=\count379
+\@anim@@tmlnfile=\read5
+\@anim@tmpcnt=\count380
+\c@@anim@ltxcnt=\count381
+\@anim@curlayer=\count382
+\@anim@lineno=\count383
+\@anim@curfield=\count384
+\@anim@@resizeflags=\count385
+) (C:\Software\Miktex\texmfs\install\tex/latex/booktabs\booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen348
+\lightrulewidth=\dimen349
+\cmidrulewidth=\dimen350
+\belowrulesep=\dimen351
+\belowbottomsep=\dimen352
+\aboverulesep=\dimen353
+\abovetopsep=\dimen354
+\cmidrulesep=\dimen355
+\cmidrulekern=\dimen356
+\defaultaddspace=\dimen357
+\@cmidla=\count386
+\@cmidlb=\count387
+\@aboverulesep=\dimen358
+\@belowrulesep=\dimen359
+\@thisruleclass=\count388
+\@lastruleclass=\count389
+\@thisrulewidth=\dimen360
+) (C:\Software\Miktex\texmfs\install\tex/latex/colortbl\colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+(C:\Software\Miktex\texmfs\install\tex/latex/tools\array.sty
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen361
+\ar@mcellbox=\box92
+\extrarowheight=\dimen362
+\NC@list=\toks60
+\extratabsurround=\skip79
+\backup@length=\skip80
+\ar@cellbox=\box93
+)
+\everycr=\toks61
+\minrowclearance=\skip81
+) (C:\Software\Miktex\texmfs\install\tex/latex/environ\environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(C:\Software\Miktex\texmfs\install\tex/latex/trimspaces\trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)) (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bclogo.sty
+Package: bclogo 2016/01/10 v3.1
+\bc@invboxh=\skip82
+\bc@invboxd=\skip83
+\bc@titleLength=\skip84
+\logowidth=\skip85
+(C:\Software\Miktex\texmfs\install\tex/latex/mdframed\mdframed.sty
+Package: mdframed 2013/07/01 1.9b: mdframed
+(C:\Software\Miktex\texmfs\install\tex/latex/needspace\needspace.sty
+Package: needspace 2010/09/12 v1.3d reserve vertical space
+)
+\mdf@templength=\skip86
+\c@mdf@globalstyle@cnt=\count390
+\mdf@skipabove@length=\skip87
+\mdf@skipbelow@length=\skip88
+\mdf@leftmargin@length=\skip89
+\mdf@rightmargin@length=\skip90
+\mdf@innerleftmargin@length=\skip91
+\mdf@innerrightmargin@length=\skip92
+\mdf@innertopmargin@length=\skip93
+\mdf@innerbottommargin@length=\skip94
+\mdf@splittopskip@length=\skip95
+\mdf@splitbottomskip@length=\skip96
+\mdf@outermargin@length=\skip97
+\mdf@innermargin@length=\skip98
+\mdf@linewidth@length=\skip99
+\mdf@innerlinewidth@length=\skip100
+\mdf@middlelinewidth@length=\skip101
+\mdf@outerlinewidth@length=\skip102
+\mdf@roundcorner@length=\skip103
+\mdf@footenotedistance@length=\skip104
+\mdf@userdefinedwidth@length=\skip105
+\mdf@needspace@length=\skip106
+\mdf@frametitleaboveskip@length=\skip107
+\mdf@frametitlebelowskip@length=\skip108
+\mdf@frametitlerulewidth@length=\skip109
+\mdf@frametitleleftmargin@length=\skip110
+\mdf@frametitlerightmargin@length=\skip111
+\mdf@shadowsize@length=\skip112
+\mdf@extratopheight@length=\skip113
+\mdf@subtitleabovelinewidth@length=\skip114
+\mdf@subtitlebelowlinewidth@length=\skip115
+\mdf@subtitleaboveskip@length=\skip116
+\mdf@subtitlebelowskip@length=\skip117
+\mdf@subtitleinneraboveskip@length=\skip118
+\mdf@subtitleinnerbelowskip@length=\skip119
+\mdf@subsubtitleabovelinewidth@length=\skip120
+\mdf@subsubtitlebelowlinewidth@length=\skip121
+\mdf@subsubtitleaboveskip@length=\skip122
+\mdf@subsubtitlebelowskip@length=\skip123
+\mdf@subsubtitleinneraboveskip@length=\skip124
+\mdf@subsubtitleinnerbelowskip@length=\skip125
+(C:\Software\Miktex\texmfs\install\tex/latex/mdframed\md-frame-1.mdf
+File: md-frame-1.mdf 2013/07/01\ 1.9b: md-frame-1
+)
+\mdf@frametitlebox=\box94
+\mdf@footnotebox=\box95
+\mdf@splitbox@one=\box96
+\mdf@splitbox@two=\box97
+\mdf@splitbox@save=\box98
+\mdfsplitboxwidth=\skip126
+\mdfsplitboxtotalwidth=\skip127
+\mdfsplitboxheight=\skip128
+\mdfsplitboxdepth=\skip129
+\mdfsplitboxtotalheight=\skip130
+\mdfframetitleboxwidth=\skip131
+\mdfframetitleboxtotalwidth=\skip132
+\mdfframetitleboxheight=\skip133
+\mdfframetitleboxdepth=\skip134
+\mdfframetitleboxtotalheight=\skip135
+\mdffootnoteboxwidth=\skip136
+\mdffootnoteboxtotalwidth=\skip137
+\mdffootnoteboxheight=\skip138
+\mdffootnoteboxdepth=\skip139
+\mdffootnoteboxtotalheight=\skip140
+\mdftotallinewidth=\skip141
+\mdfboundingboxwidth=\skip142
+\mdfboundingboxtotalwidth=\skip143
+\mdfboundingboxheight=\skip144
+\mdfboundingboxdepth=\skip145
+\mdfboundingboxtotalheight=\skip146
+\mdf@freevspace@length=\skip147
+\mdf@horizontalwidthofbox@length=\skip148
+\mdf@verticalmarginwhole@length=\skip149
+\mdf@horizontalspaceofbox=\skip150
+\mdfsubtitleheight=\skip151
+\mdfsubsubtitleheight=\skip152
+\c@mdfcountframes=\count391
+
+****** mdframed patching \endmdf@trivlist
+
+****** -- failed******
+
+\mdf@envdepth=\count392
+\c@mdf@env@i=\count393
+\c@mdf@env@ii=\count394
+\c@mdf@zref@counter=\count395
+Package zref Info: New property: mdf@pagevalue on input line 895.
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz/libraries
+\tikzlibraryshadows.code.tex
+File: tikzlibraryshadows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/frontendlayer/tikz/libraries
+\tikzlibraryfadings.code.tex
+File: tikzlibraryfadings.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+
+(C:\Software\Miktex\texmfs\install\tex/generic/pgf/libraries\pgflibraryfadings.
+code.tex
+File: pgflibraryfadings.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)))
+\c@bclogocompteur=\count396
+\bcval@epBarre=\skip153
+\bcval@framesep=\skip154
+\bcval@tailleOndu=\skip155
+\bcval@borderWidth=\skip156
+\bcval@margeG=\skip157
+\bcval@margeD=\skip158
+\bc@envbox=\box99
+) (Slides_AQLT.aux)
+\openout1 = `Slides_AQLT.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 224.
+LaTeX Font Info:    ... okay on input line 224.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: includehead includefoot 
+* h-part:(L,W,R)=(23.67358pt, 316.84819pt, 23.67358pt)
+* v-part:(T,H,B)=(0.0pt, 273.14662pt, 0.0pt)
+* \paperwidth=364.19536pt
+* \paperheight=273.14662pt
+* \textwidth=316.84819pt
+* \textheight=244.6939pt
+* \oddsidemargin=-48.5964pt
+* \evensidemargin=-48.5964pt
+* \topmargin=-72.26999pt
+* \headheight=14.22636pt
+* \headsep=0.0pt
+* \topskip=10.0pt
+* \footskip=14.22636pt
+* \marginparwidth=3.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(C:\Software\Miktex\texmfs\install\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count397
+\scratchdimen=\dimen363
+\scratchbox=\box100
+\nofMPsegments=\count398
+\nofMParguments=\count399
+\everyMPshowfont=\toks62
+\MPscratchCnt=\count400
+\MPscratchDim=\dimen364
+\MPnumerator=\count401
+\makeMPintoPDFobject=\count402
+\everyMPtoPDFconversion=\toks63
+) (C:\Software\Miktex\texmfs\install\tex/latex/epstopdf-pkg\epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+(C:\Software\Miktex\texmfs\install\tex/latex/00miktex\epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+Package hyperref Info: Link coloring OFF on input line 224.
+(C:\Software\Miktex\texmfs\install\tex/latex/hyperref\nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+(C:\Software\Miktex\texmfs\install\tex/latex/refcount\refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(C:\Software\Miktex\texmfs\install\tex/generic/gettitlestring\gettitlestring.st
+y
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count403
+)
+LaTeX Info: Redefining \ref on input line 224.
+LaTeX Info: Redefining \pageref on input line 224.
+LaTeX Info: Redefining \nameref on input line 224.
+(Slides_AQLT.out) (Slides_AQLT.out)
+\@outlinefile=\write6
+\openout6 = `Slides_AQLT.out'.
+
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 224.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 224.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 224.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 224.
+\symnumbers=\mathgroup7
+\sympureletters=\mathgroup8
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 224.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 224.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 224.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 224.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 224.
+LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 224.
+LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
+(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 224.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 224.
+
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-basic-dictio
+nary-English.dict
+Dictionary: translator-basic-dictionary, Language: English 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-basic-dictio
+nary-French.dict
+Dictionary: translator-basic-dictionary, Language: French 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-bibliography
+-dictionary-English.dict
+Dictionary: translator-bibliography-dictionary, Language: English 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-bibliography
+-dictionary-French.dict
+Dictionary: translator-bibliography-dictionary, Language: French 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-environment-
+dictionary-English.dict
+Dictionary: translator-environment-dictionary, Language: English 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-environment-
+dictionary-French.dict
+Dictionary: translator-environment-dictionary, Language: French 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-months-dicti
+onary-English.dict
+Dictionary: translator-months-dictionary, Language: English 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-months-dicti
+onary-French.dict
+Dictionary: translator-month-dictionary, Language: French 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-numbers-dict
+ionary-English.dict
+Dictionary: translator-numbers-dictionary, Language: English 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-numbers-dict
+ionary-French.dict
+Dictionary: translator-numbers-dictionary, Language: French 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-theorem-dict
+ionary-English.dict
+Dictionary: translator-theorem-dictionary, Language: English 
+)
+(C:\Software\Miktex\texmfs\install\tex/latex/translator\translator-theorem-dict
+ionary-French.dict
+Dictionary: translator-theorem-dictionary, Language: French 
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: french babel package is loaded.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Info: Redefining \degres on input line 224.
+LaTeX Info: Redefining \up on input line 224.
+(C:\Software\Miktex\texmfs\install\tex/latex/tools\hhline.sty
+Package: hhline 2020/01/04 v2.04 Table rule package (DPC)
+)
+LaTeX Info: Redefining \microtypecontext on input line 224.
+Package microtype Info: Applying patch `item' on input line 224.
+Package microtype Info: Applying patch `toc' on input line 224.
+Package microtype Info: Applying patch `eqnum' on input line 224.
+
+Package microtype Warning: Unable to apply patch `footnote' on input line 224.
+
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using protrusion set `basicmath'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+LaTeX Info: Redefining \showhyphens on input line 224.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmss' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+Package pgfplots notification 'compat/show suggested version=true': you might b
+enefit from \pgfplotsset{compat=1.18} (current compat level: 1.17).
+
+(Slides_AQLT.nav)
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 22
+7.
+(C:\Software\Miktex\texmfs\install\tex/latex/lm\t1lmr.fd
+File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+
+LaTeX Font Warning: Font shape `T1/lmss/m/sc' in size <12> not available
+(Font)              Font shape `T1/lmr/m/sc' tried instead on input line 227.
+
+(C:\Software\Miktex\texmfs\install\tex/latex/microtype\mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+)
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/lmr/m/sc/12'.
+(microtype)             Ignoring protrusion settings for this character.
+<img/logobeamer.png, id=104, 1559.8275pt x 286.06876pt>
+File: img/logobeamer.png Graphic file (type png)
+<use img/logobeamer.png>
+Package pdftex.def Info: img/logobeamer.png  used on input line 227.
+(pdftex.def)             Requested size: 297.86977pt x 54.62848pt.
+
+LaTeX Font Warning: Font shape `T1/lmss/m/sc' in size <10> not available
+(Font)              Font shape `T1/lmr/m/sc' tried instead on input line 227.
+
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/lmr/m/sc/10'.
+(microtype)             Ignoring protrusion settings for this character.
+[1
+
+{C:/Software/Miktex/texmfs/data/fonts/map/pdftex/pdftex.map} <./img/logobeamer.
+png>]
+LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
+262.
+(C:\Software\Miktex\texmfs\install\tex/latex/lm\ot1lmss.fd
+File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmss' (encoding: OT1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
+62.
+(C:\Software\Miktex\texmfs\install\tex/latex/lm\omllmm.fd
+File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+262.
+(C:\Software\Miktex\texmfs\install\tex/latex/lm\omslmsy.fd
+File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+262.
+(C:\Software\Miktex\texmfs\install\tex/latex/lm\omxlmex.fd
+File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 262.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 262.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 262.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 262
+.
+(C:\Software\Miktex\texmfs\install\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+) (C:\Software\Miktex\texmfs\install\tex/latex/microtype\mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 262
+.
+(C:\Software\Miktex\texmfs\install\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) (C:\Software\Miktex\texmfs\install\tex/latex/microtype\mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+stmry on input line 2
+62.
+(C:\Software\Miktex\texmfs\install\tex/latex/stmaryrd\ustmry.fd)
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 262.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 262.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 262.
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[2
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.262 \end{frame}
+                 
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[3
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.262 \end{frame}
+                 
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[4
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.262 \end{frame}
+                 
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[5
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.262 \end{frame}
+                 
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[6
+
+]
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 305.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 305.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 305.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 305.
+
+Overfull \vbox (2.57181pt too high) detected at line 305
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[7
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.305 \end{frame}
+                 
+Overfull \vbox (2.57181pt too high) detected at line 305
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[8
+
+]
+\openout4 = `Slides_AQLT.vrb'.
+
+(Slides_AQLT.vrb
+LaTeX Font Info:    Trying to load font information for U+fontawesomefree0 on i
+nput line 3.
+(C:\Software\Miktex\texmfs\install\tex/latex/fontawesome5\ufontawesomefree0.fd)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 26.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 26.
+LaTeX Font Info:    Trying to load font information for U+fontawesomebrands1 on
+ input line 55.
+
+(C:\Software\Miktex\texmfs\install\tex/latex/fontawesome5\ufontawesomebrands1.f
+d)
+LaTeX Font Info:    Font shape `U/fontawesomebrands1/solid/n' in size <10> not 
+available
+(Font)              Font shape `U/fontawesomebrands1/regular/n' tried instead o
+n input line 55.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
+5.
+(C:\Software\Miktex\texmfs\install\tex/latex/lm\t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+))
+Overfull \vbox (20.19878pt too high) detected at line 363
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[9
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 \protect\hypertarget{introduction-3}{}
+                                          )
+Overfull \vbox (20.19878pt too high) detected at line 363
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[10
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 \protect\hypertarget{introduction-3}{}
+                                          )
+Overfull \vbox (20.19878pt too high) detected at line 363
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[11
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 \protect\hypertarget{introduction-3}{}
+                                          )
+Overfull \vbox (20.19878pt too high) detected at line 363
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[12
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 \protect\hypertarget{introduction-3}{}
+                                          )
+Overfull \vbox (20.19878pt too high) detected at line 363
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[13
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{introduction-
+3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 \protect\hypertarget{introduction-3}{}
+                                          )
+Overfull \vbox (20.19878pt too high) detected at line 363
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[14
+
+] (Slides_AQLT.toc)
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[15
+
+]
+\openout4 = `Slides_AQLT.vrb'.
+
+(Slides_AQLT.vrb
+<img/h13-1.pdf, id=381, 722.7pt x 505.89pt>
+File: img/h13-1.pdf Graphic file (type pdf)
+<use img/h13-1.pdf>
+Package pdftex.def Info: img/h13-1.pdf  used on input line 16.
+(pdftex.def)             Requested size: 156.0722pt x 109.25697pt.
+)
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[16
+
+ <./img/h13-1.pdf>]
+Overfull \hbox (11.9531pt too wide) detected at line 430
+[] \OT1/lmss/m/n/10 = [] = \T1/lmss/m/sl/10 w[]y \OT1/lmss/m/n/10 = [] \T1/lmss
+/m/sl/10 w[]y[][]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[17
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{polynuxf4mes-
+locaux-rjdfilterslp_filter}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.430 \end{frame}
+                 
+Overfull \hbox (11.9531pt too wide) detected at line 430
+[] \OT1/lmss/m/n/10 = [] = \T1/lmss/m/sl/10 w[]y \OT1/lmss/m/n/10 = [] \T1/lmss
+/m/sl/10 w[]y[][]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[18
+
+]
+\openout4 = `Slides_AQLT.vrb'.
+
+(Slides_AQLT.vrb
+File: bc-smiley-bonnehumeur.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-bonne
+humeur.mps)
+File: bc-smiley-mauvaisehumeur.mps Graphic file (type mps)
+[MP to PDF]
+(C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-mauvaisehumeur.mp
+s))
+Overfull \vbox (19.36708pt too high) detected at line 481
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[19
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{filtres-asymu
+xe9triques-rjdfilterslp_filter}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 ...tres-asymuxe9triques-rjdfilterslp_filter}{}
+                                                  
+File: bc-smiley-bonnehumeur.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-bonne
+humeur.mps)
+File: bc-smiley-mauvaisehumeur.mps Graphic file (type mps)
+[MP to PDF]
+(C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-mauvaisehumeur.mp
+s))
+Overfull \vbox (19.36708pt too high) detected at line 481
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[20
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{filtres-asymu
+xe9triques-rjdfilterslp_filter}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 ...tres-asymuxe9triques-rjdfilterslp_filter}{}
+                                                  
+File: bc-smiley-bonnehumeur.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-bonne
+humeur.mps)
+File: bc-smiley-mauvaisehumeur.mps Graphic file (type mps)
+[MP to PDF]
+(C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-mauvaisehumeur.mp
+s))
+Overfull \vbox (19.36708pt too high) detected at line 481
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[21
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{filtres-asymu
+xe9triques-rjdfilterslp_filter}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 ...tres-asymuxe9triques-rjdfilterslp_filter}{}
+                                                  
+File: bc-smiley-bonnehumeur.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-bonne
+humeur.mps)
+File: bc-smiley-mauvaisehumeur.mps Graphic file (type mps)
+[MP to PDF]
+(C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-mauvaisehumeur.mp
+s))
+Overfull \vbox (19.36708pt too high) detected at line 481
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[22
+
+]
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[23
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{filtres-rkhs-
+rjdfiltersrkhs_filter}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.516 \end{frame}
+                 
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[24
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{filtres-rkhs-
+rjdfiltersrkhs_filter}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.516 \end{frame}
+                 
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[25
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{filtres-rkhs-
+rjdfiltersrkhs_filter}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.516 \end{frame}
+                 
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[26
+
+]
+\openout4 = `Slides_AQLT.vrb'.
+
+(Slides_AQLT.vrb
+File: bc-smiley-mauvaisehumeur.mps Graphic file (type mps)
+[MP to PDF]
+(C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-mauvaisehumeur.mp
+s)
+<img/rkhstimeliness-1.pdf, id=585, 722.7pt x 505.89pt>
+File: img/rkhstimeliness-1.pdf Graphic file (type pdf)
+<use img/rkhstimeliness-1.pdf>
+Package pdftex.def Info: img/rkhstimeliness-1.pdf  used on input line 20.
+(pdftex.def)             Requested size: 156.0722pt x 109.25697pt.
+File: bc-smiley-bonnehumeur.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-smiley-bonne
+humeur.mps))
+Overfull \vbox (16.80087pt too high) detected at line 557
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[27
+
+ <./img/rkhstimeliness-1.pdf>] (Slides_AQLT.toc)
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[28
+
+]
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[29
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{muxe9thodolog
+ie-1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.628 \end{frame}
+                 
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[30
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{muxe9thodolog
+ie-1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.628 \end{frame}
+                 
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[31
+
+]
+<img/simulations/phase_shift_simul.pdf, id=690, 578.16pt x 361.35pt>
+File: img/simulations/phase_shift_simul.pdf Graphic file (type pdf)
+<use img/simulations/phase_shift_simul.pdf>
+Package pdftex.def Info: img/simulations/phase_shift_simul.pdf  used on input l
+ine 637.
+(pdftex.def)             Requested size: 316.84819pt x 198.02632pt.
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[32
+
+ <./img/simulations/phase_shift_simul.pdf>]
+Overfull \vbox (3.06522pt too high) detected at line 672
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[33
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{muxe9diane-de
+s-ruxe9visions-suxe9ries-simuluxe9es}) has been already used, duplicate ignored
+
+<to be read again> 
+                   \relax 
+l.672 \end{frame}
+                 
+Overfull \vbox (3.06522pt too high) detected at line 672
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[34
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{muxe9diane-de
+s-ruxe9visions-suxe9ries-simuluxe9es}) has been already used, duplicate ignored
+
+<to be read again> 
+                   \relax 
+l.672 \end{frame}
+                 
+Overfull \vbox (3.06522pt too high) detected at line 672
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[35
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{muxe9diane-de
+s-ruxe9visions-suxe9ries-simuluxe9es}) has been already used, duplicate ignored
+
+<to be read again> 
+                   \relax 
+l.672 \end{frame}
+                 
+Overfull \vbox (3.06522pt too high) detected at line 672
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[36
+
+]
+<img/nber/retailx_lp.pdf, id=783, 505.89pt x 361.35pt>
+File: img/nber/retailx_lp.pdf Graphic file (type pdf)
+<use img/nber/retailx_lp.pdf>
+Package pdftex.def Info: img/nber/retailx_lp.pdf  used on input line 681.
+(pdftex.def)             Requested size: 316.84819pt x 226.32289pt.
+
+Overfull \vbox (15.29944pt too high) detected at line 681
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[37
+
+ <./img/nber/retailx_lp.pdf>]
+<img/nber/retailx_rkhs_arima.pdf, id=809, 505.89pt x 361.35pt>
+File: img/nber/retailx_rkhs_arima.pdf Graphic file (type pdf)
+<use img/nber/retailx_rkhs_arima.pdf>
+Package pdftex.def Info: img/nber/retailx_rkhs_arima.pdf  used on input line 68
+6.
+(pdftex.def)             Requested size: 316.84819pt x 226.32289pt.
+
+Overfull \vbox (15.29944pt too high) detected at line 686
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[38
+
+ <./img/nber/retailx_rkhs_arima.pdf>]
+\openout4 = `Slides_AQLT.vrb'.
+
+(Slides_AQLT.vrb
+Overfull \hbox (15.82085pt too wide) detected at line 8
+\OMS/lmsy/m/n/10 8\T1/lmss/m/sl/10 q\OML/lmm/m/it/10 ; [] \OT1/lmss/m/n/10 = []
+ []\OMS/lmsy/m/n/10 8\T1/lmss/m/sl/10 i \OML/lmm/m/it/10 > \T1/lmss/m/sl/10 q\O
+ML/lmm/m/it/10 ; \T1/lmss/m/sl/10 w[] \OT1/lmss/m/n/10 = \T1/lmss/m/n/10 0
+ []
+
+)
+Overfull \vbox (13.21683pt too high) detected at line 717
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[39
+
+]
+<img/nber/retailx_lp_implicit_forecast.pdf, id=853, 505.89pt x 361.35pt>
+File: img/nber/retailx_lp_implicit_forecast.pdf Graphic file (type pdf)
+<use img/nber/retailx_lp_implicit_forecast.pdf>
+Package pdftex.def Info: img/nber/retailx_lp_implicit_forecast.pdf  used on inp
+ut line 722.
+(pdftex.def)             Requested size: 316.84819pt x 226.32289pt.
+
+Overfull \vbox (15.29944pt too high) detected at line 722
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[40
+
+ <./img/nber/retailx_lp_implicit_forecast.pdf>]
+<img/nber/retailx_rkhs_arima_implicit_forecast.pdf, id=879, 505.89pt x 361.35pt
+>
+File: img/nber/retailx_rkhs_arima_implicit_forecast.pdf Graphic file (type pdf)
+
+<use img/nber/retailx_rkhs_arima_implicit_forecast.pdf>
+Package pdftex.def Info: img/nber/retailx_rkhs_arima_implicit_forecast.pdf  use
+d on input line 727.
+(pdftex.def)             Requested size: 316.84819pt x 226.32289pt.
+
+Overfull \vbox (15.29944pt too high) detected at line 727
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[41
+
+ <./img/nber/retailx_rkhs_arima_implicit_forecast.pdf>]
+\openout4 = `Slides_AQLT.vrb'.
+
+(Slides_AQLT.vrb)
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[42
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{conclusion-2}
+) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 \protect\hypertarget{conclusion-2}{}
+                                        )
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[43
+
+] (Slides_AQLT.vrb
+pdfTeX warning (ext4): destination with the same identifier (name{conclusion-2}
+) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.2 \protect\hypertarget{conclusion-2}{}
+                                        )
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[44
+
+]
+File: bc-inter.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-inter.mps)
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[45
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{what-next}) h
+as been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.802 \end{frame}
+                 
+File: bc-inter.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-inter.mps)
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[46
+
+]
+pdfTeX warning (ext4): destination with the same identifier (name{what-next}) h
+as been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.802 \end{frame}
+                 
+File: bc-inter.mps Graphic file (type mps)
+[MP to PDF] (C:\Software\Miktex\texmfs\install\tex/latex/bclogo\bc-inter.mps)
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[47
+
+]
+LaTeX Font Info:    Trying to load font information for U+fontawesomebrands0 on
+ input line 814.
+
+(C:\Software\Miktex\texmfs\install\tex/latex/fontawesome5\ufontawesomebrands0.f
+d)
+LaTeX Font Info:    Font shape `U/fontawesomebrands0/solid/n' in size <10> not 
+available
+(Font)              Font shape `U/fontawesomebrands0/regular/n' tried instead o
+n input line 814.
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[][]
+ []
+
+[48
+
+]
+\tf@nav=\write7
+\openout7 = `Slides_AQLT.nav'.
+
+\tf@toc=\write8
+\openout8 = `Slides_AQLT.toc'.
+
+\tf@snm=\write9
+\openout9 = `Slides_AQLT.snm'.
+
+(Slides_AQLT.aux)
+Package rerunfilecheck Info: File `Slides_AQLT.out' has not changed.
+(rerunfilecheck)             Checksum: D1E47ABBBD8298740B85E32F4834C09F;2013.
+ ) 
+Here is how much of TeX's memory you used:
+ 49351 strings out of 478584
+ 1130998 string characters out of 2849575
+ 1652002 words of memory out of 3000000
+ 66229 multiletter control sequences out of 15000+600000
+ 563194 words of font info for 168 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 128i,18n,122p,2160b,2215s stack positions out of 5000i,500n,10000p,200000b,80000s
+{C:/Software/Miktex/texmfs/install/fonts/enc/dvips/fontawesome5/fa5brands0.en
+c}{C:/Software/Miktex/texmfs/install/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Softw
+are/Miktex/texmfs/install/fonts/enc/dvips/lm/lm-ec.enc}{C:/Software/Miktex/texm
+fs/install/fonts/enc/dvips/fontawesome5/fa5brands1.enc}{C:/Software/Miktex/texm
+fs/install/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Software/Miktex/texmfs/install/
+fonts/enc/dvips/fontawesome5/fa5free0.enc}{C:/Software/Miktex/texmfs/install/fo
+nts/enc/dvips/lm/lm-rm.enc}{C:/Software/Miktex/texmfs/install/fonts/enc/dvips/l
+m/lm-mathex.enc}<C:/Software/Miktex/texmfs/install/fonts/type1/public/fontaweso
+me5/FontAwesome5Brands-Regular.pfb><C:/Software/Miktex/texmfs/install/fonts/typ
+e1/public/fontawesome5/FontAwesome5Free-Solid.pfb><C:/Software/Miktex/texmfs/in
+stall/fonts/type1/public/lm/lmcsc10.pfb><C:/Software/Miktex/texmfs/install/font
+s/type1/public/lm/lmex10.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/pub
+lic/lm/lmmi10.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public/lm/lmmi
+5.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public/lm/lmmi6.pfb><C:/So
+ftware/Miktex/texmfs/install/fonts/type1/public/lm/lmmi7.pfb><C:/Software/Mikte
+x/texmfs/install/fonts/type1/public/lm/lmmi8.pfb><C:/Software/Miktex/texmfs/ins
+tall/fonts/type1/public/lm/lmmi9.pfb><C:/Software/Miktex/texmfs/install/fonts/t
+ype1/public/lm/lmss10.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public
+/lm/lmss12.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public/lm/lmss8.p
+fb><C:/Software/Miktex/texmfs/install/fonts/type1/public/lm/lmss9.pfb><C:/Softw
+are/Miktex/texmfs/install/fonts/type1/public/lm/lmssbx10.pfb><C:/Software/Mikte
+x/texmfs/install/fonts/type1/public/lm/lmsso10.pfb><C:/Software/Miktex/texmfs/i
+nstall/fonts/type1/public/lm/lmsso8.pfb><C:/Software/Miktex/texmfs/install/font
+s/type1/public/lm/lmsso9.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/pub
+lic/lm/lmsy10.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public/lm/lmsy
+6.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public/lm/lmsy7.pfb><C:/So
+ftware/Miktex/texmfs/install/fonts/type1/public/lm/lmsy8.pfb><C:/Software/Mikte
+x/texmfs/install/fonts/type1/public/lm/lmsy9.pfb><C:/Software/Miktex/texmfs/ins
+tall/fonts/type1/public/lm/lmtt10.pfb><C:/Software/Miktex/texmfs/install/fonts/
+type1/public/lm/lmtt12.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/publi
+c/lm/lmtt8.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public/amsfonts/s
+ymbols/msbm10.pfb><C:/Software/Miktex/texmfs/install/fonts/type1/public/hoekwat
+er/stmary10.pfb>
+Output written on Slides_AQLT.pdf (48 pages, 865605 bytes).
+PDF statistics:
+ 1190 PDF objects out of 1200 (max. 8388607)
+ 129 named destinations out of 1000 (max. 500000)
+ 57045 words of extra memory for PDF output out of 61914 (max. 10000000)
+

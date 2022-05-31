@@ -1,0 +1,75 @@
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\beamer@sectionpages {1}{1}}
+\headcommand {\beamer@subsectionpages {1}{1}}
+\headcommand {\sectionentry {1}{Introduction}{2}{Introduction}{0}}
+\headcommand {\slideentry {1}{0}{1}{2/6}{}{0}}
+\headcommand {\beamer@framepages {2}{6}}
+\headcommand {\slideentry {1}{0}{2}{7/8}{}{0}}
+\headcommand {\beamer@framepages {7}{8}}
+\headcommand {\slideentry {1}{0}{3}{9/14}{}{0}}
+\headcommand {\beamer@framepages {9}{14}}
+\headcommand {\beamer@sectionpages {2}{14}}
+\headcommand {\beamer@subsectionpages {2}{14}}
+\headcommand {\sectionentry {2}{Méthodes étudiées}{15}{Méthodes étudiées}{0}}
+\headcommand {\slideentry {2}{0}{1}{15/15}{}{0}}
+\headcommand {\beamer@framepages {15}{15}}
+\headcommand {\beamer@subsectionpages {15}{15}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{16}{Filtre symétrique}}
+\headcommand {\slideentry {2}{1}{1}{16/16}{Filtre symétrique}{0}}
+\headcommand {\beamer@framepages {16}{16}}
+\headcommand {\beamer@subsectionpages {16}{16}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{17}{Polynômes Locaux}}
+\headcommand {\slideentry {2}{2}{1}{17/18}{Polynômes Locaux}{0}}
+\headcommand {\beamer@framepages {17}{18}}
+\headcommand {\slideentry {2}{2}{2}{19/22}{Polynômes Locaux}{0}}
+\headcommand {\beamer@framepages {19}{22}}
+\headcommand {\beamer@subsectionpages {17}{22}}
+\headcommand {\beamer@subsectionentry {0}{2}{3}{23}{Filtres et Reproducing Kernel Hilbert Space (RKHS)}}
+\headcommand {\slideentry {2}{3}{1}{23/26}{Filtres et Reproducing Kernel Hilbert Space (RKHS)}{0}}
+\headcommand {\beamer@framepages {23}{26}}
+\headcommand {\slideentry {2}{3}{2}{27/27}{Filtres et Reproducing Kernel Hilbert Space (RKHS)}{0}}
+\headcommand {\beamer@framepages {27}{27}}
+\headcommand {\beamer@sectionpages {15}{27}}
+\headcommand {\beamer@subsectionpages {23}{27}}
+\headcommand {\sectionentry {3}{Comparaison des méthodes}{28}{Comparaison des méthodes}{0}}
+\headcommand {\slideentry {3}{0}{1}{28/28}{}{0}}
+\headcommand {\beamer@framepages {28}{28}}
+\headcommand {\beamer@subsectionpages {28}{28}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{29}{Méthodologie}}
+\headcommand {\slideentry {3}{1}{1}{29/31}{Méthodologie}{0}}
+\headcommand {\beamer@framepages {29}{31}}
+\headcommand {\beamer@subsectionpages {29}{31}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{32}{Application sur séries simulées}}
+\headcommand {\slideentry {3}{2}{1}{32/32}{Application sur séries simulées}{0}}
+\headcommand {\beamer@framepages {32}{32}}
+\headcommand {\slideentry {3}{2}{2}{33/36}{Application sur séries simulées}{0}}
+\headcommand {\beamer@framepages {33}{36}}
+\headcommand {\beamer@subsectionpages {32}{36}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{37}{Un exemple : série des ventes au détail des États-Unis (en log)}}
+\headcommand {\slideentry {3}{3}{1}{37/37}{Un exemple : série des ventes au détail des États-Unis (en log)}{0}}
+\headcommand {\beamer@framepages {37}{37}}
+\headcommand {\slideentry {3}{3}{2}{38/38}{Un exemple : série des ventes au détail des États-Unis (en log)}{0}}
+\headcommand {\beamer@framepages {38}{38}}
+\headcommand {\slideentry {3}{3}{3}{39/39}{Un exemple : série des ventes au détail des États-Unis (en log)}{0}}
+\headcommand {\beamer@framepages {39}{39}}
+\headcommand {\slideentry {3}{3}{4}{40/40}{Un exemple : série des ventes au détail des États-Unis (en log)}{0}}
+\headcommand {\beamer@framepages {40}{40}}
+\headcommand {\slideentry {3}{3}{5}{41/41}{Un exemple : série des ventes au détail des États-Unis (en log)}{0}}
+\headcommand {\beamer@framepages {41}{41}}
+\headcommand {\beamer@sectionpages {28}{41}}
+\headcommand {\beamer@subsectionpages {37}{41}}
+\headcommand {\sectionentry {4}{Conclusion}{42}{Conclusion}{0}}
+\headcommand {\beamer@subsectionpages {42}{41}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{42}{Conclusion}}
+\headcommand {\slideentry {4}{1}{1}{42/44}{Conclusion}{0}}
+\headcommand {\beamer@framepages {42}{44}}
+\headcommand {\slideentry {4}{1}{2}{45/47}{Conclusion}{0}}
+\headcommand {\beamer@framepages {45}{47}}
+\headcommand {\slideentry {4}{1}{3}{48/48}{Conclusion}{0}}
+\headcommand {\beamer@framepages {48}{48}}
+\headcommand {\beamer@partpages {1}{48}}
+\headcommand {\beamer@subsectionpages {42}{48}}
+\headcommand {\beamer@sectionpages {42}{48}}
+\headcommand {\beamer@documentpages {48}}
+\headcommand {\gdef \inserttotalframenumber {20}}

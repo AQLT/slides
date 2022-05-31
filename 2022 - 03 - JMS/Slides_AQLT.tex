@@ -1,0 +1,816 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[10pt,xcolor=table,color={dvipsnames,usenames},ignorenonframetext,usepdftitle=false,french]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{caption}
+\captionsetup{skip=0pt,belowskip=0pt}
+%\setlength\abovecaptionskip{-15pt}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath,mathtools,multirow}
+\usepackage{float,hhline}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme[coding=utf8,language=french,
+,titlepagelogo=img/logobeamer.png
+]{TorinoTh}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdfauthor={Alain Quartier-la-Tente},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\newif\ifbibliography
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \let\insertpartnumber\relax
+  \let\partname\relax
+  \frame{\partpage}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  %\setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+  }
+\setcounter{secnumdepth}{0}
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{dsfont}
+\usepackage{stmaryrd}
+\usepackage[normalem]{ulem}
+\usepackage{fontawesome5}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.17}
+\pgfplotsset{samples=100}
+\usepackage{animate}
+ \usepackage{booktabs}
+
+\usepackage{colortbl}
+
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\cov}[2]{\Cov\left( #1\,,\,#2 \right)}
+
+\DeclareMathOperator{\e}{e}
+\renewcommand{\P}{\mathds{P}} %Apparement \P existe déjà ?
+\newcommand\N{\mathds{N}}
+\newcommand\R{\mathds{R}}
+
+
+\newcommand\1{\mathds{1}}
+\newcommand{\E}[2][]{{\mathds{E}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand{\V}[2][]{{\mathds{V}}_{#1}
+  \def\temp{#2}\ifx\temp\empty
+  \else
+    \left[#2\right]
+  \fi
+}
+\newcommand\ud{\,\mathrm{d}}
+
+
+% blocks
+\usepackage{environ}
+\usepackage[tikz]{bclogo}
+
+\tikzstyle{titlestyle} =[draw=black!80,fill=black!20, text=black,
+ right=10pt, rounded corners]
+\mdfdefinestyle{symmaryboxstyle}{
+	linecolor=black!80, backgroundcolor = black!5,
+	skipabove=\baselineskip, innertopmargin=\baselineskip,
+	innerbottommargin=\baselineskip,
+	userdefinedwidth=\textwidth,
+	middlelinewidth=1.2pt, roundcorner=5pt,
+	skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+	frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
+	innerlinewidth=0pt,
+}
+\NewEnviron{summary}{%
+\begin{mdframed}[style=symmaryboxstyle]
+\vspace{-0.5em}
+\BODY
+\end{mdframed}
+}
+\makeatletter
+% Open `\noalign` and check for overlay specification:
+\def\rowcolor{\noalign{\ifnum0=`}\fi\bmr@rowcolor}
+\newcommand<>{\bmr@rowcolor}{%
+    \alt#1%
+        {\global\let\CT@do@color\CT@@do@color\@ifnextchar[\CT@rowa\CT@rowb}% Rest of original `\rowcolor`
+        {\ifnum0=`{\fi}\@gooble@rowcolor}% End `\noalign` and gobble all arguments of `\rowcolor`.
+}
+% Gobble all normal arguments of `\rowcolor`:
+\newcommand{\@gooble@rowcolor}[2][]{\@gooble@rowcolor@}
+\newcommand{\@gooble@rowcolor@}[1][]{\@gooble@rowcolor@@}
+\newcommand{\@gooble@rowcolor@@}[1][]{\ignorespaces}
+
+\newcommand{\rowc}[1]{\only<#1>{\\\rowcolor{processblue!40}}}
+%\newcommand{\rowc}[1]{{\rowcolor<#1>{processblue!30}}
+\newcommand{\cellc}[1]{\only<#1>{\cellcolor{processblue!40}}}
+\newcommand{\supsp}[1]{\visible<#1>{\\}}
+
+\title{Détection en temps réels des points de retournement :\\
+Apport de l'utilisation des filtres asymétriques dans l'analyse
+conjoncturelle}
+\ateneo{Journées de méthodologie statistique (JMS) - 2022}
+\author{Alain Quartier-la-Tente}
+\date{}
+
+
+\setrellabel{}
+
+\setcandidatelabel{}
+
+\rel{}
+\division{Session 27 : Séries temporelles\\
+31/03/2022}
+
+\departement{Insee (DESE) et LEMNA}
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+
+\begin{document}
+\begin{frame}[plain,noframenumbering]
+\titlepage
+\end{frame}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\begin{frame}{Introduction (1)}
+\protect\hypertarget{introduction-1}{}
+\(X_t\) (ex : IPI France) se décompose en plusieurs composantes
+inobservées : \[
+X_t=\onslide<2->{\underbrace{TC_t}_{\text{tendance-cycle}}}
+\onslide<3->{
++\underbrace{S_t}_{\text{saisonnalité}}
+}
+\onslide<4->{
++\underbrace{I_t}_{\text{irrégulier}}
+}
+\text{ (décomposition additive)}
+\]
+\onslide<5>{$TC_t$ généralement estimée sur une série \highlight{sans} saisonnalité}
+
+\begin{tikzpicture}
+\begin{axis}[enlarge x limits=false, ylabel={IPI France},ymin = 66,ymax=120, 
+xtick={2010,2012,...,2020}, xticklabels={2010,2012,...,2020},width=\textwidth, height=0.7\textheight]
+\only<1->{
+\addplot[mark=none, black] coordinates {(2010,90.3) (2010.083,93.1) (2010.167,109.5) (2010.25,100.4) (2010.333,95.5) (2010.417,111.8) (2010.5,100.8) (2010.583,74.5) (2010.667,109) (2010.75,105) (2010.833,102.7) (2010.917,101.9) (2011,99) (2011.083,101.6) (2011.167,115.3) (2011.25,101.6) (2011.333,110.1) (2011.417,108.5) (2011.5,101) (2011.583,78.3) (2011.667,110) (2011.75,106.4) (2011.833,106.3) (2011.917,100.2) (2012,99.3) (2012.083,99.9) (2012.167,110.3) (2012.25,99.8) (2012.333,96.1) (2012.417,108.5) (2012.5,103.8) (2012.583,78.8) (2012.667,102.9) (2012.75,107.6) (2012.833,101.9) (2012.917,91.5) (2013,96.3) (2013.083,95.7) (2013.167,103.9) (2013.25,103.4) (2013.333,96.2) (2013.417,105.5) (2013.5,105.2) (2013.583,73.4) (2013.667,103.3) (2013.75,109.3) (2013.833,99) (2013.917,94.6) (2014,96.8) (2014.083,97.1) (2014.167,104.9) (2014.25,102.9) (2014.333,92.4) (2014.417,104.8) (2014.5,103.3) (2014.583,71.5) (2014.667,107.2) (2014.75,107.7) (2014.833,95.5) (2014.917,98.4) (2015,94.6) (2015.083,96.1) (2015.167,108.4) (2015.25,102.4) (2015.333,91) (2015.417,111.8) (2015.5,101.1) (2015.583,76.1) (2015.667,109.1) (2015.75,107.7) (2015.833,101.8) (2015.917,99.9) (2016,95.1) (2016.083,99.6) (2016.167,108.3) (2016.25,103.3) (2016.333,98.6) (2016.417,110.3) (2016.5,95.8) (2016.583,79.7) (2016.667,107.9) (2016.75,103.4) (2016.833,104.7) (2016.917,99.7) (2017,98.9) (2017.083,97.1) (2017.167,114.5) (2017.25,98) (2017.333,102.7) (2017.417,111.4) (2017.5,99.5) (2017.583,81.4) (2017.667,108.2) (2017.75,113.2) (2017.833,111) (2017.917,99.5) (2018,101.8) (2018.083,98.6) (2018.167,112.9) (2018.25,103) (2018.333,98.7) (2018.417,112.8) (2018.5,106.6) (2018.583,82.6) (2018.667,104.7) (2018.75,116) (2018.833,109.6) (2018.917,97.6) (2019,103.8) (2019.083,102) (2019.167,111.6) (2019.25,107.2) (2019.333,105.2) (2019.417,106) (2019.5,109.8) (2019.583,78.8) (2019.667,109) (2019.75,116.5) (2019.833,104) (2019.917,97.8) (2020,101) (2020.083,100.1) (2020.167,91.8) (2020.25,66.7) (2020.333,73.7) (2020.417,98.2) (2020.5,97.4) (2020.583,71.7) (2020.667,104.7) (2020.75,106.7) (2020.833,101.6) (2020.917,96.6)};}
+\only<2->{
+\addplot+[mark=none,blue] coordinates {(2010,96.6) (2010.083,97.1) (2010.167,97.9) (2010.25,98.9) (2010.333,99.7) (2010.417,100.2) (2010.5,100.3) (2010.583,100.4) (2010.667,100.5) (2010.75,101) (2010.833,101.9) (2010.917,102.8) (2011,103.4) (2011.083,103.7) (2011.167,103.5) (2011.25,102.8) (2011.333,102.1) (2011.417,101.5) (2011.5,101.2) (2011.583,101.4) (2011.667,101.7) (2011.75,102.1) (2011.833,102.4) (2011.917,102.4) (2012,102.1) (2012.083,101.6) (2012.167,101) (2012.25,100.6) (2012.333,100.4) (2012.417,100.4) (2012.5,100.4) (2012.583,100.2) (2012.667,99.6) (2012.75,99) (2012.833,98.4) (2012.917,98) (2013,98) (2013.083,98.3) (2013.167,98.8) (2013.25,99.2) (2013.333,99.4) (2013.417,99.4) (2013.5,99.2) (2013.583,98.9) (2013.667,98.6) (2013.75,98.4) (2013.833,98.4) (2013.917,98.5) (2014,98.7) (2014.083,98.9) (2014.167,98.8) (2014.25,98.7) (2014.333,98.5) (2014.417,98.3) (2014.5,98.2) (2014.583,98.1) (2014.667,98.2) (2014.75,98.2) (2014.833,98.3) (2014.917,98.5) (2015,98.7) (2015.083,99.1) (2015.167,99.4) (2015.25,99.8) (2015.333,100.3) (2015.417,100.7) (2015.5,101) (2015.583,101.3) (2015.667,101.3) (2015.75,101.2) (2015.833,101) (2015.917,100.7) (2016,100.6) (2016.083,100.6) (2016.167,100.7) (2016.25,100.8) (2016.333,100.8) (2016.417,100.8) (2016.5,100.6) (2016.583,100.4) (2016.667,100.3) (2016.75,100.5) (2016.833,100.9) (2016.917,101.5) (2017,102) (2017.083,102.3) (2017.167,102.4) (2017.25,102.3) (2017.333,102) (2017.417,101.9) (2017.5,102.3) (2017.583,102.9) (2017.667,103.7) (2017.75,104.4) (2017.833,104.7) (2017.917,104.6) (2018,104) (2018.083,103.4) (2018.167,103.1) (2018.25,103.1) (2018.333,103.3) (2018.417,103.6) (2018.5,103.9) (2018.583,104) (2018.667,104.2) (2018.75,104.4) (2018.833,104.7) (2018.917,105.1) (2019,105.5) (2019.083,105.8) (2019.167,105.9) (2019.25,105.7) (2019.333,105.4) (2019.417,105) (2019.5,104.6) (2019.583,104.2) (2019.667,103.7) (2019.75,103.4) (2019.833,103.2) (2019.917,103.1) (2020,103) (2020.083,103) (2020.167,103.2) (2020.25,103.6) (2020.333,104) (2020.417,104.4) (2020.5,104.5) (2020.583,104.4) (2020.667,103.9) (2020.75,103.3) (2020.833,102.8) (2020.917,102.5)};
+}
+\only<3->{
+\addplot+[mark=none,green!60!black] coordinates {(2010,91) (2010.083,93.7) (2010.167,109.5) (2010.25,99.9) (2010.333,92.4) (2010.417,111.9) (2010.5,101.7) (2010.583,73.8) (2010.667,108.9) (2010.75,106) (2010.833,106.1) (2010.917,102.4) (2011,97.5) (2011.083,100.5) (2011.167,114.7) (2011.25,102.4) (2011.333,97) (2011.417,111.9) (2011.5,101.1) (2011.583,78.6) (2011.667,109.8) (2011.75,106.4) (2011.833,106.7) (2011.917,99.1) (2012,98.6) (2012.083,101.8) (2012.167,109.9) (2012.25,99.8) (2012.333,97.3) (2012.417,108.9) (2012.5,102.7) (2012.583,77.6) (2012.667,103.1) (2012.75,108.7) (2012.833,101.3) (2012.917,92.2) (2013,96.8) (2013.083,95.4) (2013.167,103.4) (2013.25,103.9) (2013.333,96.2) (2013.417,104.9) (2013.5,104.6) (2013.583,74.2) (2013.667,104) (2013.75,107.5) (2013.833,99.4) (2013.917,95.2) (2014,97.4) (2014.083,95.9) (2014.167,105.4) (2014.25,101.6) (2014.333,92.9) (2014.417,105.9) (2014.5,102.9) (2014.583,71.8) (2014.667,106.1) (2014.75,107.5) (2014.833,96.6) (2014.917,98.2) (2015,94.7) (2015.083,95.8) (2015.167,108.3) (2015.25,101.8) (2015.333,93.4) (2015.417,110.9) (2015.5,105.4) (2015.583,74.9) (2015.667,109.4) (2015.75,108.1) (2015.833,101.7) (2015.917,99.9) (2016,94.6) (2016.083,99.7) (2016.167,109.5) (2016.25,103) (2016.333,96.6) (2016.417,110.7) (2016.5,100.2) (2016.583,79.4) (2016.667,107.1) (2016.75,105.6) (2016.833,105.3) (2016.917,98) (2017,98.1) (2017.083,98.3) (2017.167,113.5) (2017.25,98.8) (2017.333,101.3) (2017.417,111.8) (2017.5,101.6) (2017.583,81.5) (2017.667,108.7) (2017.75,112.3) (2017.833,108.5) (2017.917,98.8) (2018,102.9) (2018.083,99.2) (2018.167,109.3) (2018.25,103.6) (2018.333,102.5) (2018.417,112) (2018.5,105.8) (2018.583,82.8) (2018.667,106.2) (2018.75,115.6) (2018.833,108.5) (2018.917,98.3) (2019,103.7) (2019.083,101.7) (2019.167,112.6) (2019.25,106.2) (2019.333,104.8) (2019.417,110.8) (2019.5,109.8) (2019.583,80.5) (2019.667,107.7) (2019.75,114.3) (2019.833,105.4) (2019.917,98.1) (2020,101) (2020.083,99.6) (2020.167,112.1) (2020.25,103.6) (2020.333,98.8) (2020.417,115.3) (2020.5,109.4) (2020.583,78.6) (2020.667,111.2) (2020.75,111.8) (2020.833,104.1) (2020.917,99.4)};
+}
+\only<4->{
+\addplot[mark=none,red] coordinates {(2010,90.3) (2010.083,93.1) (2010.167,109.5) (2010.25,100.4) (2010.333,95.5) (2010.417,111.8) (2010.5,100.8) (2010.583,74.5) (2010.667,109) (2010.75,105) (2010.833,102.7) (2010.917,101.9) (2011,99) (2011.083,101.6) (2011.167,115.3) (2011.25,101.6) (2011.333,110.1) (2011.417,108.5) (2011.5,101) (2011.583,78.3) (2011.667,110) (2011.75,106.4) (2011.833,106.3) (2011.917,100.2) (2012,99.3) (2012.083,99.9) (2012.167,110.3) (2012.25,99.8) (2012.333,96.1) (2012.417,108.5) (2012.5,103.8) (2012.583,78.8) (2012.667,102.9) (2012.75,107.6) (2012.833,101.9) (2012.917,91.5) (2013,96.3) (2013.083,95.7) (2013.167,103.9) (2013.25,103.4) (2013.333,96.2) (2013.417,105.5) (2013.5,105.2) (2013.583,73.4) (2013.667,103.3) (2013.75,109.3) (2013.833,99) (2013.917,94.6) (2014,96.8) (2014.083,97.1) (2014.167,104.9) (2014.25,102.9) (2014.333,92.4) (2014.417,104.8) (2014.5,103.3) (2014.583,71.5) (2014.667,107.2) (2014.75,107.7) (2014.833,95.5) (2014.917,98.4) (2015,94.6) (2015.083,96.1) (2015.167,108.4) (2015.25,102.4) (2015.333,91) (2015.417,111.8) (2015.5,101.1) (2015.583,76.1) (2015.667,109.1) (2015.75,107.7) (2015.833,101.8) (2015.917,99.9) (2016,95.1) (2016.083,99.6) (2016.167,108.3) (2016.25,103.3) (2016.333,98.6) (2016.417,110.3) (2016.5,95.8) (2016.583,79.7) (2016.667,107.9) (2016.75,103.4) (2016.833,104.7) (2016.917,99.7) (2017,98.9) (2017.083,97.1) (2017.167,114.5) (2017.25,98) (2017.333,102.7) (2017.417,111.4) (2017.5,99.5) (2017.583,81.4) (2017.667,108.2) (2017.75,113.2) (2017.833,111) (2017.917,99.5) (2018,101.8) (2018.083,98.6) (2018.167,112.9) (2018.25,103) (2018.333,98.7) (2018.417,112.8) (2018.5,106.6) (2018.583,82.6) (2018.667,104.7) (2018.75,116) (2018.833,109.6) (2018.917,97.6) (2019,103.8) (2019.083,102) (2019.167,111.6) (2019.25,107.2) (2019.333,105.2) (2019.417,106) (2019.5,109.8) (2019.583,78.8) (2019.667,109) (2019.75,116.5) (2019.833,104) (2019.917,97.8) (2020,101) (2020.083,100.1) (2020.167,91.8) (2020.25,66.7) (2020.333,73.7) (2020.417,98.2) (2020.5,97.4) (2020.583,71.7) (2020.667,104.7) (2020.75,106.7) (2020.833,101.6) (2020.917,96.6)};}
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Introduction (2)}
+\protect\hypertarget{introduction-2}{}
+\footnotesize
+
+\highlight{Moyennes mobiles} (ou \highlight{filtres linéaires})
+omniprésents dans l'extraction de la tendance-cycle et la
+désaisonnalisation (e.g.~: X-13ARIMA) : \[
+M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k}
+\]
+
+\pause
+
+Appliquer \(M_\theta\) sur \(X_t=\e^{-i\omega t}\) va avoir deux effets
+: \[
+M_{\theta}X_t = \sum_{k=-p}^{+f} \theta_k \e^{-i \omega (t+k)}
+= \left(\sum_{k=-p}^{+f} \theta_k \e^{-i \omega k}\right)\cdot X_t = G_\theta(\omega)\e^{-i\Phi_\theta(\omega)} X_t
+\] 1. Multiplier le niveau par \(G_{\theta}\left(\omega\right)\)
+(\emph{gain})\\
+2. Créer un \emph{déphasage} \(\Phi_\theta(\omega)/\omega\) : affecte
+détection des points de retournement
+
+\begin{figure}[!ht]
+\pgfplotsset{width=\textwidth,height=4cm,every axis legend/.append style={font=\footnotesize,
+  at={(0.5,-0.1)},
+  anchor=north}
+    }
+\begin{tikzpicture}
+\begin{axis}[
+xtick={0,3.14159,...,15.70795},
+xticklabels={0,$\pi$,$2\pi$,$3\pi$,$4\pi$,$5\pi$} 
+]
+\addplot[domain=0:5*pi,smooth]    plot (\x,{sin(\x * (pi/2) r)});
+\addplot[domain=0:5*pi,smooth, dashed]    
+  plot (\x,{1/2*sin(\x* pi/2 r )+1/2*sin((\x -1) * pi/2 r)});
+\draw[<->](axis cs: 1.5,1)--(axis cs: 1.5,0.7071068)
+  node[pos=0.5, right]{\scriptsize $G_{\theta_0}(\omega)$};
+\draw[<->] (axis cs: 3, -0.70710680-0.05)--(axis cs: 3.5,-0.7071068-0.05) 
+  node[pos=0.5, below right]{\scriptsize $\Phi_{\theta_0}(\omega)$};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Introduction (3)}
+\protect\hypertarget{introduction-3}{}
+\faArrowCircleRight{} Généralement, utilisation de filtres
+\highlight{symétriques} (\(p=f\) et \(\theta_{-i}=\theta_i\))
+
+\pause
+
+\faArrowCircleRight{} Pour l'estimation en \highlightbf{temps réel},
+utilisation de filtres \highlight{asymétriques} (\(f<p\)) \(\implies\)
+révision et détection avec retard des points de retournement
+(\highlight{déphasage})
+
+\pause
+
+Solution classique : prolonger la série par prévision et utiliser filtre
+symétrique\\
+\faArrowCircleRight{} revient à utiliser des filtres asymétriques
+optimisés avec certains critères
+
+\pause
+
+Objectifs cette étude :
+
+\begin{itemize}
+\item
+  Étudier et comparer des approches récentes pour l'extraction de la
+  tendance-cycle en temps réel :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Régression polynomiale locale (Proietti et Luati 2008)\\
+  \item
+    RKHS (Dagum et Bianconcini 2016)\\
+  \item
+    Optimisation sous contrainte d'une somme pondérée de critères
+    (Grun-Rehomme \emph{et ali} 2018, Wildi et McElroy, 2019)
+  \end{itemize}
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Montrer qu'il est possible d'établir une théorie générale englobant
+  toutes ces méthodes
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Présenter le package \faIcon{r-project} \texttt{rjdfilters}
+\end{itemize}
+\end{frame}
+
+\hypertarget{muxe9thodes-uxe9tudiuxe9es}{%
+\section{Méthodes étudiées}\label{muxe9thodes-uxe9tudiuxe9es}}
+
+\begin{frame}{Sommaire}
+\protect\hypertarget{sommaire}{}
+\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
+
+\hypertarget{filtre-symuxe9trique}{%
+\subsection{Filtre symétrique}\label{filtre-symuxe9trique}}
+
+\begin{frame}[fragile]{Moyenne mobile symétrique d'Henderson}
+\protect\hypertarget{moyenne-mobile-symuxe9trique-dhenderson}{}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rjdfilters)}
+\NormalTok{f }\OtherTok{\textless{}{-}} \FunctionTok{lp\_filter}\NormalTok{(}\DecValTok{6}\NormalTok{, }\AttributeTok{kernel =} \StringTok{"Henderson"}\NormalTok{)}
+\FunctionTok{plot\_coef}\NormalTok{(f, }\AttributeTok{q =} \DecValTok{6}\NormalTok{, }\AttributeTok{legend =} \ConstantTok{FALSE}\NormalTok{,}
+          \AttributeTok{main=}\StringTok{"Henderson 13 termes"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[height=0.4\paperheight]{img/h13-1} \end{center}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+MM Henderson (utilisé dans X-13ARIMA) largement répandue pour
+l'estimation de la TC
+
+\medskip
+
+MM Henderson préserve les tendances polynomiales de degré 3 et minimise
+le critère de ``lissage'' (\(\sum(\nabla^3\theta_i)^2\))
+
+\medskip
+
+Sur séries mensuelles : MM de 13 termes généralement
+\end{column}
+\end{columns}
+\end{frame}
+
+\hypertarget{polynuxf4mes-locaux}{%
+\subsection{Polynômes Locaux}\label{polynuxf4mes-locaux}}
+
+\begin{frame}{Polynômes Locaux : \texttt{rjdfilters::lp\_filter()}}
+\protect\hypertarget{polynuxf4mes-locaux-rjdfilterslp_filter}{}
+Hypothèse : \(y_t=\mu_t+\varepsilon_t\) avec
+\(\varepsilon_t\overset{i.i.d}{\sim}\mathcal N(0,\sigma^2)\)
+
+\(\mu_t\) localement approchée par un polynôme de degré \(d\): \[
+\forall j\in\left\llbracket -h,h\right\rrbracket : y_{t+j}=m_{t+j}+\varepsilon_{t+j},\quad m_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}
+\]
+
+\pause
+
+Estimation en utilisant les WLS avec \emph{noyaux}:
+\(\hat{\beta}=(X'KX)^{1}X'Ky\) et \[
+\hat{m}_{t}=\hat\beta_0=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}
+\text{ \faArrowCircleRight{} équivalent à une moyenne mobile symétrique}
+\] \faArrowCircleRight{} Filtre de Henderson avec \(d=3\) et noyau
+spécifique.
+\end{frame}
+
+\begin{frame}[fragile]{Filtres asymétriques :
+\texttt{rjdfilters::lp\_filter()}}
+\protect\hypertarget{filtres-asymuxe9triques-rjdfilterslp_filter}{}
+\begin{enumerate}
+\tightlist
+\item
+  Même méthode mais moins de données (DAF) \(\iff\) minimiser les
+  révisions sous mêmes contraintes polynomiales
+\end{enumerate}
+
+\faArrowCircleRight{} \textbf{sans biais} mais \textbf{beaucoup de
+variance}
+
+\faArrowCircleRight{} utilisé dans STL
+
+\pause
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item
+  Minimisation des révisions sous contraintes polynomiales :
+
+  \begin{enumerate}
+  \item
+    \emph{Linear-Constant} (LC): \(y_t\) linéaire and \(v\) reproduit
+    les constantes (\highlight{Musgrave})
+  \item
+    \emph{Quadratic-Linear} (QL): \(y_t\) quadratique et \(v\) reproduit
+    droites
+  \item
+    \emph{Cubic-Quadratic} (CQ): \(y_t\) cubique et \(v\) reproduit
+    tendances quadratiques
+  \end{enumerate}
+
+  \faArrowCircleRight{} Filtres asymétriques \(v\) dépendent de
+  ``IC-Ratio''
+\end{enumerate}
+
+\pause
+
+\bcsmbh modèles simples facilement interprétables
+
+\bcsmmh Déphasage non contrôlé \faArrowCircleRight{} méthode étendue
+dans \texttt{rjdfilters::lp\_filter()}
+
+\pause
+
+\faDesktop{} Visualisation
+\url{https://aqlt.shinyapps.io/FiltersProperties/}
+\end{frame}
+
+\hypertarget{filtres-et-reproducing-kernel-hilbert-space-rkhs}{%
+\subsection{Filtres et Reproducing Kernel Hilbert Space
+(RKHS)}\label{filtres-et-reproducing-kernel-hilbert-space-rkhs}}
+
+\begin{frame}{Filtres RKHS : \texttt{rjdfilters::rkhs\_filter()}}
+\protect\hypertarget{filtres-rkhs-rjdfiltersrkhs_filter}{}
+\begin{itemize}
+\item
+  Utilisation de la théorie des RKHS pour approcher le filtre
+  d'Henderson
+\item
+  Avec \(K_p\) une \textbf{fonction de noyau} définie sur \([-1,1]\), le
+  filtre symétrique : \[
+  \forall j\in\left\llbracket -h,h\right\rrbracket: w_{j}=\frac{K_p(j/b)}{\sum_{i=-h}^{^h}K_p(i/b)}
+  \]
+\end{itemize}
+
+\onslide<3->{\faArrowCircleRight{} avec $b=h+1$ et $K_p$ spécifique on retrouve le filtre d'Henderson}
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Pour les filtres asymétriques : \[
+  \forall j\in\left\llbracket -h,q\right\rrbracket: w_{a,j}=\frac{K_p(j/b)}{\sum_{i=-h}^{^q}K_p(i/b)}
+  \]
+\end{itemize}
+
+\pause\pause\faArrowCircleRight{} \(b\) choisit par optimisation,
+e.g.~minimisant les révisions (\(b_{q,\Gamma}\)), les révisions liées à
+la fonction de gain (\(b_{q,G}\)) et celles liées au déphasage
+(\(b_{q,\varphi}\))
+\end{frame}
+
+\begin{frame}[fragile]{Filtres asymétriques}
+\protect\hypertarget{filtres-asymuxe9triques}{}
+\begin{columns}[T]
+\begin{column}{0.65\textwidth}
+\bcsmmh Plusieurs extremum
+
+\footnotesize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rjdfilters)}
+\NormalTok{fun }\OtherTok{\textless{}{-}} \FunctionTok{rkhs\_optimization\_fun}\NormalTok{(}\AttributeTok{horizon =} \DecValTok{6}\NormalTok{,}
+            \AttributeTok{leads =} \DecValTok{5}\NormalTok{, }\AttributeTok{degree =} \DecValTok{3}\NormalTok{,}
+            \AttributeTok{asymmetricCriterion =} \StringTok{"Timeliness"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(fun, }\FloatTok{5.6}\NormalTok{, }\DecValTok{12}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"b"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"Timeliness"}\NormalTok{, }\AttributeTok{main =} \StringTok{"6X5 filter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[height=0.4\paperheight]{img/rkhstimeliness-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rkhs\_optimal\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    q=0    q=1    q=2    q=3    q=4    q=5 
+## 6.0000 6.0000 6.3875 8.1500 9.3500 6.0000
+\end{verbatim}
+\end{column}
+
+\begin{column}{0.3\textwidth}
+\bigskip
+
+\bcsmbh Méthode généralisable à des filtres avec fréquences irrégulières
+\end{column}
+\end{columns}
+\end{frame}
+
+\hypertarget{comparaison-des-muxe9thodes}{%
+\section{Comparaison des méthodes}\label{comparaison-des-muxe9thodes}}
+
+\begin{frame}{Sommaire}
+\protect\hypertarget{sommaire-1}{}
+\tableofcontents[currentsection, hideothersubsections]
+\end{frame}
+
+\hypertarget{muxe9thodologie}{%
+\subsection{Méthodologie}\label{muxe9thodologie}}
+
+\begin{frame}{Méthodologie}
+\protect\hypertarget{muxe9thodologie-1}{}
+Comparaison des différentes méthodes sur séries simulées (avec 3 niveaux
+de variabilité) et séries réelles :
+
+\begin{enumerate}
+\tightlist
+\item
+  Estimation de la tendance-cycle à chaque date en utilisant les
+  différentes méthodes et un filtre symétrique de 13 termes
+\end{enumerate}
+
+\pause
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item
+  À chaque date, estimation des points de retournement :
+
+  \begin{itemize}
+  \item
+    redressements : \(y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}\)
+  \item
+    ralentissements :
+    \(y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}\)
+  \end{itemize}
+\end{enumerate}
+
+Déphasage = temps nécessaire pour détecter le bon point de retournement
+sans révision
+
+\pause
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Calcul des révisions avec deux critères :
+\end{enumerate}
+
+\[
+\mathbb E\left[
+\left|\frac{
+y_{t|t+q} - y_{t|last}
+}{
+y_{t|last}
+}\right|
+\right]\quad
+\text{ et }
+\quad
+\mathbb E\left[
+\left|\frac{
+y_{t|t+q} - y_{t|t+q+1}
+}{
+y_{t|t+q+1}
+}\right|
+\right]
+\]
+\end{frame}
+
+\hypertarget{application-sur-suxe9ries-simuluxe9es}{%
+\subsection{Application sur séries
+simulées}\label{application-sur-suxe9ries-simuluxe9es}}
+
+\begin{frame}{Résultats sur le déphasage (séries simulées)}
+\protect\hypertarget{ruxe9sultats-sur-le-duxe9phasage-suxe9ries-simuluxe9es}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/simulations/phase_shift_simul} \end{center}
+\end{frame}
+
+\begin{frame}{Médiane des révisions (séries simulées)}
+\protect\hypertarget{muxe9diane-des-ruxe9visions-suxe9ries-simuluxe9es}{}
+Pour les séries à variabilité moyenne :
+
+\begin{table}[!h]
+\centering \footnotesize
+\begin{tabular}{ccccccc}
+\toprule
+Méthode & $q=0$ & $q=1$ & $q=2$ & $q=3$ & $q=4$ & $q=5$\\
+\midrule
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\cellc{1}\textbf{MAE entre $q$\ieme{} et la dernière estimation}}\\
+\cellc{1}\hspace{1em}LC & 0,21 & 0,10 & 0,03 & 0,03 & 0,03 & 0,01\\
+\hspace{1em}QL (rel) & 1,6 & 1,0 & 1,3 & 1,5 & 1,3 & 1,1\\
+\hspace{1em}CQ (rel) & 2,2 & 1,3 & 4,2 & 3,3 & 2,1 & 1,6\\
+\hspace{1em}DAF (rel) & 2,3 & 1,5 & 4,9 & 3,5 & 2,2 & 1,5\\
+\hspace{1em}$b_{q,\Gamma}$ (rel) & 3,1 & 2,3 & 1,1 & 3,6 & 3,5 & 3,9\\
+\cellc{3}\hspace{1em}$b_{q,G}$ (rel) & \cellc{3} 4,1 & \cellc{3} 4,0 & 1,1 & 3,6 & 3,5 & 4,0\\
+\cellc{2}\hspace{1em}$b_{q,\varphi}$ (rel) & 1,5 & 1,1 & 1,0 & 1,8 & 2,7 & \cellc{2} 8,7\\
+\hspace{1em}\cellc{4}ARIMA (rel) & 1,0 & 1,0 & 1,1 & 1,1 & 1,1 & 1,0\\
+\addlinespace[0.3em]
+\multicolumn{7}{l}{\cellc{1}\textbf{MAE entre $q$\ieme{} et la $q+1$\ieme{} estimation}}\\
+\cellc{1}\hspace{1em}LC & 0,19 & 0,10 & 0,02 & 0,01 & 0,07 & 0,01\\
+\cellc{2}\hspace{1em}QL (rel) & 1,6 & \cellc{2}43,2 & 0,1 & 3,1 & 0,9 & 1,1\\
+\hspace{1em}CQ (rel) & 2,3 & 0,2 & 4,3 & 7,3 & 1,4 & 1,6\\
+\cellc{2}\hspace{1em}DAF (rel) & 3,5 & 2,6 & 4,6 & \cellc{2} 12,9 & 1,3 & 1,5\\
+\cellc{2}\hspace{1em}$b_{q,\Gamma}$ (rel) & 2,1 & 2,9 & 3,7 & 0,3 & \cellc{2}16,2 & 3,9\\
+\cellc{2-3}\hspace{1em}$b_{q,G}$ (rel) & \cellc{3}3,7 & \cellc{3}4,7 & \cellc{3}4,3 & 0,5 & \cellc{2}17,0 & 4,0\\
+\cellc{2} \hspace{1em}$b_{q,\varphi}$ (rel) & 1,2 & 1,4 & 3,5 & 5,3 & 0,7 & \cellc{2}8,7\\
+\hspace{1em}\cellc{4}ARIMA (rel) & 1,1 & 1,3 & 0,8 & \cellc{4}1,8 & \cellc{4} 2,3 & 1,0\\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+\hypertarget{un-exemple-suxe9rie-des-ventes-au-duxe9tail-des-uxe9tats-unis-en-log}{%
+\subsection{Un exemple : série des ventes au détail des États-Unis (en
+log)}\label{un-exemple-suxe9rie-des-ventes-au-duxe9tail-des-uxe9tats-unis-en-log}}
+
+\begin{frame}{Estimations successives de la tendance-cycle (1)}
+\protect\hypertarget{estimations-successives-de-la-tendance-cycle-1}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/nber/retailx_lp} \end{center}
+\end{frame}
+
+\begin{frame}{Estimations successives de la tendance-cycle (2)}
+\protect\hypertarget{estimations-successives-de-la-tendance-cycle-2}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/nber/retailx_rkhs_arima} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Prévisions implicites}
+\protect\hypertarget{pruxe9visions-implicites}{}
+Fonction \texttt{rjdfilters::implicit\_forecast}
+
+\[
+\forall q, \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{lissage par }v\text{ de la série prolongée}}
+=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{lissage par }w^q\text{ de la série prolongée}}\text{ avec }\forall i > q,w_i^q=0
+\] Ce qui est équivalent à : \[
+\forall q, \quad \sum_{i=1}^h (v_i- w_i^q) y_i^*
+=\sum_{i=-h}^0 (w_i^q-v_i)y_i.
+\] Matriciellement :
+
+\begin{equation}
+\resizebox{\textwidth}{!}{$
+\begin{pmatrix}
+  v_1 & v_2 & \cdots & v_h \\
+  v_1 - w_1^1 & v_2 & \cdots & v_h \\
+  \vdots & \vdots & \cdots & \vdots \\
+   v_1 - w_1^{h-1} & v_2-w_2^{h-1} & \cdots & v_h
+\end{pmatrix}
+\begin{pmatrix}y_1^* \\ \vdots \\ y_h^*\end{pmatrix}=
+\begin{pmatrix}
+  w_{-h}^0 - v_{-h} & w_{-(h-1)}^0 - v_{-(h-1)} & \cdots & w_{0}^0 - v_{0} \\
+  w_{-h}^1 - v_{-h} & w_{-(h-1)}^1 - v_{-(h-1)} & \cdots & w_{0}^1 - v_{0} \\
+  \vdots & \vdots & \cdots & \vdots \\
+  w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
+\end{pmatrix}
+\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.$}
+\end{equation}
+\end{frame}
+
+\begin{frame}{Prévisions implicites (1)}
+\protect\hypertarget{pruxe9visions-implicites-1}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/nber/retailx_lp_implicit_forecast} \end{center}
+\end{frame}
+
+\begin{frame}{Prévisions implicites (2)}
+\protect\hypertarget{pruxe9visions-implicites-2}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/nber/retailx_rkhs_arima_implicit_forecast} \end{center}
+\end{frame}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\hypertarget{conclusion-1}{%
+\subsection{Conclusion}\label{conclusion-1}}
+
+\begin{frame}[fragile]{Conclusion}
+\protect\hypertarget{conclusion-2}{}
+\begin{itemize}
+\tightlist
+\item
+  Dans la construction des filtres asymétriques, on peut se restreindre
+  à ceux qui conservent les polynômes de degré au plus 1 (et exclure les
+  filtres QL, CQ et DAF)
+\end{itemize}
+
+\bigskip
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  RKHS semble permettre un bon compris déphasage/révisions (\(b_{q,G}\))
+  mais potentiellement problèmes de calibration avec estimations
+  intermédiaires erratiques (\(b_{q,\varphi}\))
+\end{itemize}
+
+\bigskip
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Dans certains cas des méthodes alternatives à la prévision ARIMA
+  peuvent être utilisées \faIcon{arrow-circle-right} \texttt{rjdfilters}
+  peut aider à comparer les résultats (\texttt{rjdfilters::x11()} pour
+  les intégrer dans X-11)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What next\bcquestion}
+\protect\hypertarget{what-next}{}
+\begin{itemize}
+\tightlist
+\item
+  Etudes sur d'autres méthodes comme Vasyechko et Grun-Rehomme (2014) ou
+  Feng et Schäfer (2021)
+\end{itemize}
+
+\bigskip
+
+\pause
+
+\bigskip
+
+\begin{itemize}
+\tightlist
+\item
+  Utiliser des paramètres différents en fin de période ? Impact de la
+  longueur du filtre ?
+\end{itemize}
+
+\bigskip
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Impact des points atypiques ? quid des méthodes robustes ?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[noframenumbering]{Merci pour votre attention}
+\protect\hypertarget{merci-pour-votre-attention}{}
+Package \faIcon{r-project}{}:
+
+\href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
+
+Version en développement
+\href{https://github.com/AQLT/rjdfilters}{\faGithub{} AQLT/rjdfilters}
+
+\faIcon{desktop} Codes : \url{https://github.com/AQLT/articles}
+\end{frame}
+
+\end{document}
