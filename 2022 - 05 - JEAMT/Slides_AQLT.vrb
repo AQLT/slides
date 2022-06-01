@@ -1,0 +1,39 @@
+\frametitle{Conclusion}
+\protect\hypertarget{conclusion-2}{}
+\begin{itemize}
+\tightlist
+\item
+  Dans la construction des filtres asymétriques:
+\end{itemize}
+
+\begin{enumerate}
+\tightlist
+\item
+  on peut se restreindre à ceux qui conservent les polynômes de degré au
+  plus 1 (et exclure les filtres QL, CQ et DAF)
+\end{enumerate}
+
+\bigskip
+
+\pause
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  on peut utiliser le filtre LC pour les estimations proches de
+  l'estimation finale
+\end{enumerate}
+
+\bigskip
+
+\pause
+
+\begin{itemize}
+\tightlist
+\item
+  Dans certains cas des méthodes alternatives à la prévision ARIMA
+  peuvent être utilisées \faIcon{arrow-circle-right} \texttt{rjdfilters}
+  peut aider à comparer les résultats (\texttt{rjdfilters::x11()} pour
+  les intégrer dans X-11)
+\end{itemize}
