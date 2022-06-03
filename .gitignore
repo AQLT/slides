@@ -3,8 +3,7 @@
 .RData
 .Ruserdata
 *.Rproj
-.DS_Store
 *_cache
 *_files
 *DS_Store
-._*
+._.*
