@@ -9,7 +9,7 @@ division: |
 logo: "img/logobeamer.png"
 automaticcontents: false
 output:
-    beamer_presentation:
+    beamer_presentation:    
         template: template_beamer.tex
         keep_tex: yes
         theme: TorinoTh
@@ -48,7 +48,7 @@ if(is_html){
         fa_r_project <- 'R'
     }
 }
-
+options(width = 60)
 ```
 
 # Introduction
@@ -160,8 +160,6 @@ Seasonal adjustment: `seasonal`, `RJdemetra`, `x12`: run X12 but tricky to isola
 
 `rjdfilters`: \faRProject{} package based on the \large\faJava{} \normalsize libraries of JDemetra+ 3.0
 
-\href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}; development version \href{https://github.com/AQLT/rjdfilters}{\faGithub{} AQLT/rjdfilters}
-
 Allows to:
 
 - easily create/combine/apply moving averages `moving_average()`
@@ -179,8 +177,9 @@ Allows to:
 
 # Moving averages
 
-### Create moving average `moving_average`
+### Create moving average `moving_average` {.allowframebreaks}
 
+\footnotesize
 ```{r}
 library(rjdfilters)
 m1 = moving_average(rep(1,3), lags = 1); m1 # Forward MA
@@ -200,9 +199,9 @@ si_1 <- 1 - tc_1
 M3 <- moving_average(rep(1/3, 3), lags = -1)
 M3X3 <- M3 * M3
 # M3X3 moving average applied to each month
-M3X3
+coef(M3X3)
 M3X3_seasonal <- to_seasonal(M3X3, 12)
-M3X3_seasonal
+coef(M3X3_seasonal)
 s_1 = M3X3_seasonal * si_1
 s_1_norm = (1 - M2X12) * s_1
 sa_1 <- 1 - s_1_norm
@@ -223,18 +222,17 @@ par(mai = c(0.3, 0.3, 0.2, 0))
 layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
 
 plot_coef(tc_f);plot_coef(sa_2, col = "orange", add = TRUE)
-legend("topleft", legend = c("Final TC filter", "Final SA filter"),
+legend("topleft", 
+       legend = c("Final TC filter", "Final SA filter"),
        col= c("black", "orange"), lty = 1)
-
 plot_gain(tc_f);plot_gain(sa_2, col = "orange", add = TRUE)
-
 plot_phase(tc_f);plot_phase(sa_2, col = "orange", add = TRUE)
 par(def.par)
 ```
 
 ```{r}
 y <- retailsa$AllOtherGenMerchandiseStores
-trend <- y * tc_1
+trend <- y * tc_1 
 sa <- y * sa_1
 plot(window(ts.union(y, trend, sa), start = 2000),
      plot.type = "single",
@@ -245,6 +243,208 @@ plot(window(ts.union(y, trend, sa), start = 2000),
 ### lp
 
 
+### Local polynomial filters
+
+Hypothesis : $y_t=\mu_t+\varepsilon_t$ with $\varepsilon_t\overset{i.i.d}{\sim}\mathcal N(0,\sigma^2)$
+
+$\mu_t$ locally approximated by a polynomial of degree $d$:
+$$
+\forall j\in\left\llbracket -h,h\right\rrbracket : y_{t+j}=m_{t+j}+\varepsilon_{t+j},\quad m_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}
+$$
+
+Estimation with WLS ($K$=weights=*kernels*): $\hat{\beta}=(X'KX)^{1}X'Ky$ and
+$$
+\hat{m}_{t}=\hat\beta_0=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}
+\text{ \faArrowCircleRight{} equivalent to a symmetric moving average}
+$$
+\faArrowCircleRight{} Arithmetic mean with $K=1$ and $p=0/1$.
+
+\faArrowCircleRight{} Henderson filter with $d=3$ and specific kernel
+
+### Asymmetric filters: \faIcon{r-project} `rjdfilters::lp_filter()`
+
+Several solutions:
+
+1. Same method with less data (DAF) $\iff$ Minimize revisions under same polynomial constraints (reproduce cubic trend)
+
+\faArrowCircleRight{} **no bias** but **lots of variance**  
+ 
+
+\pause
+
+2. Minimization of revisions filter under polynomial constraints:
+
+    1. *Linear-Constant* (LC): $y_t$ linear and $v$ reproduce constant trends (\highlight{Musgrave} filter)
+    
+    2. *Quadratic-Linear* (QL): $y_t$ quadratic and $v$ reproduce linear trends
+    
+    3. *Cubic-Quadratic* (CQ): $y_t$ cubic and $v$ reproduce quadratic trends
+    
+    \faArrowCircleRight{} Asymmetric filters $v$ depends on a ratio linked to "IC-Ratio"
+    
+\pause
+\bcsmbh simple models with easy interpretation
+
+\bcsmmh Timeliness not controlled \faArrowCircleRight{} method extended in `rjdfilters::lp_filter()`
+
+
+
+## Linear Filters and Reproducing Kernel Hilbert Space (RKHS)
+
+### RKHS filters: \faIcon{r-project} `rjdfilters::rkhs_filter()`
+
+- RKHS theory used to approximate Henderson filter
+
+- With $K_p$ the **kernel function**, the symmetric filter:
+$$
+\forall j\in\left\llbracket -h,h\right\rrbracket: w_{j}=\frac{K_p(j/b)}{\sum_{i=-h}^{^h}K_p(i/b)}
+$$
+
+\onslide<3->{\faArrowCircleRight{} with $b=h+1$ and a specific $K_p$ you have the Henderson filter}
+
+\pause
+
+- For asymmetric filters:
+$$
+\forall j\in\left\llbracket -h,q\right\rrbracket: w_{a,j}=\frac{K_p(j/b)}{\sum_{i=-h}^{^q}K_p(i/b)}
+$$
+
+\pause\pause\faArrowCircleRight{} $b$ chosen by optimization, e.g. minimizing revisions linked to phase-shift:
+$$b_{q,\varphi}=\underset{b_q}{\min}
+\int_{0}^{2\pi/12}
+\rho_s(\lambda)\rho_\theta(\lambda)\sin^{2}\left(\frac{\varphi_\theta(\omega)}{2}\right)\ud \omega$$
+
+### Asymmetric filters
+
+::::{.columns}
+:::{.column width=65%}
+
+\bcsmmh several local extremum
+
+\footnotesize
+```{r, out.height="50%", fig.align="center"}
+fun <- rkhs_optimization_fun(horizon = 6, 
+            leads = 5, degree = 3, 
+            asymmetricCriterion = "Timeliness")
+plot(fun, 5.6, 12, xlab = "b", 
+     ylab = "Timeliness", main = "6X5 filter")
+rkhs_optimal_bw()
+```
+:::
+:::{.column width=30%}
+
+\bigskip
+
+\bcsmbh Generalizable to create filters that could be applied to irregular frequency series
+
+:::
+::::
+
+
+## Minimization under constraints: FST approach
+
+### FST approach: \faIcon{r-project} `rjdfilters::fst_filter()`
+
+Minimization of a weighted sum of 3 criteria under polynomial constraints:
+
+\begin{align*}
+\begin{cases}
+\underset{\theta}{\min} & J(\theta)=
+\alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta)\\
+s.c. & C\theta=a
+\end{cases}\\
+\begin{cases}
+F_g(\theta) = \sum_{k=-p}^{+f}\theta_{k}^{2} \text{ Fidelity (variance reduction ratio, Bongard)} \\
+S_g(\theta) = \sum_{j}(\nabla^{d}\theta_{j})^{2}\text{ $d=3$ Smoothness (Henderson criterion)} \\
+T_g(\theta) = \int_{0}^{\omega_{2}}\rho_{\theta}(\omega)^2\sin(\varphi_{\theta}(\omega))^2\ud\omega
+\text{ timeliness (phase-shift)}
+\end{cases}
+\end{align*}
+
+\pause
+::: {.summary data-latex=""}
+- \bcsmbh Unique solution
+  
+- \bcsmbh Asymmetric filters independent of data and symmetric filter
+  
+- \bcsmmh Non-normalized weights
+:::
+
+
+## Un exemple : série des ventes au détail des États-Unis (en log)
+
+### Estimations successives de la tendance-cycle (1)
+
+```{r retailxlp, echo=FALSE, out.width="100%"}
+series <- "RETAILx"
+img <- sprintf("img/nber/%s_%s.%s",tolower(series),
+               "lp",
+               fig.ext)
+knitr::include_graphics(img)
+```
+
+### Estimations successives de la tendance-cycle (2)
+
+```{r retailxrkhs, echo=FALSE, out.width="100%"}
+img <- sprintf("img/nber/%s_%s.%s",tolower(series),
+               "rkhs_arima",
+               fig.ext)
+knitr::include_graphics(img)
+```
+
+
+### Implicit forecast: `rjdfilters::implicit_forecast`
+
+$w^q$ used when $q$ future values are known: 
+
+$$
+\forall q, \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{smoothing by }v\text{ of the extended data}}
+=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{smoothing by }w^q\text{ of the extended data}}\text{ avec }\forall i > q,w_i^q=0
+$$
+Which is equivalent to:
+$$
+\forall q, \quad \sum_{i=1}^h (v_i- w_i^q) y_i^*
+=\sum_{i=-h}^0 (w_i^q-v_i)y_i.
+$$
+In matrix:
+
+\begin{equation}
+\resizebox{\textwidth}{!}{$
+\begin{pmatrix}
+  v_1 & v_2 & \cdots & v_h \\
+  v_1 - w_1^1 & v_2 & \cdots & v_h \\
+  \vdots & \vdots & \cdots & \vdots \\
+   v_1 - w_1^{h-1} & v_2-w_2^{h-1} & \cdots & v_h
+\end{pmatrix}
+\begin{pmatrix}y_1^* \\ \vdots \\ y_h^*\end{pmatrix}=
+\begin{pmatrix}
+  w_{-h}^0 - v_{-h} & w_{-(h-1)}^0 - v_{-(h-1)} & \cdots & w_{0}^0 - v_{0} \\
+  w_{-h}^1 - v_{-h} & w_{-(h-1)}^1 - v_{-(h-1)} & \cdots & w_{0}^1 - v_{0} \\
+  \vdots & \vdots & \cdots & \vdots \\
+  w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
+\end{pmatrix}
+\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.$}
+\end{equation}
+
+
+### Implicit forecasts (1)
+
+```{r retailxiplp, echo=FALSE, out.width="100%"}
+series <- "RETAILx"
+img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
+               "lp",
+               fig.ext)
+knitr::include_graphics(img)
+```
+
+### Implicit forecasts (2)
+
+```{r retailxiprkhs, echo=FALSE, out.width="100%"}
+img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
+               "rkhs_arima",
+               fig.ext)
+knitr::include_graphics(img)
+```
 
 
 ### Thank you for your attention {.noframenumbering}
