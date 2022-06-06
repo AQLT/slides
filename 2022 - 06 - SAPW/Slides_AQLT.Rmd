@@ -28,7 +28,8 @@ natbiboptions: [numbers]
 knitr::opts_chunk$set(echo = TRUE,
                       cache = F,
                       fig.align = 'center',
-                      fig.path = "img/")
+                      fig.path = "img/",
+                      out.width ="100%")
 library(knitr)
 library(kableExtra)
 library(rjdfilters)
@@ -49,6 +50,7 @@ if(is_html){
     }
 }
 options(width = 60)
+def.par <- par(no.readonly = TRUE)
 ```
 
 # Introduction
@@ -205,7 +207,9 @@ coef(M3X3_seasonal)
 s_1 = M3X3_seasonal * si_1
 s_1_norm = (1 - M2X12) * s_1
 sa_1 <- 1 - s_1_norm
-henderson_mm = moving_average(lp_filter(horizon = 6)$filters.coef[, "q=6"], lags = -6)
+henderson_mm = moving_average(lp_filter(horizon = 6)$
+                                  filters.coef[, "q=6"],
+                              lags = -6)
 tc_2 <- henderson_mm * sa_1
 si_2 <- 1 - tc_2
 M5 <- moving_average(rep(1/5, 5), lags = -2)
@@ -217,7 +221,6 @@ tc_f <- henderson_mm * sa_2
 ```
 
 ```{r}
-def.par <- par(no.readonly = TRUE)
 par(mai = c(0.3, 0.3, 0.2, 0))
 layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
 
@@ -288,6 +291,21 @@ Several solutions:
 \bcsmmh Timeliness not controlled \faArrowCircleRight{} method extended in `rjdfilters::lp_filter()`
 
 
+### Examples
+
+```{r}
+def.par <- par(no.readonly = TRUE)
+par(mai = c(0.3, 0.3, 0.2, 0))
+layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+
+plot_coef(tc_f);plot_coef(sa_2, col = "orange", add = TRUE)
+legend("topleft", 
+       legend = c("Final TC filter", "Final SA filter"),
+       col= c("black", "orange"), lty = 1)
+plot_gain(tc_f);plot_gain(sa_2, col = "orange", add = TRUE)
+plot_phase(tc_f);plot_phase(sa_2, col = "orange", add = TRUE)
+par(def.par)
+```
 
 ## Linear Filters and Reproducing Kernel Hilbert Space (RKHS)
 
@@ -357,7 +375,7 @@ s.c. & C\theta=a
 F_g(\theta) = \sum_{k=-p}^{+f}\theta_{k}^{2} \text{ Fidelity (variance reduction ratio, Bongard)} \\
 S_g(\theta) = \sum_{j}(\nabla^{d}\theta_{j})^{2}\text{ $d=3$ Smoothness (Henderson criterion)} \\
 T_g(\theta) = \int_{0}^{\omega_{2}}\rho_{\theta}(\omega)^2\sin(\varphi_{\theta}(\omega))^2\ud\omega
-\text{ timeliness (phase-shift)}
+\text{ Timeliness (phase-shift)}
 \end{cases}
 \end{align*}
 
@@ -375,22 +393,23 @@ T_g(\theta) = \int_{0}^{\omega_{2}}\rho_{\theta}(\omega)^2\sin(\varphi_{\theta}(
 
 ### Estimations successives de la tendance-cycle (1)
 
-```{r retailxlp, echo=FALSE, out.width="100%"}
-series <- "RETAILx"
-img <- sprintf("img/nber/%s_%s.%s",tolower(series),
-               "lp",
-               fig.ext)
-knitr::include_graphics(img)
-```
+<!-- ```{r retailxlp, echo=FALSE, out.width="100%"} -->
+<!-- series <- "RETAILx" -->
+<!-- img <- sprintf("img/nber/%s_%s.%s",tolower(series), -->
+<!--                "lp", -->
+<!--                fig.ext) -->
+<!-- knitr::include_graphics(img) -->
+<!-- ``` -->
 
 ### Estimations successives de la tendance-cycle (2)
 
-```{r retailxrkhs, echo=FALSE, out.width="100%"}
-img <- sprintf("img/nber/%s_%s.%s",tolower(series),
-               "rkhs_arima",
-               fig.ext)
-knitr::include_graphics(img)
-```
+
+<!-- ```{r retailxrkhs, echo=FALSE, out.width="100%"} -->
+<!-- img <- sprintf("img/nber/%s_%s.%s",tolower(series), -->
+<!--                "rkhs_arima", -->
+<!--                fig.ext) -->
+<!-- knitr::include_graphics(img) -->
+<!-- ``` -->
 
 
 ### Implicit forecast: `rjdfilters::implicit_forecast`
@@ -429,22 +448,22 @@ In matrix:
 
 ### Implicit forecasts (1)
 
-```{r retailxiplp, echo=FALSE, out.width="100%"}
-series <- "RETAILx"
-img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
-               "lp",
-               fig.ext)
-knitr::include_graphics(img)
-```
+<!-- ```{r retailxiplp, echo=FALSE, out.width="100%"} -->
+<!-- series <- "RETAILx" -->
+<!-- img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series), -->
+<!--                "lp", -->
+<!--                fig.ext) -->
+<!-- knitr::include_graphics(img) -->
+<!-- ``` -->
 
 ### Implicit forecasts (2)
 
-```{r retailxiprkhs, echo=FALSE, out.width="100%"}
-img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
-               "rkhs_arima",
-               fig.ext)
-knitr::include_graphics(img)
-```
+<!-- ```{r retailxiprkhs, echo=FALSE, out.width="100%"} -->
+<!-- img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series), -->
+<!--                "rkhs_arima", -->
+<!--                fig.ext) -->
+<!-- knitr::include_graphics(img) -->
+<!-- ``` -->
 
 
 ### Thank you for your attention {.noframenumbering}
