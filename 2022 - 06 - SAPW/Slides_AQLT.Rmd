@@ -3,11 +3,11 @@ title: |
  | Trend-cycle extraction and moving average manipulations in R with the rjdfilters package
 subtitle: "4th Seasonal Adjustment Practitioners Workshop"
 author: "Alain Quartier-la-Tente"
-departement: "Insee, LEMNA"
+departement: "INSEE, LEMNA (French Statistician)"
 division: |
     | June 8th - June 9th
 logo: "img/logobeamer.png"
-automaticcontents: false
+automaticcontents: true
 output:
     beamer_presentation:    
         template: template_beamer.tex
@@ -36,7 +36,7 @@ library(rjdfilters)
 
 is_html <- knitr::is_html_output()
 is_latex <- knitr::is_latex_output()
-
+fig.ext = "pdf"
 if(is_html){
     fa_arrow_circle_right <- '<i class="fas fa-arrow-circle-right"></i>'
     fa_r_project <- '<i class="fab fa-r-project"></i>'
@@ -111,9 +111,9 @@ $$
 \hat{m}_{t}=\hat\beta_0=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}
 \text{ \faArrowCircleRight{} equivalent to a symmetric moving average}
 $$
-\faArrowCircleRight{} Arithmetic mean with $K=1$ and $p=0/1$.
+\faArrowCircleRight{} Arithmetic mean with $K=1$ and $d=0\text{ or }1$.
 
-\faArrowCircleRight{} Henderson filter with $d=3$ and specific kernel
+\faArrowCircleRight{} Henderson filter with $d=2\text{ or }3$ and specific kernel
 
 
 ### What already exists in `r fa_r_project`? (1)
@@ -133,21 +133,21 @@ or `stats::filter(., method= "recursive", sides = 1)`: real-time asymmetric MA
 $$
 y_t=f_1x_{t}+\dots+f_p x_{t-(p-1)}
 $$
--> possible to add 0 to create general asymmetric filters but endpoints won't be well treated.
+\faArrowCircleRight{} possible to add 0 to create general asymmetric filters but endpoints won't be well treated.
 
 ### What already exists in `r fa_r_project`? (2)
 
 Local polynomial models ($X=1$ in our case)
 
-3. `KernSmooth::locpoly` local polynomial with gaussian kernel
+3. `KernSmooth::locpoly()` local polynomial with gaussian kernel
 
-4. `locfit::locfit` local polynomial with tricube, rectangular, triweight, triangular, epanechnikov, bisquare, gaussian
+4. `locfit::locfit()` local polynomial with tricube, rectangular, triweight, triangular, epanechnikov, bisquare, gaussian
 
-5. `stats::loess` tricube kernel
+5. `stats::loess()` tricube kernel
 
 . . .
 
-Seasonal adjustment: `seasonal`, `RJdemetra`, `x12`: run X12 but tricky to isolate one MA
+Seasonal adjustment: `seasonal`, `RJDemetra`, `x12`: run X12 but tricky to isolate one MA
 
 . . .
 
@@ -158,7 +158,7 @@ Seasonal adjustment: `seasonal`, `RJdemetra`, `x12`: run X12 but tricky to isola
 \faArrowCircleRight{} No way to create SA MA: Henderson, Musgrave, etc.
 
 
-### `rjdfilters`
+### `rjdfilters` (1)
 
 `rjdfilters`: \faRProject{} package based on the \large\faJava{} \normalsize libraries of JDemetra+ 3.0
 
@@ -166,27 +166,42 @@ Allows to:
 
 - easily create/combine/apply moving averages `moving_average()`
 
-- study the properties of the MA: plot coef (`plot_coef`), gain (`plot_gain()`), phase-shift (`plot_phase()`) and different statics (`diagnostic_matrix`)
+- study the properties of the MA: plot coef (`plot_coef()`), gain (`plot_gain()`), phase-shift (`plot_phase()`) and different statics (`diagnostic_matrix()`)
 
 - trend-cycle extraction with different methods to treat endpoints: 
 
-  - `lp_filter` local polynomial filters of Proietti and Luati (2008) (including Musgrave): Henderson, Uniform, biweight, Trapezoidal, Triweight, Tricube, "Gaussian", Triangular, Parabolic (= Epanechnikov)  
-  - `rkhs_filter` Reproducing Kernel Hilbert Space (RKHS) of Dagum and Bianconcini (2008) with same kernels  
-  - `fst_filter` FST approach of Grun-Rehomme, Guggemos, and Ladiray (2018)  
-  - `dfa_filter` derivation of AST approach of Wildi and McElroy (2019)
+  - `lp_filter()` local polynomial filters of Proietti and Luati (2008) (including Musgrave): Henderson, Uniform, biweight, Trapezoidal, Triweight, Tricube, "Gaussian", Triangular, Parabolic (= Epanechnikov)  
+  - `rkhs_filter()` Reproducing Kernel Hilbert Space (RKHS) of Dagum and Bianconcini (2008) with same kernels  
+  - `fst_filter()` FST approach of Grun-Rehomme, Guggemos, and Ladiray (2018)  
+  - `dfa_filter()` derivation of AST approach of Wildi and McElroy (2019)
   
 - change the filter used in X-11 for TC extraction
 
+
+### `rjdfilters` (2)
+
+Available at \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
+
+Development version \href{https://github.com/AQLT/rjdfilters}{\faGithub{} AQLT/rjdfilters}
+
+```{r, eval=FALSE}
+remotes::install_github("palatej/rjd3toolkit")
+remotes::install_github("AQLT/rjdfilters")
+```
+
+
 # Moving averages
 
-### Create moving average `moving_average` {.allowframebreaks}
+### Create moving average `moving_average()` {.allowframebreaks}
 
 \footnotesize
 ```{r}
 library(rjdfilters)
 m1 = moving_average(rep(1,3), lags = 1); m1 # Forward MA
 m2 = moving_average(rep(1,3), lags = -1); m2 # centered MA
-m1 + m2; m1*m2; m1 - m2
+m1 + m2
+m1*m2
+m1 - m2
 ```
 
 Can be used to create all the MA of X-11:
@@ -196,14 +211,14 @@ e1 <- e1/sum(e1)
 e2 <- moving_average(rep(1/12, 12), lags = -5)
 # used to have the 1rst estimate of the trend
 tc_1 <- M2X12 <- (e1 + e2)/2
-coef(M2X12)
+coef(M2X12) |> round(3)
 si_1 <- 1 - tc_1
 M3 <- moving_average(rep(1/3, 3), lags = -1)
 M3X3 <- M3 * M3
 # M3X3 moving average applied to each month
-coef(M3X3)
+coef(M3X3) |> round(3)
 M3X3_seasonal <- to_seasonal(M3X3, 12)
-coef(M3X3_seasonal)
+coef(M3X3_seasonal) |> round(3)
 s_1 = M3X3_seasonal * si_1
 s_1_norm = (1 - M2X12) * s_1
 sa_1 <- 1 - s_1_norm
@@ -220,7 +235,8 @@ sa_2 <- 1 - s_2_norm
 tc_f <- henderson_mm * sa_2
 ```
 
-```{r}
+
+```{r x11Filters,out.height="100%"}
 par(mai = c(0.3, 0.3, 0.2, 0))
 layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
 
@@ -230,20 +246,41 @@ legend("topleft",
        col= c("black", "orange"), lty = 1)
 plot_gain(tc_f);plot_gain(sa_2, col = "orange", add = TRUE)
 plot_phase(tc_f);plot_phase(sa_2, col = "orange", add = TRUE)
+```
+
+```{r,include = FALSE}
 par(def.par)
 ```
 
-```{r}
+### Apply a moving average
+
+\footnotesize
+```{r exApply,out.height="70%"}
 y <- retailsa$AllOtherGenMerchandiseStores
-trend <- y * tc_1 
-sa <- y * sa_1
+trend <- y * tc_1; sa <- y * sa_1
 plot(window(ts.union(y, trend, sa), start = 2000),
      plot.type = "single",
       col = c("black","orange", "lightblue"))
 ```
 
 
-### lp
+# Asymmetric filters
+
+## Current X-13ARIMA
+
+### Trend-cycle extraction in X-13ARIMA
+
+Idea closed to the following:
+
+1. series extended by an ARIMA model
+
+2. Trend-cycle extraction with the Henderson filter:
+
+  a. Selection of bandwidth with the I-C ratio
+  
+  b. Musgrave filter for the last points of the extended series
+
+## Local polynomials
 
 
 ### Local polynomial filters
@@ -264,6 +301,7 @@ $$
 
 \faArrowCircleRight{} Henderson filter with $d=3$ and specific kernel
 
+
 ### Asymmetric filters: \faIcon{r-project} `rjdfilters::lp_filter()`
 
 Several solutions:
@@ -283,7 +321,7 @@ Several solutions:
     
     3. *Cubic-Quadratic* (CQ): $y_t$ cubic and $v$ reproduce quadratic trends
     
-    \faArrowCircleRight{} Asymmetric filters $v$ depends on a ratio linked to "IC-Ratio"
+    \faArrowCircleRight{} Asymmetric filters $v$ linked to "IC-Ratio" `rjdfilters::ic_ratio()`
     
 \pause
 \bcsmbh simple models with easy interpretation
@@ -291,20 +329,21 @@ Several solutions:
 \bcsmmh Timeliness not controlled \faArrowCircleRight{} method extended in `rjdfilters::lp_filter()`
 
 
-### Examples
+### Example  {.allowframebreaks}
 
-```{r}
-def.par <- par(no.readonly = TRUE)
+```{r,out.width="90%"}
 par(mai = c(0.3, 0.3, 0.2, 0))
-layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+layout(matrix(c(1,2,3,4), 2, byrow = TRUE))
 
-plot_coef(tc_f);plot_coef(sa_2, col = "orange", add = TRUE)
-legend("topleft", 
-       legend = c("Final TC filter", "Final SA filter"),
-       col= c("black", "orange"), lty = 1)
-plot_gain(tc_f);plot_gain(sa_2, col = "orange", add = TRUE)
-plot_phase(tc_f);plot_phase(sa_2, col = "orange", add = TRUE)
-par(def.par)
+lp_filter(endpoints = "LC") |> 
+  plot_coef(q = 0:6, main = "Musgrave", zeroAsNa = TRUE)
+lp_filter(endpoints = "QL") |> 
+  plot_coef(q = 0:6, main = "QL", zeroAsNa = TRUE)
+lp_filter(endpoints = "CQ") |> 
+  plot_coef(q = 0:6, main = "CQ", zeroAsNa = TRUE)
+lp_filter(endpoints = "DAF") |> 
+  plot_coef(q = 0:6, main = "DAF", zeroAsNa = TRUE)
+
 ```
 
 ## Linear Filters and Reproducing Kernel Hilbert Space (RKHS)
@@ -340,7 +379,7 @@ $$b_{q,\varphi}=\underset{b_q}{\min}
 \bcsmmh several local extremum
 
 \footnotesize
-```{r, out.height="50%", fig.align="center"}
+```{r, out.height="50%",out.width=NULL, fig.align="center"}
 fun <- rkhs_optimization_fun(horizon = 6, 
             leads = 5, degree = 3, 
             asymmetricCriterion = "Timeliness")
@@ -366,12 +405,12 @@ rkhs_optimal_bw()
 Minimization of a weighted sum of 3 criteria under polynomial constraints:
 
 \begin{align*}
-\begin{cases}
+&\begin{cases}
 \underset{\theta}{\min} & J(\theta)=
 \alpha F_g(\theta)+\beta S_g(\theta)+\gamma T_g(\theta)\\
 s.c. & C\theta=a
 \end{cases}\\
-\begin{cases}
+&\begin{cases}
 F_g(\theta) = \sum_{k=-p}^{+f}\theta_{k}^{2} \text{ Fidelity (variance reduction ratio, Bongard)} \\
 S_g(\theta) = \sum_{j}(\nabla^{d}\theta_{j})^{2}\text{ $d=3$ Smoothness (Henderson criterion)} \\
 T_g(\theta) = \int_{0}^{\omega_{2}}\rho_{\theta}(\omega)^2\sin(\varphi_{\theta}(\omega))^2\ud\omega
@@ -389,36 +428,37 @@ T_g(\theta) = \int_{0}^{\omega_{2}}\rho_{\theta}(\omega)^2\sin(\varphi_{\theta}(
 :::
 
 
-## Un exemple : série des ventes au détail des États-Unis (en log)
 
-### Estimations successives de la tendance-cycle (1)
+## One example: US retail sales (log)
 
-<!-- ```{r retailxlp, echo=FALSE, out.width="100%"} -->
-<!-- series <- "RETAILx" -->
-<!-- img <- sprintf("img/nber/%s_%s.%s",tolower(series), -->
-<!--                "lp", -->
-<!--                fig.ext) -->
-<!-- knitr::include_graphics(img) -->
-<!-- ``` -->
+### Successive trend-cycle estimates (1)
 
-### Estimations successives de la tendance-cycle (2)
+```{r retailxlp, echo=FALSE, out.width="100%"}
+series <- "RETAILx"
+img <- sprintf("img/%s_%s.%s",tolower(series),
+               "lp",
+               fig.ext)
+knitr::include_graphics(img)
+```
+
+### Successive trend-cycle estimates (2)
 
 
-<!-- ```{r retailxrkhs, echo=FALSE, out.width="100%"} -->
-<!-- img <- sprintf("img/nber/%s_%s.%s",tolower(series), -->
-<!--                "rkhs_arima", -->
-<!--                fig.ext) -->
-<!-- knitr::include_graphics(img) -->
-<!-- ``` -->
+```{r retailxrkhs, echo=FALSE, out.width="100%"}
+img <- sprintf("img/%s_%s.%s",tolower(series),
+               "rkhs_arima",
+               fig.ext)
+knitr::include_graphics(img)
+```
 
 
 ### Implicit forecast: `rjdfilters::implicit_forecast`
 
-$w^q$ used when $q$ future values are known: 
+$w^q$ used when $q$ future values are known and $\forall i > q,w_i^q=0$: 
 
 $$
 \forall q, \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{smoothing by }v\text{ of the extended data}}
-=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{smoothing by }w^q\text{ of the extended data}}\text{ avec }\forall i > q,w_i^q=0
+=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{smoothing by }w^q\text{ of the extended data}}
 $$
 Which is equivalent to:
 $$
@@ -426,7 +466,6 @@ $$
 =\sum_{i=-h}^0 (w_i^q-v_i)y_i.
 $$
 In matrix:
-
 \begin{equation}
 \resizebox{\textwidth}{!}{$
 \begin{pmatrix}
@@ -442,28 +481,84 @@ In matrix:
   \vdots & \vdots & \cdots & \vdots \\
   w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
 \end{pmatrix}
-\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.$}
+\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}$}
 \end{equation}
 
 
 ### Implicit forecasts (1)
 
-<!-- ```{r retailxiplp, echo=FALSE, out.width="100%"} -->
-<!-- series <- "RETAILx" -->
-<!-- img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series), -->
-<!--                "lp", -->
-<!--                fig.ext) -->
-<!-- knitr::include_graphics(img) -->
-<!-- ``` -->
+```{r retailxiplp, echo=FALSE, out.width="100%"}
+series <- "RETAILx"
+img <- sprintf("img/%s_%s_implicit_forecast.%s",tolower(series),
+               "lp",
+               fig.ext)
+knitr::include_graphics(img)
+```
 
 ### Implicit forecasts (2)
 
-<!-- ```{r retailxiprkhs, echo=FALSE, out.width="100%"} -->
-<!-- img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series), -->
-<!--                "rkhs_arima", -->
-<!--                fig.ext) -->
-<!-- knitr::include_graphics(img) -->
-<!-- ``` -->
+```{r retailxiprkhs, echo=FALSE, out.width="100%"}
+img <- sprintf("img/%s_%s_implicit_forecast.%s",tolower(series),
+               "rkhs_arima",
+               fig.ext)
+knitr::include_graphics(img)
+```
+
+### How to apply a filter {.allowframebreaks}
+
+\footnotesize
+
+`rjdfilters::jfilter()` to apply a filter with asymmetric 
+
+```{r,}
+y <- retailsa$AllOtherGenMerchandiseStores
+sc <- henderson(y, length = 13, musgrave = FALSE)
+icr <- ic_ratio(y, sc)
+icr
+daf <- lp_filter(horizon = 6, ic = icr, endpoints = "DAF")$filters.coef
+round(daf, 3)
+trend <- jfilter(y, daf)
+```
+
+
+`rjdfilters::x11()` to change the filters in X-11
+
+```{r x11}
+decomp_daf = x11(y, trend.coefs = daf)
+daf_modif <- daf
+# We change the final filter to a asymmetric filter
+daf_modif[,"q=6"] <- lp_filter(endpoints = "LC")$filters.coef[,"q=0"]
+decomp_daf_modif = x11(y, trend.coefs = daf_modif)
+
+plot(y)
+lines(decomp_daf$decomposition[,"t"], col = "red")
+lines(decomp_daf_modif$decomposition[,"t"], col = "green")
+```
+
+
+# Conclusion
+
+### Conclusion
+
+With `rjdfilters` you can already:
+
+- create and manipulate moving averages
+
+- used different technics for real-time trend-cycle estimates
+
+- custom X-11 filters
+
+
+
+. . .
+
+What might be implemented in the future:
+
+- Class on finiteFilters (central filter with asymmetric filters) to easily combined them
+
+- Bandwidth selection methods: IC ratios, CV, AIC, etc.
+
+- More ideas?
 
 
 ### Thank you for your attention {.noframenumbering}
