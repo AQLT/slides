@@ -28,7 +28,7 @@ natbiboptions: [numbers]
 knitr::opts_chunk$set(echo = TRUE,
                       cache = F,
                       fig.align = 'center',
-                      fig.path = "img/",
+                      fig.path = "img/markdown-",
                       out.width ="100%")
 library(knitr)
 library(kableExtra)
