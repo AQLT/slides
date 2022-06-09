@@ -2,11 +2,11 @@
 
 ## 2022
 
-- June 2022: [Seasonal Adjustment Practitioners Workshop (SAPW)](https://aqlt.github.io/slides/2022 - 06 - SAPW/Slides_AQLT.pdf)
+- June 2022: [Seasonal Adjustment Practitioners Workshop (SAPW)](https://aqlt.github.io/slides/2022%20-%2006%20-%20SAPW/Slides_AQLT.pdf)
 
-- May 2022: [Journée Econometrie Appliquée Michel Terraza](https://aqlt.github.io/slides/2022 - 05 - JEAMT/Slides_AQLT.pdf)
+- May 2022: [Journée Econometrie Appliquée Michel Terraza](https://aqlt.github.io/slides/2022%20-%2005%20-%20JEAMT/Slides_AQLT.pdf)
 
-- March 2022: [JMS](https://aqlt.github.io/slides/2021%20-%2010%20- TSACE/calendars_doc.pdf)
+- March 2022: [JMS](https://aqlt.github.io/slides/2021%20-%2010%20-%20TSACE/calendars_doc.pdf)
 
 ## 2021
 
