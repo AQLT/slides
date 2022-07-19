@@ -2,6 +2,8 @@
 
 ## 2022
 
+- September 2022 : [Séminaire interne D2E](https://aqlt.github.io/slides/2022%20-%2009%20-%20D2E/Slides_AQLT.pdf)
+
 - June 2022: [Seasonal Adjustment Practitioners Workshop (SAPW)](https://aqlt.github.io/slides/2022%20-%2006%20-%20SAPW/Slides_AQLT.pdf)
 
 - May 2022: [Journée Econometrie Appliquée Michel Terraza](https://aqlt.github.io/slides/2022%20-%2005%20-%20JEAMT/Slides_AQLT.pdf)
@@ -10,7 +12,7 @@
 
 ## 2021
 
-- October 2021: [TSACE](https://aqlt.github.io/slides/2021%20-%2010%20- TSACE/calendars_doc.pdf)
+- October 2021: [TSACE](https://aqlt.github.io/slides/2021%20-%2010%20-%20TSACE/calendars_doc.pdf)
 
 - August 2021: [JSM](https://aqlt.github.io/slides/2021%20-%2008%20-%20JSM/Slides_AQLT.pdf)
 
