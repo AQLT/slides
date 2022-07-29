@@ -9,7 +9,8 @@ division: |
     | Insee
     | Session 10: Seasonal and Calendar Adjustment
 logo: "img/logobeamer.png"
-automaticcontents: false
+automaticcontents: true
+automaticcontentstext: "Contents"
 output:
     beamer_presentation:
         template: template_Beamer.tex
@@ -28,14 +29,24 @@ natbiboptions: [numbers]
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      cache = F, eval = F,
+                      cache = F, 
                       fig.align = 'center',
                       fig.path = "img/markdown-")
 library(knitr)
 library(kableExtra)
-library(rjdfilters)
 library(microbenchmark)
 library(ggplot2)
+library(rjd3toolkit)
+library(rjd3modelling)
+library(rjd3sa)
+library(rjd3arima)
+library(rjd3x13)
+library(rjd3tramoseats)
+library(RJDemetra3)
+library(rjdfilters)
+library(rjd3sts)
+library(rjd3highfreq)
+library(rjd3bench)
 fig.ext <- "pdf"
 # load(file = "tables.RData")
 # mae <- readRDS("tables_revisions.RDS")$MAE
@@ -110,20 +121,93 @@ Contains several utility functions used in other `rjd` packages and several func
 
 - Normality tests: Bowman-Shenton (`bowmanshenton()`), Doornik-Hansen (`doornikhansen()`), Jarque-Bera (`jarquebera()`)
 
-- \bclampe Runs tests (randomness of data):  mean or the median (`testofruns()`) or up and down runs test (`testofupdownruns()`) -> not available in R
+- \bclampe Runs tests (randomness of data):  mean or the median (`testofruns()`) or up and down runs test (`testofupdownruns()`)
 
 - autocorrelations function (usual, inverse, partial)
 
 - `aggregate` to aggregate a time serie to a higher frequency
 
+### Examples  {.allowframebreaks}
+
+\footnotesize
+
+```{r}
+library(rjd3toolkit)
+set.seed(100)
+x = rnorm(1000);y = rlnorm(1000)
+bowmanshenton(x) # normal distribution
+bowmanshenton(y) # log-normal distribution
+testofruns(x) # random data
+testofruns(y) # random data
+testofruns(1:1000) # non-random data
+autocorrelations(x)
+autocorrelations.inverse(x)
+autocorrelations.partial(x)
+```
+
+
 ## rjd3modelling
 ### rjd3modelling
 
-- \bclampe create user-defined calendar and trading-days regressors
+- \bclampe create user-defined calendar and trading-days regressors: 
+  `calendar.new()` (create a new calendar), `calendar.holiday()` (add a specific holiday, e.g. christmas),
+  `calendar.easter()` (easter related day) and calendar.fixedday()`
 
 - \bclampe create outliers regressors (AO, LS, TC, SO, Ramp, intervention variables), calendar related regressors (stock, leap year, periodic dummies and contrasts, trigonometric variables) -> to be added quadratic ramps
 
 - \bclampe  Range-mean regression test (to choose log transformation), Canova-Hansen (`td.ch()`) and trading-days f-test (`td.f()`)
+
+### Example of a specific calendar  {.allowframebreaks}
+
+```{r}
+library(rjd3modelling)
+fr_cal <- calendar.new()
+calendar.holiday(fr_cal, "NEWYEAR")
+calendar.holiday(fr_cal, "EASTERMONDAY")
+calendar.holiday(fr_cal, "MAYDAY")
+calendar.fixedday(fr_cal, month = 5, day = 8,
+                  start = "1953-03-20")
+# calendar.holiday(fr_cal, "WHITMONDAY") # Equivalent to:
+calendar.easter(fr_cal, offset = 61)
+
+calendar.fixedday(fr_cal, month = 7, day = 14)
+# calendar.holiday(fr_cal, "ASSUMPTION")
+calendar.easter(fr_cal, offset = 61)
+calendar.holiday(fr_cal, "ALLSAINTSDAY")
+calendar.holiday(fr_cal, "ARMISTICE")
+calendar.holiday(fr_cal, "CHRISTMAS")
+```
+
+\footnotesize
+Use `holidays()` to get the days of the holidays and `htd()` to get the trading days regressors
+
+```{r}
+holidays(fr_cal, "2020-12-24", 10,single = T)
+s = ts(0, start = 2020, end = c(2020, 11), frequency = 12)
+# Trading-days regressors (each day has a different effect, sunday as contrasts)
+td_reg <- htd(fr_cal, s = s, groups = c(1, 2, 3, 4, 5, 6, 0))
+# Working-days regressors (Monday = ... = Friday; Saturday = Sunday = contrasts)
+wd_reg <- htd(fr_cal, s = s, groups = c(1, 1, 1, 1, 1, 0, 0))
+# Monday = ... = Friday; Saturday; Sunday = contrasts
+wd_reg <- htd(fr_cal, s = s, groups = c(1, 1, 1, 1, 1, 2, 0))
+wd_reg
+```
+
+
+### Example of outliers {.allowframebreaks} 
+
+\footnotesize
+
+```{r outplot}
+s = ts(0, start = 2000, end = 2005, frequency = 12)
+ao = ao.variable(s = s, date = "2001-03-01")
+ls = ls.variable(s = s, date = "2001-01-01")
+tc = tc.variable(s = s, date = "2001-01-01", rate = 0.7)
+so = so.variable(s = s, date = "2003-05-01")
+ramp = ramp.variable(s = s, range = c("2001-01-01","2001-12-01"))
+plot(ts.union(ao, ls, tc, so, ramp), plot.type = "single",
+     col = c("red","lightgreen","orange","blue","black"))
+```
 
 ## rjd3sa
 ### rjd3sa
@@ -145,6 +229,18 @@ Seasonality tests :
 - QS Seasonality Test (`seasonality.qs()`)
 
 # Seasonal adjustment packages
+
+\bcattention Always correct the trend and remove the mean before seasonality tests:
+\footnotesize
+```{r}
+library(rjd3sa)
+y = diff(rjd3toolkit::ABS$X0.2.09.10.M, 1); y = y - mean(y)
+seasonality.f(y, 12)
+seasonality.friedman(y, 12)
+seasonality.kruskalwallis(y, 12)
+seasonality.combined(y, 12)
+```
+
 
 
 ## rjd3arima
@@ -186,6 +282,11 @@ autoplot(m)+theme(axis.text=element_text(size=16),
 ```
 
 
+### Exemples
+
+
+
+
 ## rjd3tramoseats
 ### rjd3tramoseats
 
@@ -207,6 +308,9 @@ Functions to manipulate JDemetra+ workspaces:
 
 - Will contain all the functionalities of `rjdworkspace`
 
+
+## rjdhighfreq
+
 ### rjd3highfreq
 
 Seasonal adjustment of high frequency data :
@@ -222,24 +326,6 @@ See Session 3: High Frequency Data
 
 # Other packages
 
-## rjd3sts
-
-### rjd3sts
-
-Interface to structural time series and state space models
-Functions to manipulate JDemetra+ workspaces:
-
-- Still in construction: you can load an existing workspace but not create a new one
-
-- Will contain all the functionalities of `rjdworkspace`
-
-
-## rjd3bench
-### rjd3bench
-
-Benchmarking and temporal disaggregation
-
-Several examples here: https://github.com/palatej/test_rjd3bench
 
 ## rjdfilters
 
@@ -335,12 +421,55 @@ plot(window(ts.union(y, trend, sa), start = 2000),
       col = c("black","orange", "lightblue"))
 ```
 
-### Merci pour votre attention {.noframenumbering}
 
-Package \faIcon{r-project}{}:
+## rjd3sts
+
+### rjd3sts
+
+Interface to structural time series and state space models
+
+Several examples available here https://github.com/palatej/test_rjd3sts
+
+
+
+## rjd3bench
+### rjd3bench
+
+Benchmarking and temporal disaggregation
+
+Several examples here: https://github.com/palatej/test_rjd3bench
+
+
+# Conclusion
+
+### Conclusion
+
+With JDemetra+ 3.0, lots of new `r fa_r_project` packages are coming, which will help:
+
+- create new trainings thanks to a deeper acces to all the
+
+### Thank you for your attention {.noframenumbering}
+
+Packages \faIcon{r-project}{}:
+
+\href{https://github.com/palatej/rjd3toolkit}{\faGithub{} palatej/rjd3toolkit}
+
+\href{https://github.com/palatej/rjd3modelling}{\faGithub{} palatej/rjd3modelling}
+
+\href{https://github.com/palatej/rjd3sa}{\faGithub{} palatej/rjd3sa}
+
+\href{https://github.com/palatej/rjd3arima}{\faGithub{} palatej/rjd3arima}
+
+\href{https://github.com/palatej/rjd3x13}{\faGithub{} palatej/rjd3x13}
+
+\href{https://github.com/palatej/rjd3tramoseats}{\faGithub{} palatej/rjd3tramoseats}
+
+\href{https://github.com/palatej/rjdemetra3}{\faGithub{} palatej/rjdemetra3}
 
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
-Version en développement \href{https://github.com/AQLT/rjdfilters}{\faGithub{} AQLT/rjdfilters}
+\href{https://github.com/palatej/rjd3sts}{\faGithub{} palatej/rjd3sts}
 
-\faIcon{desktop} Codes : <https://github.com/AQLT/articles>
+\href{https://github.com/palatej/rjd3highfreq}{\faGithub{} palatej/rjd3highfreq}
+
+\href{https://github.com/palatej/rjd3bench}{\faGithub{} palatej/rjd3bench}
