@@ -46,7 +46,7 @@ library(RJDemetra3)
 library(rjdfilters)
 library(rjd3sts)
 library(rjd3highfreq)
-library(rjd3bench)
+# library(rjd3bench)
 fig.ext <- "pdf"
 # load(file = "tables.RData")
 # mae <- readRDS("tables_revisions.RDS")$MAE
@@ -473,3 +473,6 @@ Packages \faIcon{r-project}{}:
 \href{https://github.com/palatej/rjd3highfreq}{\faGithub{} palatej/rjd3highfreq}
 
 \href{https://github.com/palatej/rjd3bench}{\faGithub{} palatej/rjd3bench}
+
+\href{https://github.com/AQLT/ggdemetra3}{\faGithub{} AQLT/ggdemetra3}
+
