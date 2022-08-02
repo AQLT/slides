@@ -46,6 +46,7 @@ library(RJDemetra3)
 library(rjdfilters)
 library(rjd3sts)
 library(rjd3highfreq)
+library(ggdemetra3)
 # library(rjd3bench)
 fig.ext <- "pdf"
 # load(file = "tables.RData")
@@ -83,7 +84,7 @@ def.par <- par(no.readonly = TRUE)
 
 . . .
 
--   With the development of JDemetra+ 3.0, more than 11 R packages are being developped! Not only on seasonal adjustment!
+-   With the development of JDemetra+ 3.0, more than 12 R packages are being developped! Not only on seasonal adjustment!
 
 ### Introduction (2)
 
@@ -102,6 +103,7 @@ remotes::install_github("palatej/rjdfilters")
 remotes::install_github("palatej/rjd3sts")
 remotes::install_github("palatej/rjd3highfreq")
 remotes::install_github("palatej/rjd3bench")
+remotes::install_github("AQLT/ggdemetra3")
 ```
 
 ### Introduction (3)
@@ -210,7 +212,7 @@ plot(ts.union(ao, ls, tc, so, ramp), plot.type = "single",
 ```
 
 ## rjd3sa
-### rjd3sa
+### rjd3sa (1)
 
 Seasonality tests :
 
@@ -228,8 +230,8 @@ Seasonality tests :
 
 - QS Seasonality Test (`seasonality.qs()`)
 
-# Seasonal adjustment packages
 
+### rjd3sa (2)
 \bcattention Always correct the trend and remove the mean before seasonality tests:
 \footnotesize
 ```{r}
@@ -242,13 +244,15 @@ seasonality.combined(y, 12)
 ```
 
 
+# Seasonal adjustment packages
+
 
 ## rjd3arima
 ### rjd3arima
 
 Utility functions used in `rjd3x13` and `rjd3tramoseats` to set the specification of the preprocessing:
 
-`set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()`, `add_ramp()` 
+`set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()` and `remove_outlier()`, `add_ramp()` and `remove`_ramp()`
 
 \bcinterdit `add_usrdefvar()` not yet available
 
@@ -282,7 +286,25 @@ autoplot(m)+theme(axis.text=element_text(size=16),
 ```
 
 
-### Exemples
+### Exemple {.allowframebreaks}
+\footnotesize
+
+```{r x13, out.height="50%"}
+y = rjd3toolkit::ABS$X0.2.09.10.M
+spec = spec_x13_default("rsa5c") |> set_easter(type = "unused") |> 
+  set_outlier(outliers.type = c("AO", "LS")) |> 
+  set_tradingdays(test = "None") |> set_x11(henderson.filter = 13) |> 
+  add_outlier(type = "TC", date = "2000-06-01",
+              name = "My TC in 2000-06") 
+m = rjd3x13::fast.x13(y, spec)
+# m is a list with several outputs:
+names(m)
+m
+summary(m$preprocessing)
+plot(m)
+```
+
+
 
 
 
@@ -298,13 +320,29 @@ Main functions:
 
 - \bclampe Refresh policies: `tramo.refresh()` and `tramoseats.refresh()`
 
+
+### Exemple {.allowframebreaks}
+
+\footnotesize
+
+```{r tramoseats, out.height="70%"}
+spec = spec_tramoseats_default("rsafull") |> 
+  set_easter(type = "IncludeEasterMonday") |> 
+  set_tradingdays(test = "Separate_T") |> 
+  set_seats(algorithm = "KalmanSmoother")
+m = rjd3tramoseats::tramoseats(y, spec)
+# More informations:
+names(m)
+m$result
+```
+
 ## rjdemetra3
 
 ### rjdemetra3
 
 Functions to manipulate JDemetra+ workspaces:
 
-- Still in construction: you can load an existing workspace but not create a new one
+- Still in construction: you can load an existing workspace but not create a new one (use `jws.load()` for example)
 
 - Will contain all the functionalities of `rjdworkspace`
 
@@ -317,11 +355,11 @@ Seasonal adjustment of high frequency data :
 
 - \bclampe fractional and multi airline decomposition 
 
-- STL/Loess
-
 - \bclampe Extension of X-11 decomposition with non integer periodicity
 
-See Session 3: High Frequency Data
+- STL/Loess
+
+See Session 3: High Frequency Data and https://github.com/palatej/test_rjd3hf
 
 
 # Other packages
@@ -440,17 +478,54 @@ Benchmarking and temporal disaggregation
 Several examples here: https://github.com/palatej/test_rjd3bench
 
 
+## ggdemetra3
+### ggdemetra3 {.allowframebreaks}
+
+Like `ggdemetra` but compatible with `rjdemetra3`: ggplot2 to add seasonal adjustment statistics to your plot. Also compatible with high-frequency methods (`"x11-extended"`, `"fractionalairline"`, `"multiairline"` or `"stl"`):
+
+```{r ggdemetra3, out.height="85%"}
+p <- ggplot(data = usclaims,
+            mapping = aes(x = date, y = `Initial claims`)) +
+    geom_line() +
+    labs(title = "US initial claims",
+         x = NULL, y = NULL) +
+    geom_sa(component = "sa", linetype = 2,frequency = 52,
+            method ="multiairline",
+            col = "red") 
+p
+```
+
+
+
+
+
 # Conclusion
 
 ### Conclusion
 
-With JDemetra+ 3.0, lots of new `r fa_r_project` packages are coming, which will help:
+With JDemetra+ 3.0, lots of new `r fa_r_project` packages are coming:
 
-- create new trainings thanks to a deeper acces to all the
+- On time series analysis and seasonal adjustment (much faster than standard packages)
+
+- New developments on seasonal adjustment will be available (e.g. high-frequency data)
+
+- Allow to create new trainings thanks to a deeper acces to all the functionalities of JDemetra+
+
+. . .
+
+Many ways to contribute:
+
+- Testing it and reporting issues
+
+- Developping new tools (other packages, new functions, etc.)
+
 
 ### Thank you for your attention {.noframenumbering}
 
 Packages \faIcon{r-project}{}:
+
+::::{.columns}
+:::{.column width=40%}
 
 \href{https://github.com/palatej/rjd3toolkit}{\faGithub{} palatej/rjd3toolkit}
 
@@ -465,6 +540,8 @@ Packages \faIcon{r-project}{}:
 \href{https://github.com/palatej/rjd3tramoseats}{\faGithub{} palatej/rjd3tramoseats}
 
 \href{https://github.com/palatej/rjdemetra3}{\faGithub{} palatej/rjdemetra3}
+:::
+:::{.column width=50%}
 
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
@@ -475,4 +552,6 @@ Packages \faIcon{r-project}{}:
 \href{https://github.com/palatej/rjd3bench}{\faGithub{} palatej/rjd3bench}
 
 \href{https://github.com/AQLT/ggdemetra3}{\faGithub{} AQLT/ggdemetra3}
+:::
+::::
 
