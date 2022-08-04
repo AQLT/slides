@@ -685,6 +685,7 @@ knitr::include_graphics(img)
 Actuellement on utilise toujours autant de points dans le passé (6) que la MM symétriques pour les estimations intermédiaires : hypothèse raisonnable ? Faudrait-il utiliser plus ou moins de points dans le passé ?
 
 Critères classiques : validation croisée, CP-Mallow, AIC, Rice-T :
+
 $$
 CV(\hat\mu)=\frac{1}{n-2h}\sum_{t=h+1}^{n-h}\frac{(y_t-\hat \mu_t)^2}{(1-w_0)^2}
 $$
@@ -698,7 +699,6 @@ Pistes à explorer :
 1. Méthodes plus complexes de sélection de la fenêtre (e.g. Fan et Gijbels 1992)
 
 2. Méthode des plus proches voisins : utiliser toujours le même nombre de points (e.g. toujours 13 points)
-
 
 ## Paramétrisation locale des méthodes polynomiales
 
@@ -787,6 +787,7 @@ img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
                fig.ext)
 knitr::include_graphics(img)
 ```
+
 
 # Conclusion
 
