@@ -43,14 +43,13 @@ library(rjd3arima)
 library(rjd3x13)
 library(rjd3tramoseats)
 library(RJDemetra3)
-library(rjdfilters)
-library(rjd3sts)
-library(rjd3highfreq)
 library(ggdemetra3)
+
+# library(rjd3sts)
+# library(rjd3highfreq)
+
 # library(rjd3bench)
 fig.ext <- "pdf"
-# load(file = "tables.RData")
-# mae <- readRDS("tables_revisions.RDS")$MAE
 is_html <- knitr::is_html_output()
 is_latex <- knitr::is_latex_output()
 fig.ext = "pdf"
@@ -61,6 +60,7 @@ if(is_html){
     if(is_latex){
         fa_arrow_circle_right <- "\\faIcon{arrow-circle-right}"
         fa_r_project <- "\\faIcon{r-project}"
+        fa_java <- "\\faIcon{java}"
     }else {
         fa_arrow_circle_right <- "->"
         fa_r_project <- 'R'
@@ -76,19 +76,23 @@ def.par <- par(no.readonly = TRUE)
 
 -   In March 2019, `RJDemetra` was published on CRAN:
 
-    -   first R package that enables to use TRAMO-SEATS
+    -   first `r fa_r_project` package that enables to use TRAMO-SEATS
 
-    -   faster than existing R packages on seasonal adjustment
+    -   faster than existing `r fa_r_project` packages on seasonal adjustment
 
     -   enables to interact with JDemetra+ "workspaces" used in production
 
 . . .
 
--   With the development of JDemetra+ 3.0, more than 12 R packages are being developped! Not only on seasonal adjustment!
+-   With the development of JDemetra+ 3.0, more than 12 `r fa_r_project` packages are being developped! Not only on seasonal adjustment!
+
+. . .
+
+- They are require Java `r fa_java` $\geq$ 17 (see for example installation manual of `RJDemetra`: <https://github.com/jdemetra/rjdemetra/wiki/Installation-manual>)
 
 ### Introduction (2)
 
-They are all available in GitHub and require Java $\geq$ 17 (see for example installation manual of `RJDemetra`: <https://github.com/jdemetra/rjdemetra/wiki/Installation-manual>):
+They are all available in GitHub, currently:
 
 ```{r, eval=FALSE}
 # install.packages("remotes")
@@ -110,8 +114,7 @@ remotes::install_github("AQLT/ggdemetra3")
 
 ![](img/diag.pdf)
 
-If you don't know what to do: install all of them!
-
+And it's just the beggining!
 
 # Utility packages
 
@@ -214,7 +217,7 @@ plot(ts.union(ao, ls, tc, so, ramp), plot.type = "single",
 ## rjd3sa
 ### rjd3sa (1)
 
-Seasonality tests :
+Seasonality tests:
 
 - Canova-Hansen (`seasonality.canovahansen()`)
 
@@ -347,11 +350,11 @@ Functions to manipulate JDemetra+ workspaces:
 - Will contain all the functionalities of `rjdworkspace`
 
 
-## rjdhighfreq
+## rjd3highfreq
 
 ### rjd3highfreq
 
-Seasonal adjustment of high frequency data :
+Seasonal adjustment of high frequency data:
 
 - \bclampe fractional and multi airline decomposition 
 
@@ -364,6 +367,33 @@ See Session 3: High Frequency Data and https://github.com/palatej/test_rjd3hf
 
 # Other packages
 
+
+## ggdemetra3
+### ggdemetra3 {.allowframebreaks}
+
+Like `ggdemetra` but compatible with `rjdemetra3`: ggplot2 to add seasonal adjustment statistics to your plot. Also compatible with high-frequency methods (WIP): \footnotesize
+
+```{r ggdemetra3, out.height="85%", message = FALSE, warning = FALSE}
+library(ggdemetra3)
+spec <- spec_x13_default("rsa3") |> set_tradingdays(option = "WorkingDays")
+p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
+    geom_line() +
+    labs(title = "SA - IPI-FR",
+         x = NULL, y = NULL)
+p_sa <- p_ipi_fr +
+    geom_sa(component = "y_f(12)", linetype = 2,
+            spec = spec) + 
+    geom_sa(component = "sa", color = "red") +
+    geom_sa(component = "sa_f", color = "red", linetype = 2)
+p_sa
+p_sa + 
+    geom_outlier(geom = "label_repel",
+                 coefficients = TRUE,
+                 ylim = c(NA, 65), force = 10,
+                 arrow = arrow(length = unit(0.03, "npc"),
+                               type = "closed", ends = "last"),
+                 digits = 2)
+```
 
 ## rjdfilters
 
@@ -384,6 +414,10 @@ See Session 3: High Frequency Data and https://github.com/palatej/test_rjd3hf
 
 - \bclampe change the filter used in X-11 for TC extraction
 
+
+```{r, include = FALSE}
+library(rjdfilters)
+```
 
 ### Create moving average `moving_average()` {.allowframebreaks}
 
@@ -478,22 +512,7 @@ Benchmarking and temporal disaggregation
 Several examples here: https://github.com/palatej/test_rjd3bench
 
 
-## ggdemetra3
-### ggdemetra3 {.allowframebreaks}
 
-Like `ggdemetra` but compatible with `rjdemetra3`: ggplot2 to add seasonal adjustment statistics to your plot. Also compatible with high-frequency methods (`"x11-extended"`, `"fractionalairline"`, `"multiairline"` or `"stl"`):
-
-```{r ggdemetra3, out.height="85%"}
-p <- ggplot(data = usclaims,
-            mapping = aes(x = date, y = `Initial claims`)) +
-    geom_line() +
-    labs(title = "US initial claims",
-         x = NULL, y = NULL) +
-    geom_sa(component = "sa", linetype = 2,frequency = 52,
-            method ="multiairline",
-            col = "red") 
-p
-```
 
 
 

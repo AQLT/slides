@@ -481,7 +481,23 @@ y_{t|t+q+1}
 \right]
 $$
 
-### Séries simulées
+### Séries simulées {.allowframebreaks}
+
+De façon similaire à Darne et Dagum (2009), on simule $y_t= C_t+ T_t + I_t$ entre janvier 1960 et décembre 2020 :
+
+- $C_t = \rho [\cos (2 \pi t / \lambda) +\sin (2 \pi t / \lambda)]$, $\lambda=72$ (cycles de 6 ans, 19 points de retournement détectables) 
+
+- $T_t = T_{t-1} + \nu_t$ avec $\nu_t \sim \mathcal{N}(0, \sigma_\nu^2)$, $\sigma_\nu=0,08$
+
+- $I_t = e_t$ avec $e_t \sim \mathcal{N}(0, \sigma_e^2)$
+
+Niveau de variabilité :
+
+- variabilité faible (rapport signal/bruit fort) : $\sigma_e^2=0,2$ et $\rho = 3,0,\, 3,5$ ou $4,0$ (0,9 $\geq$ I-C ratio $\geq$ 0,7)
+
+- variabilité moyenne (rapport signal/bruit moyen) : $\sigma_e^2=0,3$ et $\rho = 1,5,\, 2,0$ ou $3,0$ (2,3 $\geq$ I-C ratio $\geq$ 1,4)
+
+- variabilité forte (rapport signal/bruit élevé) : $\sigma_e^2=0,4$ et $\rho = 0,5,\, 0,7$ ou $1,0$ (8,9 $\geq$ I-C ratio $\geq$ 5,2)
 
 
 ```{r, echo=FALSE, out.width="100%"}
@@ -763,12 +779,14 @@ knitr::include_graphics("img/local_ic_mm.pdf")
 
 Rmq: il y a (encore) de fortes révisions entre la première et deuxième estimation, on pourrait utiliser méthode QL pour avoir les estimateurs de la pente
 
-### Résultats
+### Résultats (1)
 
 ```{r, echo=FALSE, out.width="100%"}
 knitr::include_graphics("img/simul_phase_shift_localic_norev.pdf")
 ```
 
+
+### Résultats (2)
 
 Sur la série étudiée, les résultats sont très proches :
 
@@ -779,12 +797,14 @@ img <- sprintf("img/nber/%s_%s.%s",tolower(series),
 knitr::include_graphics(img)
 ```
 
+### Résultats (3)
 
 ```{r , echo=FALSE, out.width="100%"}
 series <- "RETAILx"
 img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
                "localic",
                fig.ext)
+
 knitr::include_graphics(img)
 ```
 
