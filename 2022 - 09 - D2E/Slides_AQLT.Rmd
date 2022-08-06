@@ -768,7 +768,7 @@ knitr::include_graphics("img/local_ic_tp.pdf")
 Idée : paramétrisation locale
 $$
 \begin{cases}
-\sigma^2=XXX\text{ (fixé)}\\
+\hat\sigma^2=\frac{1}{n-2h}\sum_{t=h+1}^{n-h}\frac{(y_t-\hat \mu_t)^2}{1-2w_0^2+\sum w_i^2}\\
 \beta_1\text{ et }\beta_2 \text{ estimés par MM (DAF par simplification)}
 \end{cases}
 $$
