@@ -398,9 +398,18 @@ asymétriques optimisés avec certains critères\\
 \faArrowCircleRight{} sous-optimal pour séries très variables
 \end{frame}
 
+\begin{frame}{Illustration avec climats des affaires dans l'industrie
+manufacturière}
+\protect\hypertarget{illustration-avec-climats-des-affaires-dans-lindustrie-manufacturiuxe8re}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/climats_ex} \end{center}
+\footnotesize
+
+\url{https://www.insee.fr/fr/statistiques/6522175}
+\end{frame}
+
 \begin{frame}[fragile]{Objectifs}
 \protect\hypertarget{objectifs}{}
-Objectifs cette étude :
+Objectifs de cette étude :
 
 \begin{itemize}
 \tightlist
@@ -993,6 +1002,11 @@ Fonction \texttt{rjdfilters::implicit\_forecast}
 \begin{center}\includegraphics[width=1\linewidth]{img/nber/retailx_rkhs_arima_implicit_forecast} \end{center}
 \end{frame}
 
+\begin{frame}{Retour sur les climats des affaires dans l'industrie}
+\protect\hypertarget{retour-sur-les-climats-des-affaires-dans-lindustrie}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/climats_prev_impl} \end{center}
+\end{frame}
+
 \hypertarget{extensions}{%
 \section{Extensions}\label{extensions}}
 
@@ -1073,7 +1087,7 @@ les périodes de points de retournement (\(\beta_1\simeq 0\))
 
 Idée : paramétrisation locale \[
 \begin{cases}
-\sigma^2=XXX\text{ (fixé)}\\
+\hat\sigma^2=\frac{1}{n-2h}\sum_{t=h+1}^{n-h}\frac{(y_t-\hat \mu_t)^2}{1-2w_0^2+\sum w_i^2}\\
 \beta_1\text{ et }\beta_2 \text{ estimés par MM (DAF par simplification)}
 \end{cases}
 \]
@@ -1176,8 +1190,8 @@ Package \faIcon{r-project}{}:
 
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
-Exemples d'applications :
-\url{https://aqlt.github.io/slides/2022\%20-\%2006\%20-\%20SAPW/Slides_AQLT.pdf}
+Plus d'exemples sur le package, voir SAPW 2022 :
+\url{https://community.amstat.org/governmentstatisticssection/conferences/pastconference210/seasonal-adjustment-practitioners-workshop-2022}
 \end{frame}
 
 \end{document}
