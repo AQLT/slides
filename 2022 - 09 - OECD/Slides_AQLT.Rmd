@@ -152,6 +152,7 @@ autocorrelations.partial(x)
 
 
 ## rjd3modelling
+
 ### rjd3modelling
 
 - \bclampe create user-defined calendar and trading-days regressors: 
@@ -161,6 +162,9 @@ autocorrelations.partial(x)
 - \bclampe create outliers regressors (AO, LS, TC, SO, Ramp, intervention variables), calendar related regressors (stock, leap year, periodic dummies and contrasts, trigonometric variables) -> to be added quadratic ramps
 
 - \bclampe  Range-mean regression test (to choose log transformation), Canova-Hansen (`td.ch()`) and trading-days f-test (`td.f()`)
+
+- specification functions for `rjd3x13` and `rjd3tramoseats`
+
 
 ### Example of a specific calendar  {.allowframebreaks}
 
@@ -253,22 +257,22 @@ seasonality.combined(y, 12)
 ## rjd3arima
 ### rjd3arima
 
-Utility functions used in `rjd3x13` and `rjd3tramoseats` to set the specification of the preprocessing:
+`rjd3arima` is devoted to formatting the output of Arima related results 
+
+## rjd3x13 and rjd3tramoseats
+
+### Common functions
+
+In `RJDemetra` you have one function to set the specification (`regarima_spec_x13()`, `regarima_spec_tramo()`, `x13_spec()` and `tramoseats_spec()`) now one function for each part of the specification
+
+. . .
+
+Common functions (defined in `rjd3modelling`) to set the specification of the preprocessing:
 
 `set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()` and `remove_outlier()`, `add_ramp()` and `remove`_ramp()`
 
 \bcinterdit `add_usrdefvar()` not yet available
 
-. . .
-
-Functions commons to RegARIMA and TRAMO
-
-. . .
-
-In `RJDemetra` you have one function to set the specification (`regarima_spec_x13()`, `regarima_spec_tramo()`, `x13_spec()` and `tramoseats_spec()`) now one function for each part of the specification
-
-
-## rjd3x13
 ### rjd3x13
 
 Main functions:
@@ -293,6 +297,7 @@ autoplot(m)+theme(axis.text=element_text(size=16),
 \footnotesize
 
 ```{r x13, out.height="50%"}
+library(rjd3modelling);library(rjd3x13)
 y = rjd3toolkit::ABS$X0.2.09.10.M
 spec = spec_x13_default("rsa5c") |> set_easter(type = "unused") |> 
   set_outlier(outliers.type = c("AO", "LS")) |> 

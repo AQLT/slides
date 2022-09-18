@@ -192,9 +192,17 @@ Solution classique : prolonger la série par prévision et utiliser filtre symé
 \faArrowCircleRight{} revient à utiliser des filtres asymétriques optimisés avec certains critères   
 \faArrowCircleRight{} sous-optimal pour séries très variables
 
+### Illustration avec climats des affaires dans l'industrie manufacturière
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/climats_ex.pdf")
+```
+\footnotesize 
+https://www.insee.fr/fr/statistiques/6522175
+
 ### Objectifs
 
-Objectifs cette étude :
+Objectifs de cette étude :
 
 -  Étudier et comparer des approches récentes pour l'extraction de la tendance-cycle en temps réel : Régression polynomiale locale (Proietti et Luati 2008); RKHS (Dagum et Bianconcini 2016) ; Optimisation sous contrainte d’une somme pondérée de critères (Grun-Rehomme *et ali* 2018, Wildi et McElroy, 2019)
 
@@ -692,6 +700,12 @@ knitr::include_graphics(img)
 ```
 
 
+### Retour sur les climats des affaires dans l'industrie
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/climats_prev_impl.pdf")
+```
+
 # Extensions
 
 ## Choix de la fenêtre
@@ -854,4 +868,5 @@ Package \faIcon{r-project}{}:
 
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
-Exemples d'applications : https://aqlt.github.io/slides/2022%20-%2006%20-%20SAPW/Slides_AQLT.pdf
+Plus d'exemples sur le package, voir SAPW 2022 :
+https://community.amstat.org/governmentstatisticssection/conferences/pastconference210/seasonal-adjustment-practitioners-workshop-2022
