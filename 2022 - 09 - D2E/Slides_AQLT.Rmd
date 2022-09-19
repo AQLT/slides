@@ -706,6 +706,10 @@ knitr::include_graphics(img)
 knitr::include_graphics("img/climats_prev_impl.pdf")
 ```
 
+\footnotesize
+
+Méthode utilisée : LC avec IC-Ratio fixé
+
 # Extensions
 
 ## Choix de la fenêtre
