@@ -310,8 +310,10 @@ Critères importants de la tendance-cycle :
 
 \begin{frame}{Estimations de la TC et moyennes mobiles (1)}
 \protect\hypertarget{estimations-de-la-tc-et-moyennes-mobiles-1}{}
-\bcattention objectif différent de celui des méthodes d'analyse des
+\bcattention Objectif différent de celui des méthodes d'analyse des
 cycles économiques
+
+\pause
 
 \(TC_t\) généralement estimée sur une série \highlight{sans}
 saisonnalité
@@ -575,8 +577,9 @@ dans \texttt{rjdfilters::lp\_filter()}
   \]
 \end{itemize}
 
-\faArrowCircleRight{} avec \(b=h+1\) et \(K_p\) spécifique on retrouve
-le filtre d'Henderson
+\onslide<3->{\faArrowCircleRight{} avec $b=h+1$ et $K_p$ spécifique on retrouve le filtre d'Henderson}
+
+\pause
 
 \begin{itemize}
 \tightlist
@@ -586,9 +589,10 @@ le filtre d'Henderson
   \]
 \end{itemize}
 
-\faArrowCircleRight{} \(b\) choisit par optimisation, e.g.~minimisant
-les révisions (\(b_{q,\Gamma}\)), les révisions liées à la fonction de
-gain (\(b_{q,G}\)) et celles liées au déphasage (\(b_{q,\varphi}\))
+\pause\pause\faArrowCircleRight{} \(b\) choisit par optimisation,
+e.g.~minimisant les révisions (\(b_{q,\Gamma}\)), les révisions liées à
+la fonction de gain (\(b_{q,G}\)) et celles liées au déphasage
+(\(b_{q,\varphi}\))
 \end{frame}
 
 \begin{frame}[fragile]{Filtres asymétriques}
@@ -888,24 +892,24 @@ Pour les séries à variabilité \textbf{faible} :
 Méthode & $q=0$ & $q=1$ & $q=2$ & $q=3$ & $q=4$ & $q=5$\\
 \midrule
 \addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$ieme{} et la dernière estimation}}}\\
+\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la dernière estimation}}}\\
 \hspace{1em}LC & 0,1 & 0,1 & 0,0 & 0,0 & 0,0 & 0,0\\
-\hspace{1em}\cellc{1}QL (rel) & 1,7 & 1,1 & 1,2 & 1,1 & 1,0 & 0,9\\
-\hspace{1em}CQ (rel) & 2,1 & 1,7 & \cellc{1} 4,9 & 3,1 & 1,8 & 1,1\\
+\hspace{1em}QL (rel) & 1,7 & 1,1 & 1,2 & 1,1 & 1,0 & 0,9\\
+\hspace{1em}\cellc{1}CQ (rel) & 2,1 & 1,7 & \cellc{1} 4,9 & 3,1 & 1,8 & 1,1\\
 \hspace{1em}DAF (rel) & 2,2 & 2,0 & 5,8 & 3,6 & 2,0 & 1,3\\
-\hspace{1em}$b_{q,\Gamma}$ (rel) & 6,6 & 5,0 & 1,3 & 6,1 & \cellc{1}7,3 & \cellc{1}7,5\\
-\hspace{1em}$b_{q,G} (rel)$ & \cellc{1}8,8 & \cellc{1}8,9 & 1,1 & 6,2 & 7,3 & 7,5\\
-\hspace{1em}$b_{q,\varphi}$ (rel) & 2,6 & 1,9 & 1,3 & 1,7 & 3,3 & \cellc{1}9,8\\
+\hspace{1em}\cellc{1}$b_{q,\Gamma}$ (rel) & 6,6 & 5,0 & 1,3 & 6,1 & \cellc{1}7,3 & \cellc{1}7,5\\
+\hspace{1em}\cellc{1}$b_{q,G} (rel)$ & \cellc{1}8,8 & \cellc{1}8,9 & 1,1 & 6,2 & 7,3 & 7,5\\
+\hspace{1em}\cellc{1}$b_{q,\varphi}$ (rel) & 2,6 & 1,9 & 1,3 & 1,7 & 3,3 & \cellc{1}9,8\\
 \hspace{1em}ARIMA (rel) & 1,4 & 1,2 & 1,6 & 1,6 & 1,3 & 1,0\\
 \addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$ieme{} et la $q+1$ieme{} estimation}}}\\
+\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la $q+1$\ieme{} estimation}}}\\
 \hspace{1em}LC & 0,1 & 0,0 & 0,0 & 0,1 & 0,0 & 0,0\\
 \hspace{1em}QL (rel) & 1,4 & 1,3 & 0,0 & 1,8 & 1,5 & 0,9\\
 \hspace{1em}CQ (rel) & 2,3 & 0,3 & 5,4 & 5,2 & 2,0 & 1,1\\
 \hspace{1em}DAF (rel) & 1,6 & 0,7 & 5,8 & 7,8 & 2,2 & 1,3\\
-\hspace{1em}$b_{q,\Gamma}$ (rel) & 3,4 & 22,8 & 8,7 & 0,5\cellc{1} & \cellc{1}12,8 & \cellc{1}7,5\\
-\hspace{1em}$b_{q,G} (rel)$ & \cellc{1}13,7 & \cellc{1}10,2 & \cellc{1}11,6 & 0,8 & \cellc{1}9,1 & 7,5\\
-\hspace{1em}$b_{q,\varphi}$ (rel) & 1,5 & 3,0 & 2,3 & 2,8 & 1,7 & \cellc{1}9,8\\
+\hspace{1em}\cellc{1}$b_{q,\Gamma}$ (rel) & 3,4 & 22,8 & 8,7 & 0,5\cellc{1} & \cellc{1}12,8 & \cellc{1}7,5\\
+\hspace{1em}\cellc{1}$b_{q,G} (rel)$ & \cellc{1}13,7 & \cellc{1}10,2 & \cellc{1}11,6 & 0,8 & \cellc{1}9,1 & 7,5\\
+\hspace{1em}\cellc{1}$b_{q,\varphi}$ (rel) & 1,5 & 3,0 & 2,3 & 2,8 & 1,7 & \cellc{1}9,8\\
 \hspace{1em}ARIMA (rel) & 2,5 & 1,2 & 0,3 & 2,1 & 1,7 & 1,0\\
 \bottomrule
 \end{tabular}
@@ -923,7 +927,7 @@ Pour les séries à variabilité \textbf{forte} :
 Méthode & $q=0$ & $q=1$ & $q=2$ & $q=3$ & $q=4$ & $q=5$\\
 \midrule
 \addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$ieme{} et la dernière estimation}}}\\
+\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la dernière estimation}}}\\
 \hspace{1em}LC & 1,6 & 0,6 & 0,3 & 0,2 & 0,3 & 0,1\\
 \hspace{1em}QL (rel) & 1,8 & 1,2 & 1,1 & 1,5 & 1,4 & 1,4\\
 \hspace{1em}CQ (rel) & 2,1 & 2,2 & 5,0 & 4,1 & 2,7 & 2,1\\
@@ -933,15 +937,15 @@ Méthode & $q=0$ & $q=1$ & $q=2$ & $q=3$ & $q=4$ & $q=5$\\
 \hspace{1em}$b_{q,\varphi}$ (rel) & 1,2 & 1,2 & 1,2 & 1,9 & 3,4 & 10,7\\
 \hspace{1em}ARIMA (rel) & 1,0 & 1,2 & 1,0 & 1,1 & 0,8 & 0,9\\
 \addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$ieme{} et la $q+1$ieme{} estimation}}}\\
+\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la $q+1$\ieme{} estimation}}}\\
 \hspace{1em}LC & 0,7 & 0,4 & 0,1 & 0,0 & 0,2 & 0,1\\
 \hspace{1em}QL (rel) & 2,0 & 1,5 & 0,1 & 3,5 & 2,5 & 1,4\\
-\hspace{1em}CQ (rel) & 1,7 & 0,2 &\cellc{1} 19,1 & 9,2 & 1,4 & 2,1\\
-\hspace{1em}DAF (rel) & \cellc{1}11,0 & 1,4 & 4,2 & \cellc{1}9,3 & 1,6 & 2,3\\
+\hspace{1em}\cellc{1}CQ (rel) & 1,7 & 0,2 &\cellc{1} 19,1 & 9,2 & 1,4 & 2,1\\
+\hspace{1em}\cellc{1}DAF (rel) & \cellc{1}11,0 & 1,4 & 4,2 & \cellc{1}9,3 & 1,6 & 2,3\\
 \hspace{1em}$b_{q,\Gamma}$ (rel) & 1,0 & 1,3 & 1,3 & 0,2 & 0,9 & 1,4\\
 \hspace{1em}$b_{q,G} (rel)$ & 0,9 & 1,5 & 8,5 & 0,2 & 0,8 & 1,4\\
-\hspace{1em}$b_{q,\varphi}$ (rel) & 1,2 & 1,6 & 3,3 & 4,3 & 1,0 & \cellc{1}10,7\\
-\hspace{1em}ARIMA (rel) & \cellc{1}32,8 & 1,4 & 0,8 & 1,6 & 0,9 & 0,9\\
+\hspace{1em}\cellc{1}$b_{q,\varphi}$ (rel) & 1,2 & 1,6 & 3,3 & 4,3 & 1,0 & \cellc{1}10,7\\
+\hspace{1em}\cellc{1}ARIMA (rel) & \cellc{1}32,8 & 1,4 & 0,8 & 1,6 & 0,9 & 0,9\\
 \bottomrule
 \end{tabular}
 \end{table}

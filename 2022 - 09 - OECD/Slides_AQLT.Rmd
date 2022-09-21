@@ -84,7 +84,7 @@ def.par <- par(no.readonly = TRUE)
 
 . . .
 
--   With the development of JDemetra+ 3.0, more than 12 `r fa_r_project` packages are being developped! Not only on seasonal adjustment!
+-   With the development of JDemetra+ 3.0, more than 13 `r fa_r_project` packages are being developped! Not only on seasonal adjustment!
 
 . . .
 
@@ -106,6 +106,7 @@ remotes::install_github("palatej/rjdemetra3")
 remotes::install_github("palatej/rjdfilters")
 remotes::install_github("palatej/rjd3sts")
 remotes::install_github("palatej/rjd3highfreq")
+remotes::install_github("palatej/rjd3stl")
 remotes::install_github("palatej/rjd3bench")
 remotes::install_github("AQLT/ggdemetra3")
 ```
@@ -114,7 +115,7 @@ remotes::install_github("AQLT/ggdemetra3")
 
 ![](img/diag.pdf)
 
-And it's just the beggining!
+And it's just the begining!
 
 # Utility packages
 
@@ -128,9 +129,9 @@ Contains several utility functions used in other `rjd` packages and several func
 
 - \bclampe Runs tests (randomness of data):  mean or the median (`testofruns()`) or up and down runs test (`testofupdownruns()`)
 
-- autocorrelations function (usual, inverse, partial)
+- autocorrelation functions (usual, inverse, partial)
 
-- `aggregate` to aggregate a time serie to a higher frequency
+- `aggregate()` to aggregate a time serie to a higher frequency
 
 ### Examples  {.allowframebreaks}
 
@@ -157,7 +158,7 @@ autocorrelations.partial(x)
 
 - \bclampe create user-defined calendar and trading-days regressors: 
   `calendar.new()` (create a new calendar), `calendar.holiday()` (add a specific holiday, e.g. christmas),
-  `calendar.easter()` (easter related day) and calendar.fixedday()`
+  `calendar.easter()` (easter related day) and `calendar.fixedday()`)
 
 - \bclampe create outliers regressors (AO, LS, TC, SO, Ramp, intervention variables), calendar related regressors (stock, leap year, periodic dummies and contrasts, trigonometric variables) -> to be added quadratic ramps
 
@@ -355,9 +356,9 @@ Functions to manipulate JDemetra+ workspaces:
 - Will contain all the functionalities of `rjdworkspace`
 
 
-## rjd3highfreq
+## rjd3highfreq and rjd3stl
 
-### rjd3highfreq
+### rjd3highfreq and rjd3stl
 
 Seasonal adjustment of high frequency data:
 
@@ -365,7 +366,8 @@ Seasonal adjustment of high frequency data:
 
 - \bclampe Extension of X-11 decomposition with non integer periodicity
 
-- STL/Loess
+`rjd3stl` : STL, MSTL, ISTL, loess 
+
 
 See Session 3: High Frequency Data and https://github.com/palatej/test_rjd3hf
 
@@ -518,11 +520,6 @@ Several examples here: https://github.com/palatej/test_rjd3bench
 
 
 
-
-
-
-
-
 # Conclusion
 
 ### Conclusion
@@ -570,6 +567,8 @@ Packages \faIcon{r-project}{}:
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
 \href{https://github.com/palatej/rjd3sts}{\faGithub{} palatej/rjd3sts}
+
+\href{https://github.com/palatej/rjd3stl}{\faGithub{} palatej/rjd3stl}
 
 \href{https://github.com/palatej/rjd3highfreq}{\faGithub{} palatej/rjd3highfreq}
 
