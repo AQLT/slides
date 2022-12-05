@@ -245,7 +245,7 @@ Scientific Session: Time series and longitudinal data analysis}
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-\begin{frame}[fragile]{JDemetra+ ???}
+\begin{frame}{JDemetra+ \bcquestion}
 \protect\hypertarget{jdemetra}{}
 \begin{itemize}
 \tightlist
@@ -261,22 +261,6 @@ Scientific Session: Time series and longitudinal data analysis}
 \item
   Implements the two leading SA methods X-13ARIMA and TRAMO-SEATS with a
   nice graphical interface
-\end{itemize}
-
-\pause
-
-\begin{itemize}
-\item
-  How to perform SA in \faIcon{r-project} ?
-
-  \begin{itemize}
-  \item
-    \texttt{stats::stl()} and \texttt{forecast::mstl()} for (M)STL: not
-    recommended because they cannot perform calendar adjustment
-  \item
-    \texttt{seasonal} and \texttt{x12}: interface to X-13-ARIMA-SEATS US
-    Census Bureau binaries
-  \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -294,6 +278,23 @@ Scientific Session: Time series and longitudinal data analysis}
     adjustment
   \item
     enables to interact with JDemetra+ ``workspaces'' used in production
+  \end{itemize}
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\item
+  Other \faIcon{r-project} packages around SA
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{stats::stl()} and \texttt{forecast::mstl()} for (M)STL: not
+    recommended because they cannot perform calendar adjustment\\
+  \item
+    \texttt{seasonal} and \texttt{x12}: interface to X-13-ARIMA-SEATS US
+    Census Bureau binaries
   \end{itemize}
 \end{itemize}
 
@@ -363,7 +364,8 @@ and several functions to perform tests:
 \item
   Normality tests: Bowman-Shenton (\texttt{bowmanshenton()}),
   Doornik-Hansen (\texttt{doornikhansen()}), Jarque-Bera
-  (\texttt{jarquebera()})
+  (\texttt{jarquebera()}, with more parameters than
+  \texttt{tseries::jarque.bera.test()})
 \item
   \bclampe Runs tests (randomness of data): mean or the median
   (\texttt{testofruns()}) or up and down runs test
@@ -381,27 +383,58 @@ and several functions to perform tests:
 \begin{frame}[fragile]{rjd3modelling}
 \protect\hypertarget{rjd3modelling-1}{}
 \begin{itemize}
+\tightlist
 \item
   \bclampe create user-defined calendar and trading-days regressors:
   \texttt{calendar.new()} (create a new calendar),
   \texttt{calendar.holiday()} (add a specific holiday, e.g.~christmas),
   \texttt{calendar.easter()} (easter related day) and
   \texttt{calendar.fixedday()})
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
 \item
   \bclampe create outliers regressors (AO, LS, TC, SO, Ramp,
   intervention variables), calendar related regressors (stock, leap
   year, periodic dummies and contrasts, trigonometric variables)
   -\textgreater{} to be added quadratic ramps
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
 \item
   \bclampe  Range-mean regression test (to choose log transformation),
   Canova-Hansen (\texttt{td.ch()}) and trading-days f-test
   (\texttt{td.f()})
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
 \item
   manipulation of ARIMA models (generation, sum, decomposition,
   estimation)
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
 \item
   functions to stationarise your series \texttt{do.stationary()},
   \texttt{differences()}, \texttt{differencing.fast()}
+\end{itemize}
+
+\pause
+
+\begin{itemize}
+\tightlist
 \item
   specification functions for \texttt{rjd3x13} and
   \texttt{rjd3tramoseats}
@@ -550,7 +583,7 @@ seasonality tests: \footnotesize
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(rjd3sa)}
 \NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{diff}\NormalTok{(rjd3toolkit}\SpecialCharTok{::}\NormalTok{ABS}\SpecialCharTok{$}\NormalTok{X0.}\DecValTok{2}\NormalTok{.}\DecValTok{09}\NormalTok{.}\FloatTok{10.}\NormalTok{M, }\DecValTok{1}\NormalTok{); y }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(y)}
-\CommentTok{\# Or :}
+\CommentTok{\# Or:}
 \NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ rjd3modelling}\SpecialCharTok{::}\FunctionTok{differences}\NormalTok{(rjd3toolkit}\SpecialCharTok{::}\NormalTok{ABS}\SpecialCharTok{$}\NormalTok{X0.}\DecValTok{2}\NormalTok{.}\DecValTok{09}\NormalTok{.}\FloatTok{10.}\NormalTok{M)}
 \FunctionTok{seasonality.f}\NormalTok{(y)}
 \end{Highlighting}
@@ -660,10 +693,11 @@ rjd3tramoseats}\label{rjd3x13-and-rjd3tramoseats}}
 
 \begin{frame}[fragile]{Common functions}
 \protect\hypertarget{common-functions}{}
-In \texttt{RJDemetra} you have one function to set the specification
-(\texttt{regarima\_spec\_x13()}, \texttt{regarima\_spec\_tramo()},
-\texttt{x13\_spec()} and \texttt{tramoseats\_spec()}) now one function
-for each part of the specification
+In \texttt{RJDemetra} you have \textbf{one function} to set the
+specification (\texttt{regarima\_spec\_x13()},
+\texttt{regarima\_spec\_tramo()}, \texttt{x13\_spec()} and
+\texttt{tramoseats\_spec()}) now one function for each part of the
+specification
 
 \pause
 
@@ -789,10 +823,9 @@ Main functions:
   \bclampe Refresh policies: \texttt{tramo.refresh()} and
   \texttt{tramoseats.refresh()}
 \end{itemize}
-\end{frame}
 
-\begin{frame}[fragile,allowframebreaks]{Exemple}
-\protect\hypertarget{exemple-1}{}
+\pause
+
 \scriptsize
 
 \begin{Shaded}
@@ -837,7 +870,7 @@ Seasonal adjustment of high frequency data:
   \bclampe Extension of X-11 decomposition with non integer periodicity
 \end{itemize}
 
-\texttt{rjd3stl} : STL, MSTL, ISTL, loess
+\texttt{rjd3stl}: STL, MSTL, ISTL, loess
 
 See next presentation of Anna Smyk
 \end{frame}
@@ -894,7 +927,7 @@ Or from an existing model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{ggsiratioplot}\NormalTok{(mod)}
+\FunctionTok{siratioplot}\NormalTok{(mod)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -956,7 +989,7 @@ Or from an existing model:
 \protect\hypertarget{create-moving-average-moving_average}{}
 (Recall: \(B^iX_t=X_{t-p}\) and \(F^iX_t=X_{t+p}\))
 
-Goal : manipulate moving averages
+Goal: manipulate moving averages
 
 \[
 M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k} = 
@@ -965,9 +998,9 @@ M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k} =
 
 \pause
 
-Currently in R, with \texttt{filter()} you can only manipulate symmetric
-filters (\(p=f\), \(\theta_{-k}=\theta_{-k}\)) or real-time asymmetric
-filters: \[
+Currently in \faIcon{r-project}, with \texttt{filter()} you can only
+manipulate symmetric filters (\(p=f\), \(\theta_{-k}=\theta_{-k}\)) or
+real-time asymmetric filters: \[
 M_\theta(X_t)=
 \left(\sum_{k=-p}^{0}\theta_k F^k\right)X_{t} =
 \theta_0X_{t}+\dots+\theta_{-p} X_{t-p}
@@ -975,7 +1008,10 @@ M_\theta(X_t)=
 
 \pause
 
-In practice, you often need to combine filters
+In practice, you often need to combine filters (e.g.~X-11) or use
+different filters according to the number of future points availables
+(see \texttt{?rjd3filters::finite\_filters} and
+\texttt{?rjd3filters::jfilter})
 \end{frame}
 
 \begin{frame}[fragile,allowframebreaks]{Create moving average
@@ -996,12 +1032,12 @@ In practice, you often need to combine filters
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{m2 }\OtherTok{=} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{); m2 }\CommentTok{\# centered MA}
+\NormalTok{m2 }\OtherTok{=} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{/} \DecValTok{3}\NormalTok{; m2 }\CommentTok{\# centered MA}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] " B + 1,0000 +  F"
+## [1] "0,3333 B + 0,3333 + 0,3333 F"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1011,7 +1047,7 @@ In practice, you often need to combine filters
 \end{Shaded}
 
 \begin{verbatim}
-## [1] " B + 1,0000 + 2,0000 F +  F^2 +  F^3"
+## [1] "0,3333 B + 0,3333 + 1,3333 F +  F^2 +  F^3"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1021,7 +1057,7 @@ In practice, you often need to combine filters
 \end{Shaded}
 
 \begin{verbatim}
-## [1] " -  B - 1,0000 +  F^2 +  F^3"
+## [1] " - 0,3333 B - 0,3333 + 0,6667 F +  F^2 +  F^3"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1031,7 +1067,7 @@ In practice, you often need to combine filters
 \end{Shaded}
 
 \begin{verbatim}
-## [1] "1,0000 + 2,0000 F + 3,0000 F^2 + 2,0000 F^3 +  F^4"
+## [1] "0,3333 + 0,6667 F +  F^2 + 0,6667 F^3 + 0,3333 F^4"
 \end{verbatim}
 
 Can be used to create all the MA of X-11:
@@ -1143,23 +1179,18 @@ Can be used to create all the MA of X-11:
 \begin{center}\includegraphics[height=0.7\textheight]{img/slides-exApply-1} \end{center}
 \end{frame}
 
-\hypertarget{rjd3sts}{%
-\subsection{rjd3sts}\label{rjd3sts}}
+\hypertarget{rjd3sts-and-rjd3bench}{%
+\subsection{rjd3sts and rjd3bench}\label{rjd3sts-and-rjd3bench}}
 
-\begin{frame}{rjd3sts}
-\protect\hypertarget{rjd3sts-1}{}
-Interface to structural time series and state space models
+\begin{frame}[fragile]{rjd3sts and rjd3bench}
+\protect\hypertarget{rjd3sts-and-rjd3bench-1}{}
+\texttt{rjd3sts} Interface to structural time series and state space
+models
 
 Several examples available here
 \url{https://github.com/palatej/test_rjd3sts}
-\end{frame}
 
-\hypertarget{rjd3bench}{%
-\subsection{rjd3bench}\label{rjd3bench}}
-
-\begin{frame}{rjd3bench}
-\protect\hypertarget{rjd3bench-1}{}
-Benchmarking and temporal disaggregation
+\texttt{rjd3bench} Benchmarking and temporal disaggregation
 
 Several examples here: \url{https://github.com/palatej/test_rjd3bench}
 \end{frame}

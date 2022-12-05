@@ -115,21 +115,13 @@ def.par <- par(no.readonly = TRUE)
 
 # Introduction
 
-### JDemetra+ ???
+### JDemetra+ \bcquestion
 
 - JDemetra+ is an open source software (build on `r fa_java`) officially recommended by Eurostat for seasonal adjustment (SA)
 
 . . .
 
 - Implements the two leading SA methods X-13ARIMA and TRAMO-SEATS with a nice graphical interface
-
-. . .
-
-- How to perform SA in `r fa_r_project` ?
-
-  - `stats::stl()` and `forecast::mstl()` for (M)STL: not recommended because they cannot perform calendar adjustment
-  
-  - `seasonal` and `x12`: interface to X-13-ARIMA-SEATS US Census Bureau binaries
 
 
 
@@ -142,6 +134,13 @@ def.par <- par(no.readonly = TRUE)
     -   faster than existing `r fa_r_project` packages on seasonal adjustment
 
     -   enables to interact with JDemetra+ "workspaces" used in production
+    
+. . .
+
+- Other `r fa_r_project` packages around SA
+
+  - `stats::stl()` and `forecast::mstl()` for (M)STL: not recommended because they cannot perform calendar adjustment  
+  - `seasonal` and `x12`: interface to X-13-ARIMA-SEATS US Census Bureau binaries
 
 . . .
 
@@ -149,7 +148,8 @@ def.par <- par(no.readonly = TRUE)
 
 . . .
 
-- They require Java `r fa_java` $\geq$ 17 (see for example installation manual of `RJDemetra`: <https://github.com/jdemetra/rjdemetra/wiki/Installation-manual>)
+- They require Java `r fa_java` $\geq$ 17 (see for example installation manual of `RJDemetra`: <https://github.com/jdemetra/rjdemetra/wiki/Installation-manual>) 
+
 
 ### Introduction (2)
 
@@ -186,7 +186,7 @@ And it's just the begining! (might change in the future)
 
 Contains several utility functions used in other `rjd` packages and several functions to perform tests:
 
-- Normality tests: Bowman-Shenton (`bowmanshenton()`), Doornik-Hansen (`doornikhansen()`), Jarque-Bera (`jarquebera()`)
+- Normality tests: Bowman-Shenton (`bowmanshenton()`), Doornik-Hansen (`doornikhansen()`), Jarque-Bera (`jarquebera()`, with more parameters than `tseries::jarque.bera.test()`)
 
 - \bclampe Runs tests (randomness of data):  mean or the median (`testofruns()`) or up and down runs test (`testofupdownruns()`)
 
@@ -203,13 +203,23 @@ Contains several utility functions used in other `rjd` packages and several func
   `calendar.new()` (create a new calendar), `calendar.holiday()` (add a specific holiday, e.g. christmas),
   `calendar.easter()` (easter related day) and `calendar.fixedday()`)
 
+. . .
+
 - \bclampe create outliers regressors (AO, LS, TC, SO, Ramp, intervention variables), calendar related regressors (stock, leap year, periodic dummies and contrasts, trigonometric variables) -> to be added quadratic ramps
+
+. . .
 
 - \bclampe  Range-mean regression test (to choose log transformation), Canova-Hansen (`td.ch()`) and trading-days f-test (`td.f()`)
 
+. . .
+
 - manipulation of ARIMA models (generation, sum, decomposition, estimation)
 
+. . .
+
 - functions to stationarise your series `do.stationary()`, `differences()`, `differencing.fast()`
+
+. . .
 
 - specification functions for `rjd3x13` and `rjd3tramoseats`
 
@@ -305,7 +315,7 @@ Seasonality tests:
 ```{r}
 library(rjd3sa)
 y <- diff(rjd3toolkit::ABS$X0.2.09.10.M, 1); y <- y - mean(y)
-# Or :
+# Or:
 y <- rjd3modelling::differences(rjd3toolkit::ABS$X0.2.09.10.M)
 seasonality.f(y)
 seasonality.friedman(y)
@@ -326,7 +336,7 @@ seasonality.combined(y)
 
 ### Common functions
 
-In `RJDemetra` you have one function to set the specification (`regarima_spec_x13()`, `regarima_spec_tramo()`, `x13_spec()` and `tramoseats_spec()`) now one function for each part of the specification
+In `RJDemetra` you have **one function** to set the specification (`regarima_spec_x13()`, `regarima_spec_tramo()`, `x13_spec()` and `tramoseats_spec()`) now one function for each part of the specification
 
 . . .
 
@@ -388,8 +398,7 @@ Main functions:
 
 - \bclampe Refresh policies: `tramo.refresh()` and `tramoseats.refresh()`
 
-
-### Exemple {.allowframebreaks}
+. . .
 
 \scriptsize
 
@@ -400,6 +409,8 @@ spec <- spec_tramoseats_default("rsafull") |>
   set_seats(algorithm = "KalmanSmoother")
 m <- rjd3tramoseats::tramoseats(y, spec)
 ```
+
+
 
 ## rjdemetra3
 
@@ -422,7 +433,7 @@ Seasonal adjustment of high frequency data:
 
 - \bclampe Extension of X-11 decomposition with non integer periodicity
 
-`rjd3stl` : STL, MSTL, ISTL, loess 
+`rjd3stl`: STL, MSTL, ISTL, loess 
 
 
 See next presentation of Anna Smyk
@@ -459,10 +470,10 @@ ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
 
 Or from an existing model:
 
-```{r ggdemetra3-mod, fig.dim = c(6,3)}
+```{r ggdemetra3-mod, fig.dim = c(6,3), cache = FALSE}
 mod <- rjd3x13::x13(y, spec)
 autoplot(mod)
-ggsiratioplot(mod)
+siratioplot(mod)
 ```
 
 ## rjd3filters
@@ -493,7 +504,7 @@ library(rjd3filters)
 
 (Recall: $B^iX_t=X_{t-p}$ and $F^iX_t=X_{t+p}$)
 
-Goal : manipulate moving averages
+Goal: manipulate moving averages
 
 $$
 M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k} = 
@@ -502,7 +513,7 @@ $$
 
 . . . 
 
-Currently in R, with `filter()` you can only manipulate symmetric filters ($p=f$, $\theta_{-k}=\theta_{-k}$) or real-time asymmetric filters:
+Currently in `r fa_r_project`, with `filter()` you can only manipulate symmetric filters ($p=f$, $\theta_{-k}=\theta_{-k}$) or real-time asymmetric filters:
 $$
 M_\theta(X_t)=
 \left(\sum_{k=-p}^{0}\theta_k F^k\right)X_{t} =
@@ -511,7 +522,7 @@ $$
 
 . . .
 
-In practice, you often need to combine filters
+In practice, you often need to combine filters (e.g. X-11) or use different filters according to the number of future points availables (see `?rjd3filters::finite_filters` and `?rjd3filters::jfilter`)
 
 
 
@@ -522,7 +533,7 @@ In practice, you often need to combine filters
 ```{r}
 library(rjd3filters)
 m1 = moving_average(rep(1,3), lags = 1); m1 # Forward MA
-m2 = moving_average(rep(1,3), lags = -1); m2 # centered MA
+m2 = moving_average(rep(1,3), lags = -1) / 3; m2 # centered MA
 m1 + m2
 m1 - m2
 m1 * m2
@@ -589,20 +600,15 @@ plot(window(ts.union(y, trend, sa), start = 2000),
 ```
 
 
-## rjd3sts
+## rjd3sts and rjd3bench
 
-### rjd3sts
+### rjd3sts and rjd3bench
 
-Interface to structural time series and state space models
+`rjd3sts` Interface to structural time series and state space models
 
 Several examples available here https://github.com/palatej/test_rjd3sts
 
-
-
-## rjd3bench
-### rjd3bench
-
-Benchmarking and temporal disaggregation
+`rjd3bench` Benchmarking and temporal disaggregation
 
 Several examples here: https://github.com/palatej/test_rjd3bench
 
