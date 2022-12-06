@@ -382,6 +382,8 @@ and several functions to perform tests:
 
 \begin{frame}[fragile]{rjd3modelling}
 \protect\hypertarget{rjd3modelling-1}{}
+\footnotesize
+
 \begin{itemize}
 \tightlist
 \item
@@ -408,9 +410,9 @@ and several functions to perform tests:
 \begin{itemize}
 \tightlist
 \item
-  \bclampe  Range-mean regression test (to choose log transformation),
-  Canova-Hansen (\texttt{td.ch()}) and trading-days f-test
-  (\texttt{td.f()})
+  \bclampe  Range-mean regression test (to choose log transformation,
+  \texttt{rangemean.tstat()}), Canova-Hansen (\texttt{td.ch()}) and
+  trading-days f-test (\texttt{td.f()})
 \end{itemize}
 
 \pause
@@ -693,14 +695,6 @@ rjd3tramoseats}\label{rjd3x13-and-rjd3tramoseats}}
 
 \begin{frame}[fragile]{Common functions}
 \protect\hypertarget{common-functions}{}
-In \texttt{RJDemetra} you have \textbf{one function} to set the
-specification (\texttt{regarima\_spec\_x13()},
-\texttt{regarima\_spec\_tramo()}, \texttt{x13\_spec()} and
-\texttt{tramoseats\_spec()}) now one function for each part of the
-specification
-
-\pause
-
 Common functions (defined in \texttt{rjd3modelling}) to set the
 specification of the preprocessing:
 
@@ -801,7 +795,7 @@ and \texttt{rjdemetra3} more than 12 time faster than \texttt{seasonal}!
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[height=0.5\textheight]{img/slides-x13-1} \end{center}
+\begin{center}\includegraphics{img/slides-x13-1} \end{center}
 \end{frame}
 
 \hypertarget{rjd3tramoseats}{%
@@ -824,9 +818,7 @@ Main functions:
   \texttt{tramoseats.refresh()}
 \end{itemize}
 
-\pause
-
-\scriptsize
+Example:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -891,7 +883,8 @@ functions\ldots{} Also compatible with high-frequency methods (WIP):
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ggdemetra3)}
-\NormalTok{spec }\OtherTok{\textless{}{-}} \FunctionTok{spec\_x13\_default}\NormalTok{(}\StringTok{"rsa3"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \FunctionTok{set\_tradingdays}\NormalTok{(}\AttributeTok{option =} \StringTok{"WorkingDays"}\NormalTok{)}
+\NormalTok{spec }\OtherTok{\textless{}{-}} \FunctionTok{spec\_x13\_default}\NormalTok{(}\StringTok{"rsa3"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{set\_tradingdays}\NormalTok{(}\AttributeTok{option =} \StringTok{"WorkingDays"}\NormalTok{)}
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ ipi\_c\_eu\_df, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =}\NormalTok{ FR)) }\SpecialCharTok{+}
     \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
     \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"SA {-} IPI{-}FR"}\NormalTok{,}
@@ -912,26 +905,19 @@ functions\ldots{} Also compatible with high-frequency methods (WIP):
 \begin{center}\includegraphics{img/slides-ggdemetra3-1} \end{center}
 \end{frame}
 
-\begin{frame}[fragile,allowframebreaks]{ggdemetra3}
-\protect\hypertarget{ggdemetra3-2}{}
-Or from an existing model:
+\begin{frame}[fragile]{Plot from an existing model}
+\protect\hypertarget{plot-from-an-existing-model}{}
+\footnotesize
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{mod }\OtherTok{\textless{}{-}}\NormalTok{ rjd3x13}\SpecialCharTok{::}\FunctionTok{x13}\NormalTok{(y, spec)}
-\FunctionTok{autoplot}\NormalTok{(mod)}
+\CommentTok{\# siratioplot(mod) \# SI Ratio plot}
+\FunctionTok{autoplot}\NormalTok{(mod) }\CommentTok{\# autoplot}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{center}\includegraphics{img/slides-ggdemetra3-mod-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{siratioplot}\NormalTok{(mod)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics{img/slides-ggdemetra3-mod-2} \end{center}
 \end{frame}
 
 \hypertarget{rjd3filters}{%
@@ -950,233 +936,22 @@ Or from an existing model:
   (\texttt{diagnostic\_matrix()})
 \end{itemize}
 
-\pause
-
-\begin{itemize}
-\item
-  \bclampe trend-cycle extraction with different methods to treat
-  endpoints:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \texttt{lp\_filter()} local polynomial filters of Proietti and Luati
-    (2008) (including Musgrave): Henderson, Uniform, biweight,
-    Trapezoidal, Triweight, Tricube, ``Gaussian'', Triangular, Parabolic
-    (= Epanechnikov)\\
-  \item
-    \texttt{rkhs\_filter()} Reproducing Kernel Hilbert Space (RKHS) of
-    Dagum and Bianconcini (2008) with same kernels\\
-  \item
-    \texttt{fst\_filter()} FST approach of Grun-Rehomme, Guggemos, and
-    Ladiray (2018)\\
-  \item
-    \texttt{dfa\_filter()} derivation of AST approach of Wildi and
-    McElroy (2019)
-  \end{itemize}
-\end{itemize}
+Goal: manipulate moving averages \[
+M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k} = 
+\left(\sum_{k=-p}^{+f}\theta_k B^{-k}\right)X_{t}\text{ with }B^k=X_{t-k}
+\] (Currently in \faIcon{r-project} you can only limited forms of MA)
 
 \pause
 
 \begin{itemize}
 \tightlist
 \item
-  \bclampe change the filter used in X-11 for TC extraction
+  \bclampe Lots of complicated and interesting things around trend-cycle
+  estimates
 \end{itemize}
-\end{frame}
 
-\begin{frame}[fragile]{Create moving average \texttt{moving\_average()}}
-\protect\hypertarget{create-moving-average-moving_average}{}
-(Recall: \(B^iX_t=X_{t-p}\) and \(F^iX_t=X_{t+p}\))
-
-Goal: manipulate moving averages
-
-\[
-M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k} = 
-\left(\sum_{k=-p}^{+f}\theta_k F^k\right)X_{t}
-\]
-
-\pause
-
-Currently in \faIcon{r-project}, with \texttt{filter()} you can only
-manipulate symmetric filters (\(p=f\), \(\theta_{-k}=\theta_{-k}\)) or
-real-time asymmetric filters: \[
-M_\theta(X_t)=
-\left(\sum_{k=-p}^{0}\theta_k F^k\right)X_{t} =
-\theta_0X_{t}+\dots+\theta_{-p} X_{t-p}
-\]
-
-\pause
-
-In practice, you often need to combine filters (e.g.~X-11) or use
-different filters according to the number of future points availables
-(see \texttt{?rjd3filters::finite\_filters} and
-\texttt{?rjd3filters::jfilter})
-\end{frame}
-
-\begin{frame}[fragile,allowframebreaks]{Create moving average
-\texttt{moving\_average()}}
-\protect\hypertarget{create-moving-average-moving_average-1}{}
-\footnotesize
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(rjd3filters)}
-\NormalTok{m1 }\OtherTok{=} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{lags =} \DecValTok{1}\NormalTok{); m1 }\CommentTok{\# Forward MA}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] " F +  F^2 +  F^3"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m2 }\OtherTok{=} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{/} \DecValTok{3}\NormalTok{; m2 }\CommentTok{\# centered MA}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "0,3333 B + 0,3333 + 0,3333 F"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m1 }\SpecialCharTok{+}\NormalTok{ m2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "0,3333 B + 0,3333 + 1,3333 F +  F^2 +  F^3"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m1 }\SpecialCharTok{{-}}\NormalTok{ m2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] " - 0,3333 B - 0,3333 + 0,6667 F +  F^2 +  F^3"
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{m1 }\SpecialCharTok{*}\NormalTok{ m2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "0,3333 + 0,6667 F +  F^2 + 0,6667 F^3 + 0,3333 F^4"
-\end{verbatim}
-
-Can be used to create all the MA of X-11:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{e1 }\OtherTok{\textless{}{-}} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{), }\AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{6}\NormalTok{)}
-\NormalTok{e1 }\OtherTok{\textless{}{-}}\NormalTok{ e1}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(e1)}
-\NormalTok{e2 }\OtherTok{\textless{}{-}} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{12}\NormalTok{, }\DecValTok{12}\NormalTok{), }\AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{5}\NormalTok{)}
-\CommentTok{\# used to have the 1rst estimate of the trend}
-\NormalTok{tc\_1 }\OtherTok{\textless{}{-}}\NormalTok{ M2X12 }\OtherTok{\textless{}{-}}\NormalTok{ (e1 }\SpecialCharTok{+}\NormalTok{ e2)}\SpecialCharTok{/}\DecValTok{2}
-\FunctionTok{coef}\NormalTok{(M2X12) }\SpecialCharTok{|\textgreater{}} \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   t-6   t-5   t-4   t-3   t-2   t-1     t   t+1   t+2   t+3 
-## 0.042 0.083 0.083 0.083 0.083 0.083 0.083 0.083 0.083 0.083 
-##   t+4   t+5   t+6 
-## 0.083 0.083 0.042
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{si\_1 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ tc\_1}
-\NormalTok{M3 }\OtherTok{\textless{}{-}} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
-\NormalTok{M3X3 }\OtherTok{\textless{}{-}}\NormalTok{ M3 }\SpecialCharTok{*}\NormalTok{ M3}
-\CommentTok{\# M3X3 moving average applied to each month}
-\FunctionTok{coef}\NormalTok{(M3X3) }\SpecialCharTok{|\textgreater{}} \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   t-2   t-1     t   t+1   t+2 
-## 0.111 0.222 0.333 0.222 0.111
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{M3X3\_seasonal }\OtherTok{\textless{}{-}} \FunctionTok{to\_seasonal}\NormalTok{(M3X3, }\DecValTok{12}\NormalTok{)}
-\FunctionTok{coef}\NormalTok{(M3X3\_seasonal) }\SpecialCharTok{|\textgreater{}} \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##  t-24  t-23  t-22  t-21  t-20  t-19  t-18  t-17  t-16  t-15 
-## 0.111 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 
-##  t-14  t-13  t-12  t-11  t-10   t-9   t-8   t-7   t-6   t-5 
-## 0.000 0.000 0.222 0.000 0.000 0.000 0.000 0.000 0.000 0.000 
-##   t-4   t-3   t-2   t-1     t   t+1   t+2   t+3   t+4   t+5 
-## 0.000 0.000 0.000 0.000 0.333 0.000 0.000 0.000 0.000 0.000 
-##   t+6   t+7   t+8   t+9  t+10  t+11  t+12  t+13  t+14  t+15 
-## 0.000 0.000 0.000 0.000 0.000 0.000 0.222 0.000 0.000 0.000 
-##  t+16  t+17  t+18  t+19  t+20  t+21  t+22  t+23  t+24 
-## 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.111
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{s\_1 }\OtherTok{\textless{}{-}}\NormalTok{ M3X3\_seasonal }\SpecialCharTok{*}\NormalTok{ si\_1}
-\NormalTok{s\_1\_norm }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ M2X12) }\SpecialCharTok{*}\NormalTok{ s\_1}
-\NormalTok{sa\_1 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ s\_1\_norm}
-\NormalTok{henderson\_mm }\OtherTok{=} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{lp\_filter}\NormalTok{(}\AttributeTok{horizon =} \DecValTok{6}\NormalTok{)}\SpecialCharTok{$}
-\NormalTok{                                  filters.coef[, }\StringTok{"q=6"}\NormalTok{],}
-                              \AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{6}\NormalTok{)}
-\NormalTok{tc\_2 }\OtherTok{\textless{}{-}}\NormalTok{ henderson\_mm }\SpecialCharTok{*}\NormalTok{ sa\_1}
-\NormalTok{si\_2 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ tc\_2}
-\NormalTok{M5 }\OtherTok{\textless{}{-}} \FunctionTok{moving\_average}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{), }\AttributeTok{lags =} \SpecialCharTok{{-}}\DecValTok{2}\NormalTok{)}
-\NormalTok{M5X5\_seasonal }\OtherTok{\textless{}{-}} \FunctionTok{to\_seasonal}\NormalTok{(M5 }\SpecialCharTok{*}\NormalTok{ M5, }\DecValTok{12}\NormalTok{)}
-\NormalTok{s\_2 }\OtherTok{\textless{}{-}}\NormalTok{ M5X5\_seasonal }\SpecialCharTok{*}\NormalTok{ si\_2}
-\NormalTok{s\_2\_norm }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ M2X12) }\SpecialCharTok{*}\NormalTok{ s\_2}
-\NormalTok{sa\_2 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ s\_2\_norm}
-\NormalTok{tc\_f }\OtherTok{\textless{}{-}}\NormalTok{ henderson\_mm }\SpecialCharTok{*}\NormalTok{ sa\_2}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mai =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.3}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\DecValTok{0}\NormalTok{))}
-\FunctionTok{layout}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{))}
-
-\FunctionTok{plot\_coef}\NormalTok{(tc\_f);}\FunctionTok{plot\_coef}\NormalTok{(sa\_2, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
-\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{, }
-       \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Final TC filter"}\NormalTok{, }\StringTok{"Final SA filter"}\NormalTok{),}
-       \AttributeTok{col=} \FunctionTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }\StringTok{"orange"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
-\FunctionTok{plot\_gain}\NormalTok{(tc\_f);}\FunctionTok{plot\_gain}\NormalTok{(sa\_2, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
-\FunctionTok{plot\_phase}\NormalTok{(tc\_f);}\FunctionTok{plot\_phase}\NormalTok{(sa\_2, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{add =} \ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[height=0.9\textheight]{img/slides-x11Filters-1} \end{center}
-\end{frame}
-
-\begin{frame}[fragile]{Apply a moving average}
-\protect\hypertarget{apply-a-moving-average}{}
-\footnotesize
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ retailsa}\SpecialCharTok{$}\NormalTok{AllOtherGenMerchandiseStores}
-\NormalTok{trend }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{*}\NormalTok{ tc\_1}
-\NormalTok{sa }\OtherTok{\textless{}{-}}\NormalTok{ y }\SpecialCharTok{*}\NormalTok{ sa\_1}
-\FunctionTok{plot}\NormalTok{(}\FunctionTok{window}\NormalTok{(}\FunctionTok{ts.union}\NormalTok{(y, trend, sa), }\AttributeTok{start =} \DecValTok{2000}\NormalTok{),}
-     \AttributeTok{plot.type =} \StringTok{"single"}\NormalTok{,}
-      \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{,}\StringTok{"orange"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[height=0.7\textheight]{img/slides-exApply-1} \end{center}
+See my presentation at \textbf{SAPW 2022} Concurrent Session 5b - Trends
+\url{https://community.amstat.org/governmentstatisticssection/conferences/pastconference210/seasonal-adjustment-practitioners-workshop-2022}
 \end{frame}
 
 \hypertarget{rjd3sts-and-rjd3bench}{%
@@ -1213,8 +988,6 @@ With JDemetra+ 3.0, lots of new \faIcon{r-project} packages are coming:
   Allow to create new trainings thanks to a deeper acces to all the
   functionalities of JDemetra+
 \end{itemize}
-
-\pause
 
 Many ways to contribute:
 
