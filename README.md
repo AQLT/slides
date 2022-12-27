@@ -2,7 +2,7 @@
 
 ## 2022
 
-- December 2022 : [uRos](https://aqlt.github.io/slides/2022 - 11 - uRos/Slides_AQLT.pdf)
+- December 2022 : [uRos](https://aqlt.github.io/slides/2022%20-%2011%20-%20uRos/Slides_AQLT.pdf)
 
 - September 2022 : [2nd Workshop on Time Series Methods for Official Statistics](https://aqlt.github.io/slides/2022%20-%2009%20-%20OECD/Slides_AQLT.pdf)
 
