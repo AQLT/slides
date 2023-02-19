@@ -1,0 +1,316 @@
+---
+title: "Introduction à shiny"
+lang: fr
+format:
+  revealjs:
+    slide-number: c/t
+    slide-level: 3
+    smaller: true
+    #theme: solarized
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE, echo = TRUE)
+```
+## Introduction
+
+`shiny` est un package R qui permet de créer des applications web interactives directement depuis R sans avoir besoin de connaître le HTML ou le JavaScript.
+
+. . .
+
+Beaucoup de documentation sur internet :
+
+- <https://shiny.rstudio.com>
+
+- <https://shiny.rstudio.com/gallery/widget-gallery.html> et <https://shinyapps.dreamrs.fr/shinyWidgets/> pour liste des boutons
+
+- <https://rstudio.github.io/shinythemes/> pour la personnalisation
+
+- de nombreux cours, exemple : <http://perso.ens-lyon.fr/lise.vaudor/tuto-shiny/>
+
+## server et ui
+
+Dans une application shiny il y a toujours deux parties :
+
+1. Une partie server : calculs
+
+2. Une partie ui (*user interface*) : ce que l'utilisateur voit
+
+. . .
+
+Deux méthodes pour créer une application :
+
+1. un fichier `app.R` qui contient les objets `ui` et `server` et le lien entre les deux est fait avec `shiny::shinyApp()`.
+
+2. Soit deux fichiers `ui.R` et `server.R`
+
+. . .
+
+$\implies$ une seule application par dossier
+
+## Commandes {.smaller}
+
+:::: {.columns}
+::: {.column width="40%"}
+**ui**
+
+- Éléments d'entrée : fonctions `xxxInput()`
+
+- Éléments de sortie : fonctions `xxxOutput()`
+
+:::
+
+::: {.column width="10%"}
+:::
+
+::: {.column width="40%"}
+**server**
+
+- code pour créer l'output dans une `renderXxx()`
+:::
+::::
+Exemples : graphique (`renderPlot()` + `plotOutput()`), texte (`renderText()` + `textOuptut()`) et table (`renderTable()` + `tableOutput()`)
+
+. . .
+
+Si objets non-standards (plotly, dygraphs, leaflet...) regarder les fonctions `xxxOutput()` et `renderXxx()` des packages associés.  
+Ex : `dygraphs::dygraphOutput()` et `dygraphs::renderDygraph()`.
+
+## Exemple {.scrollable}
+::: {.panel-tabset}
+### ui.R
+```{r}
+fluidPage(
+    titlePanel("Old Faithful Geyser Data"),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 1, max = 50, value = 30)
+        ),
+        mainPanel(
+            plotOutput("distPlot")
+        )
+    )
+)
+```
+### server.R
+```{r}
+function(input, output, session) {
+    output$distPlot <- renderPlot({
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+        hist(x, breaks = bins, col = 'darkgray', border = 'white',
+             xlab = 'Waiting time to next eruption (in mins)',
+             main = 'Histogram of waiting times')
+    })
+}
+```
+### app.R
+
+```{r}
+ui <- fluidPage(
+    titlePanel("Old Faithful Geyser Data"),
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 1, max = 50, value = 30)
+        ),
+        mainPanel(
+            plotOutput("distPlot")
+        )
+    )
+)
+server <- function(input, output, session) {
+    output$distPlot <- renderPlot({
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+        hist(x, breaks = bins, col = 'darkgray', border = 'white',
+             xlab = 'Waiting time to next eruption (in mins)',
+             main = 'Histogram of waiting times')
+    })
+}
+shinyApp(ui, server)
+```
+:::
+
+## Widget
+
+Les *widgets* (*window gadgets*) permettent à l'utilisateur de choisir les paramètres.
+
+Ils doivent être choisis en fonction de la nature de la valeur à entrer et de l'esthétique.
+
+Voir la [Shiny Widgets Gallery](https://shiny.rstudio.com/gallery/widget-gallery.html)
+
+
+## Exemple {.scrollable}
+::: {.panel-tabset}
+### ui.R
+```{r}
+#| code-line-numbers: "5-7"
+fluidPage(
+  titlePanel("Old Faithful Geyser Data"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("variable", label = h3("Variable"), 
+                  choices = list("eruptions" = 1, "waiting" = 2), 
+                  selected = 2),
+      sliderInput("bins",
+                  "Number of bins:",
+                  min = 1, max = 50, value = 30)
+    ),
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+)
+```
+### server.R
+```{r}
+#| code-line-numbers: "3,6"
+function(input, output, session) {
+  output$distPlot <- renderPlot({
+    x    <- faithful[, as.numeric(input$variable)]
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    hist(x, breaks = bins, col = 'darkgray', border = 'white',
+         xlab = colnames(faithful)[as.numeric(input$variable)],
+         main = 'Histogram')
+  })
+}
+```
+### app.R
+
+```{r}
+#| code-line-numbers: "5-7,19,22"
+ui <- fluidPage(
+  titlePanel("Old Faithful Geyser Data"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("variable", label = h3("Variable"), 
+                  choices = list("eruptions" = 1, "waiting" = 2), 
+                  selected = 2),
+      sliderInput("bins",
+                  "Number of bins:",
+                  min = 1, max = 50, value = 30)
+    ),
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+)
+server <- function(input, output, session) {
+  output$distPlot <- renderPlot({
+    x    <- faithful[, as.numeric(input$variable)]
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    hist(x, breaks = bins, col = 'darkgray', border = 'white',
+         xlab = colnames(faithful)[as.numeric(input$variable)],
+         main = 'Histogram')
+  })
+}
+shinyApp(ui, server)
+```
+:::
+
+## Pannels
+
+Les *Pannels* permettent de combiner plusieurs éléments et chaque pannel correspond à un style différent.
+
+Exemples : <http://perso.ens-lyon.fr/lise.vaudor/Tuto_Shiny/tuto_Shiny_fr_Part3.html#(4)>
+
+
+
+## Réactivité
+
+Par défaut, dès qu'un input est modifié, l'output est recalculé.
+
+On peut vouloir contourner ce mécanisme :
+
+- partager des calculs entre différents output : `reactive()`
+
+- Déclencher l'exécution d'un code lorsqu'un utilisateur appuie sur un bouton : 
+
+  - `eventReactive()` : exécute le code
+  
+  - `observeEvent()` : renvoie une valeur réactive
+
+- empêcher des réactions : `isolate()`
+
+## Exemple `reactive()` {.scrollable}
+::: {.panel-tabset}
+### Sans
+```{r}
+fib <- function(n) ifelse(n<3, 1, fib(n-1)+fib(n-2))
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("n","Nombre de points",
+                  min = 1, max = 50, value = 1)
+    ),
+    mainPanel(
+      textOutput("nthValue"),
+      textOutput("nthValueInv")
+    )
+  )
+)
+server <- function(input, output) {
+  output$nthValue    <- renderText({ fib(as.numeric(input$n)) })
+  output$nthValueInv <- renderText({ 1 / fib(as.numeric(input$n)) })
+}
+shinyApp(ui, server)
+```
+### Avec
+```{r}
+#| code-line-numbers: "15-17"
+fib <- function(n) ifelse(n<3, 1, fib(n-1)+fib(n-2))
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("n","Nombre de points",
+                  min = 1, max = 50, value = 1)
+    ),
+    mainPanel(
+      textOutput("nthValue"),
+      textOutput("nthValueInv")
+    )
+  )
+)
+server <- function(input, output) {
+  val = reactive(fib(as.numeric(input$n)))
+  output$nthValue    <- renderText({ val() })
+  output$nthValueInv <- renderText({ 1 / val() })
+}
+shinyApp(ui, server)
+```
+:::
+
+## Exemple `eventReactive()` et `observeEvent()`{.scrollable}
+
+
+```{r}
+shinyApp(
+  ui = fluidPage(
+    column(4,
+           numericInput("x", "Value", 5),
+           br(),
+           actionButton("button", "Show")
+    ),
+    column(8, tableOutput("table"))
+  ),
+  server = function(input, output) {
+    # Take an action every time button is pressed;
+    # here, we just print a message to the console
+    observeEvent(input$button, {
+      cat("Showing", input$x, "rows\n")
+    })
+    # Take a reactive dependency on input$button, but
+    # not on any of the stuff inside the function
+    df <- eventReactive(input$button, {
+      head(cars, input$x)
+    })
+    output$table <- renderTable({
+      df()
+    })
+  }
+)
+```

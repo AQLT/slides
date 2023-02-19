@@ -1,0 +1,91 @@
+---
+title: "rjd3filters"
+lang: fr
+format:
+  revealjs:
+    slide-number: c/t
+    slide-level: 3
+    smaller: true
+    #theme: solarized
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      out.width = "90%")
+```
+
+## Introduction
+
+`rjd3filters` est un package expérimental autour de JD+ 3.0 qui permet la manipulation de moyennes mobiles utilisées dans X-11 :
+
+- Permet d'étudier différentes méthodes pour l'extraction de la tendance-cycle et leur intégration dans X-11 et analyser des dernières estimations (`implicit_forecasts()`) : voir notamment présentation aux [SAPW](https://aqlt.github.io/slides/2022%20-%2006%20-%20SAPW/Slides_AQLT.pdf)
+
+- Différentes fonctions annexes ont été implémentées pour manipuler :
+
+    - Les moyennes mobiles (`moving_average()`)
+    - Les filtres (`finite_filters`) : une `moving_average()` centrale ainsi qu'un ensemble de `moving_average()` utilisées pour les premières (`lfilters`) et dernières (`rfilters`) estimations.
+    
+## Estimation en temps réel de la tendance-cycle (1)
+
+Différentes fonctions :
+- `lp_filter()` local polynomial filters of Proietti and Luati (2008) (including Musgrave): Henderson, Uniform, biweight, Trapezoidal, Triweight, Tricube, "Gaussian", Triangular, Parabolic (= Epanechnikov)  
+- `rkhs_filter()` Reproducing Kernel Hilbert Space (RKHS) of Dagum and Bianconcini (2008) with same kernels  
+- `fst_filter()` FST approach of Grun-Rehomme, Guggemos, and Ladiray (2018)  
+- `dfa_filter()` derivation of AST approach of Wildi and McElroy (2019)
+
+## Estimation en temps réel de la tendance-cycle (2)
+
+```{r}
+library(rjd3filters)
+y <- window(retailsa$AllOtherGenMerchandiseStores, start = 2005)
+musgrave_f <- lp_filter(horizon = 6, kernel = "Henderson",endpoints = "LC")
+# L'objet java est ici stocké pour pouvoir extraire certains caractéristiques, utile ?
+names(musgrave_f)
+# uniquement coefficients affichés de q=0 à q=6, inverser ? voir finite_filters
+musgrave_f
+```
+## Estimation en temps réel de la tendance-cycle (3)
+
+```{r}
+#| out-width: 90%
+plot_coef(musgrave_f, q=c(0, 1, 2, 6), zeroAsNa = TRUE)
+```
+
+```{r}
+# Pour appliquer :
+jfilter(y, musgrave_f$filters.coef) |> round()
+```
+
+## Moyennes mobiles
+
+La fonction `moving_average()` permet de créer des moyennes mobiles avec :
+```{r}
+M3 <- moving_average(rep(1/3, 3), lags = -1)
+M3X3 <- M3 * M3 # ou M3 ^2
+coef(M3X3)
+M3X3[c(1,3)] # donne encore une moyenne mobile
+M3[3] <- 1
+M3
+1 - M3X3
+sum(M3X3)
+rev(moving_average(rep(1/3, 3), lags = -2)) # pour inverser
+is_symmetric(M3X3)
+# Pour avoir une MM que l'on applique à chaque période, ex: tous les trim
+to_seasonal(M3X3, 4)
+plot_gain(M3X3, main = "M3X3 applied to each quarter")
+plot_gain(to_seasonal(M3X3, 4), main = "M3X3 applied to the global series")
+```
+
+## Moyennes mobiles (2)
+
+```{r}
+#| fig-show: hold
+#| out-width: 40%
+is_symmetric(M3X3)
+# Pour avoir une MM que l'on applique à chaque période, ex: tous les mois
+to_seasonal(M3X3, 12)
+plot_gain(M3X3, main = "M3X3 applied to each month")
+plot_gain(to_seasonal(M3X3, 12), main = "M3X3 applied to the global series")
+```
+
+## Moyennes mobiles
