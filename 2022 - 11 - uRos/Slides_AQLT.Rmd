@@ -2,12 +2,12 @@
 title: |
  | R and JDemetra+ 3.0: 
  | A new toolbox around seasonal adjustment and time series analysis
-subtitle: "2^nd^WS Time Series Methods for Official Statistics"
+subtitle: "uRos2022"
 author: "Alain Quartier-la-Tente"
-departement: "Friday 23 September 2022"
+departement: "06/11/2022"
 division: | 
     | Insee
-    | Session 10: Seasonal and Calendar Adjustment
+    | Scientific Session: Time series and longitudinal data analysis
 logo: "img/logobeamer.png"
 automaticcontents: true
 automaticcontentstext: "Contents"
@@ -29,21 +29,23 @@ natbiboptions: [numbers]
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      cache = F, 
+                      cache = TRUE, 
                       fig.align = 'center',
-                      fig.path = "img/markdown-")
+                      fig.path = "img/slides-")
 library(knitr)
 library(kableExtra)
 library(microbenchmark)
 library(ggplot2)
+library(patchwork)
 library(rjd3toolkit)
 library(rjd3modelling)
 library(rjd3sa)
 library(rjd3arima)
 library(rjd3x13)
 library(rjd3tramoseats)
-library(RJDemetra3)
+library(rjdemetra3)
 library(ggdemetra3)
+rjd3toolkit::reload_dictionaries()
 
 # library(rjd3sts)
 # library(rjd3highfreq)
@@ -66,21 +68,79 @@ if(is_html){
         fa_r_project <- 'R'
     }
 }
+if (!dir.exists("benchmark"))
+  dir.create("benchmark")
+
+f_bm_airline <- "benchmark/airline.RDS"
+f_bm_arima <- "benchmark/arima_complicated.RDS"
+f_bm_seasonal <- "benchmark/seasonal.RDS"
+if (!file.exists(f_bm_airline)) {
+  mairline = microbenchmark::microbenchmark("stats::arima" = {
+   m = arima(log(AirPassengers), order=c(0,1,1), seasonal = list(order=c(0,1,1), period=12))
+},
+"rjd3modelling::sarima.estimate" = {
+  rjd3modelling::sarima.estimate(log(AirPassengers), order=c(0,1,1), seasonal = list(order=c(0,1,1), period=12))
+})
+  # autoplot(mairline)
+  saveRDS(mairline, f_bm_airline)
+}
+if (!file.exists(f_bm_arima)) {
+  mcomplicates = microbenchmark::microbenchmark("stats::arima" = {
+  arima(log(AirPassengers), order=c(3,1,1), seasonal = list(order=c(1,1,1), period=12))
+},
+"rjd3modelling::sarima.estimate" = {
+  rjd3modelling::sarima.estimate(log(AirPassengers), order=c(3,1,1), seasonal = list(order=c(1,1,1), period=12))
+})
+  # autoplot(mcomplicates)
+  saveRDS(mcomplicates, f_bm_arima)
+}
+
+if (!file.exists(f_bm_seasonal)) {
+  mseasonal <- microbenchmark::microbenchmark(
+    "seasonal::seas" = seasonal::seas(AirPassengers, x11 = ""),
+    "RJDemetra::x13" = RJDemetra::x13(AirPassengers),
+    "RJDemetra::jx13" = RJDemetra::jx13(AirPassengers),
+    "rjd3x13::x13" = rjd3x13::x13(AirPassengers,"rsa5c"),
+    "rjd3x13::fast.x13" = rjd3x13::fast.x13(AirPassengers,"rsa5c"),
+    "rjd3x13::jx13" = rjd3x13::jx13(AirPassengers,"rsa5c")
+  )
+  # autoplot(mseasonal)
+  saveRDS(mseasonal,
+			f_bm_seasonal)
+}
+
 options(width = 60)
 def.par <- par(no.readonly = TRUE)
 ```
 
 # Introduction
 
+### JDemetra+ \bcquestion
+
+- JDemetra+ is an open source software (build on `r fa_java`) officially recommended by Eurostat for seasonal adjustment (SA)
+
+. . .
+
+- Implements the two leading SA methods X-13ARIMA and TRAMO-SEATS with a nice graphical interface
+
+
+
 ### Introduction (1)
 
 -   In March 2019, `RJDemetra` was published on CRAN:
 
-    -   first `r fa_r_project` package that enables to use TRAMO-SEATS
+    -   only `r fa_r_project` package that enables to use TRAMO-SEATS
 
     -   faster than existing `r fa_r_project` packages on seasonal adjustment
 
     -   enables to interact with JDemetra+ "workspaces" used in production
+    
+. . .
+
+- Other `r fa_r_project` packages around SA
+
+  - `stats::stl()` and `forecast::mstl()` for (M)STL: not recommended because they cannot perform calendar adjustment  
+  - `seasonal` and `x12`: interface to X-13-ARIMA-SEATS US Census Bureau binaries
 
 . . .
 
@@ -88,7 +148,8 @@ def.par <- par(no.readonly = TRUE)
 
 . . .
 
-- They are require Java `r fa_java` $\geq$ 17 (see for example installation manual of `RJDemetra`: <https://github.com/jdemetra/rjdemetra/wiki/Installation-manual>)
+- They require Java `r fa_java` $\geq$ 17 (see for example installation manual of `RJDemetra`: <https://github.com/jdemetra/rjdemetra/wiki/Installation-manual>) 
+
 
 ### Introduction (2)
 
@@ -115,7 +176,7 @@ remotes::install_github("AQLT/ggdemetra3")
 
 ![](img/diag.pdf)
 
-And it's just the begining!
+And it's just the begining! (might change in the future)
 
 # Utility packages
 
@@ -125,7 +186,7 @@ And it's just the begining!
 
 Contains several utility functions used in other `rjd` packages and several functions to perform tests:
 
-- Normality tests: Bowman-Shenton (`bowmanshenton()`), Doornik-Hansen (`doornikhansen()`), Jarque-Bera (`jarquebera()`)
+- Normality tests: Bowman-Shenton (`bowmanshenton()`), Doornik-Hansen (`doornikhansen()`), Jarque-Bera (`jarquebera()`, with more parameters than `tseries::jarque.bera.test()`)
 
 - \bclampe Runs tests (randomness of data):  mean or the median (`testofruns()`) or up and down runs test (`testofupdownruns()`)
 
@@ -133,36 +194,34 @@ Contains several utility functions used in other `rjd` packages and several func
 
 - `aggregate()` to aggregate a time serie to a higher frequency
 
-### Examples  {.allowframebreaks}
-
-\footnotesize
-
-```{r}
-library(rjd3toolkit)
-set.seed(100)
-x = rnorm(1000);y = rlnorm(1000)
-bowmanshenton(x) # normal distribution
-bowmanshenton(y) # log-normal distribution
-testofruns(x) # random data
-testofruns(y) # random data
-testofruns(1:1000) # non-random data
-autocorrelations(x)
-autocorrelations.inverse(x)
-autocorrelations.partial(x)
-```
-
 
 ## rjd3modelling
 
 ### rjd3modelling
 
+\footnotesize
+
 - \bclampe create user-defined calendar and trading-days regressors: 
   `calendar.new()` (create a new calendar), `calendar.holiday()` (add a specific holiday, e.g. christmas),
   `calendar.easter()` (easter related day) and `calendar.fixedday()`)
 
+. . .
+
 - \bclampe create outliers regressors (AO, LS, TC, SO, Ramp, intervention variables), calendar related regressors (stock, leap year, periodic dummies and contrasts, trigonometric variables) -> to be added quadratic ramps
 
-- \bclampe  Range-mean regression test (to choose log transformation), Canova-Hansen (`td.ch()`) and trading-days f-test (`td.f()`)
+. . .
+
+- \bclampe  Range-mean regression test (to choose log transformation, `rangemean.tstat()`), Canova-Hansen (`td.ch()`) and trading-days f-test (`td.f()`)
+
+. . .
+
+- manipulation of ARIMA models (generation, sum, decomposition, estimation)
+
+. . .
+
+- functions to stationarise your series `do.stationary()`, `differences()`, `differencing.fast()`
+
+. . .
 
 - specification functions for `rjd3x13` and `rjd3tramoseats`
 
@@ -192,8 +251,8 @@ calendar.holiday(fr_cal, "CHRISTMAS")
 Use `holidays()` to get the days of the holidays and `htd()` to get the trading days regressors
 
 ```{r}
-holidays(fr_cal, "2020-12-24", 10,single = T)
-s = ts(0, start = 2020, end = c(2020, 11), frequency = 12)
+holidays(fr_cal, "2020-12-24", 10, single = TRUE)
+s <- ts(0, start = 2020, end = c(2020, 11), frequency = 12)
 # Trading-days regressors (each day has a different effect, sunday as contrasts)
 td_reg <- htd(fr_cal, s = s, groups = c(1, 2, 3, 4, 5, 6, 0))
 # Working-days regressors (Monday = ... = Friday; Saturday = Sunday = contrasts)
@@ -209,15 +268,28 @@ wd_reg
 \footnotesize
 
 ```{r outplot}
-s = ts(0, start = 2000, end = 2005, frequency = 12)
-ao = ao.variable(s = s, date = "2001-03-01")
-ls = ls.variable(s = s, date = "2001-01-01")
-tc = tc.variable(s = s, date = "2001-01-01", rate = 0.7)
-so = so.variable(s = s, date = "2003-05-01")
-ramp = ramp.variable(s = s, range = c("2001-01-01","2001-12-01"))
+s <- ts(0, start = 2000, end = 2005, frequency = 12)
+ao <- ao.variable(s = s, date = "2001-03-01")
+ls <- ls.variable(s = s, date = "2001-01-01")
+tc <- tc.variable(s = s, date = "2001-01-01", rate = 0.7)
+so <- so.variable(s = s, date = "2003-05-01")
+ramp <- ramp.variable(s = s, range = c("2001-01-01", "2001-12-01"))
 plot(ts.union(ao, ls, tc, so, ramp), plot.type = "single",
      col = c("red","lightgreen","orange","blue","black"))
 ```
+
+
+### Benchmark of ARIMA estimations
+
+More than 20 time faster in median!
+
+\footnotesize
+
+```{r performance-arima, echo = FALSE, out.height="90%", message=FALSE}
+(autoplot(readRDS(f_bm_airline), log = TRUE) + ggtitle("ARIMA(0,1,1)(0,1,1)")) /
+(autoplot(readRDS(f_bm_arima), log = TRUE) + ggtitle("ARIMA(3,1,1)(1,1,1)"))
+```
+
 
 ## rjd3sa
 ### rjd3sa (1)
@@ -244,11 +316,13 @@ Seasonality tests:
 \footnotesize
 ```{r}
 library(rjd3sa)
-y = diff(rjd3toolkit::ABS$X0.2.09.10.M, 1); y = y - mean(y)
-seasonality.f(y, 12)
-seasonality.friedman(y, 12)
-seasonality.kruskalwallis(y, 12)
-seasonality.combined(y, 12)
+y <- diff(rjd3toolkit::ABS$X0.2.09.10.M, 1); y <- y - mean(y)
+# Or:
+y <- rjd3modelling::differences(rjd3toolkit::ABS$X0.2.09.10.M)
+seasonality.f(y)
+seasonality.friedman(y)
+seasonality.kruskalwallis(y)
+seasonality.combined(y)
 ```
 
 
@@ -264,58 +338,52 @@ seasonality.combined(y, 12)
 
 ### Common functions
 
-In `RJDemetra` you have one function to set the specification (`regarima_spec_x13()`, `regarima_spec_tramo()`, `x13_spec()` and `tramoseats_spec()`) now one function for each part of the specification
-
-. . .
 
 Common functions (defined in `rjd3modelling`) to set the specification of the preprocessing:
 
-`set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()` and `remove_outlier()`, `add_ramp()` and `remove`_ramp()`
-
-\bcinterdit `add_usrdefvar()` not yet available
+`set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()` and `remove_outlier()`, `add_ramp()`, `remove_ramp()`, `add_usrdefvar()`
 
 ### rjd3x13
 
 Main functions:
 
-- Specification: created with `spec_x11_default()`, `spec_x13_default()`, `spec_regarima_default()` and customized with `rjd3arima` functions + `set_x11()`
+- Specification: created with `spec_x11_default()`, `spec_x13_default()`, `spec_regarima_default()` and customized with `rjd3modelling` functions + `set_x11()`
 
-- Apply model with `x11()`, `x13()`, `fast.x13()`, `regarima()`, `fast.regarima()`
+- Apply SA model with `x11()`, `x13()`, `fast.x13()`
+
+- ARIMA modelling with `regarima()`, `fast.regarima()`
 
 - \bclampe Refresh policies: `regarima.refresh()` and `x13.refresh()`
 
 
 ### Performance
 
+In median: `RJDemetra` more 3 time faster than `seasonal` and `rjdemetra3` more than 12 time faster than `seasonal`!
+
 ```{r performance, echo = FALSE, out.height="90%", message=FALSE}
-m = readRDS("img/microbenchmark.RDS")
+m <- readRDS(f_bm_seasonal)
 autoplot(m)+theme(axis.text=element_text(size=16),
         axis.title=element_text(size=16))
 ```
 
 
 ### Exemple {.allowframebreaks}
-\footnotesize
+\scriptsize
 
-```{r x13, out.height="50%"}
+```{r x13, fig.dim=c(6,3)}
 library(rjd3modelling);library(rjd3x13)
-y = rjd3toolkit::ABS$X0.2.09.10.M
-spec = spec_x13_default("rsa5c") |> set_easter(type = "unused") |> 
+y <- rjd3toolkit::ABS$X0.2.09.10.M
+spec <- spec_x13_default("rsa5c") |> set_easter(type = "unused") |> 
   set_outlier(outliers.type = c("AO", "LS")) |> 
   set_tradingdays(test = "None") |> set_x11(henderson.filter = 13) |> 
   add_outlier(type = "TC", date = "2000-06-01",
               name = "My TC in 2000-06") 
-m = rjd3x13::fast.x13(y, spec)
-# m is a list with several outputs:
-names(m)
-m
-summary(m$preprocessing)
+m = rjd3x13::x13(y, spec)
+m$result$preprocessing
+# Also summary function
+# summary(m)
 plot(m)
 ```
-
-
-
-
 
 
 ## rjd3tramoseats
@@ -329,21 +397,18 @@ Main functions:
 
 - \bclampe Refresh policies: `tramo.refresh()` and `tramoseats.refresh()`
 
+Example:
 
-### Exemple {.allowframebreaks}
-
-\footnotesize
 
 ```{r tramoseats, out.height="70%"}
-spec = spec_tramoseats_default("rsafull") |> 
+spec <- spec_tramoseats_default("rsafull") |> 
   set_easter(type = "IncludeEasterMonday") |> 
   set_tradingdays(test = "Separate_T") |> 
   set_seats(algorithm = "KalmanSmoother")
-m = rjd3tramoseats::tramoseats(y, spec)
-# More informations:
-names(m)
-m$result
+m <- rjd3tramoseats::tramoseats(y, spec)
 ```
+
+
 
 ## rjdemetra3
 
@@ -353,7 +418,7 @@ Functions to manipulate JDemetra+ workspaces:
 
 - Still in construction: you can load an existing workspace but not create a new one (use `jws.load()` for example)
 
-- Will contain all the functionalities of `rjdworkspace`
+- Will contain all the functionalities of `rjdworkspace` (more manipulation of workspaces)
 
 
 ## rjd3highfreq and rjd3stl
@@ -366,10 +431,10 @@ Seasonal adjustment of high frequency data:
 
 - \bclampe Extension of X-11 decomposition with non integer periodicity
 
-`rjd3stl` : STL, MSTL, ISTL, loess 
+`rjd3stl`: STL, MSTL, ISTL, loess 
 
 
-See Session 3: High Frequency Data and https://github.com/palatej/test_rjd3hf
+See next presentation of Anna Smyk
 
 
 # Other packages
@@ -378,143 +443,70 @@ See Session 3: High Frequency Data and https://github.com/palatej/test_rjd3hf
 ## ggdemetra3
 ### ggdemetra3 {.allowframebreaks}
 
-Like `ggdemetra` but compatible with `rjdemetra3`: ggplot2 to add seasonal adjustment statistics to your plot. Also compatible with high-frequency methods (WIP): \footnotesize
+Like `ggdemetra` but compatible with `rjdemetra3`: ggplot2 to add seasonal adjustment statistics to your plot,`autoplot()` functions... Also compatible with high-frequency methods (WIP): \footnotesize
 
-```{r ggdemetra3, out.height="85%", message = FALSE, warning = FALSE}
+```{r ggdemetra3, message = FALSE, warning = FALSE,cache=FALSE, fig.dim = c(6,3)}
 library(ggdemetra3)
-spec <- spec_x13_default("rsa3") |> set_tradingdays(option = "WorkingDays")
-p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
+spec <- spec_x13_default("rsa3") |> 
+  set_tradingdays(option = "WorkingDays")
+ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
     geom_line() +
     labs(title = "SA - IPI-FR",
-         x = NULL, y = NULL)
-p_sa <- p_ipi_fr +
-    geom_sa(component = "y_f(12)", linetype = 2,
-            spec = spec) + 
-    geom_sa(component = "sa", color = "red") +
-    geom_sa(component = "sa_f", color = "red", linetype = 2)
-p_sa
-p_sa + 
-    geom_outlier(geom = "label_repel",
-                 coefficients = TRUE,
-                 ylim = c(NA, 65), force = 10,
-                 arrow = arrow(length = unit(0.03, "npc"),
-                               type = "closed", ends = "last"),
-                 digits = 2)
+         x = NULL, y = NULL) +
+  geom_sa(component = "y_f(12)", linetype = 2,
+          spec = spec) + 
+  geom_sa(component = "sa", color = "red") +
+  geom_sa(component = "sa_f", color = "red", linetype = 2) +
+  geom_outlier(geom = "label_repel",
+               coefficients = TRUE,
+               ylim = c(NA, 65), force = 10,
+               arrow = arrow(length = unit(0.03, "npc"),
+                             type = "closed", ends = "last"),
+               digits = 2)
 ```
 
-## rjdfilters
+### Plot from an existing model
 
-### `rjdfilters` (1)
+\footnotesize
+
+```{r ggdemetra3-mod, fig.dim = c(6,3), cache = FALSE}
+mod <- rjd3x13::x13(y, spec)
+# siratioplot(mod) # SI Ratio plot
+autoplot(mod) # autoplot
+```
+
+## rjd3filters
+
+### `rjd3filters`
 
 - \bclampe easily create/combine/apply moving averages `moving_average()` (much more general than `stats::filter()`) and study their properties: plot coefficients (`plot_coef()`), gain (`plot_gain()`), phase-shift (`plot_phase()`) and different statics (`diagnostic_matrix()`)
 
+Goal: manipulate moving averages
+$$
+M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k} = 
+\left(\sum_{k=-p}^{+f}\theta_k B^{-k}\right)X_{t}\text{ with }B^k=X_{t-k}
+$$
+(Currently in `r fa_r_project` you can only limited forms of MA)
+
+
 . . .
 
-- \bclampe trend-cycle extraction with different methods to treat endpoints: 
-
-  - `lp_filter()` local polynomial filters of Proietti and Luati (2008) (including Musgrave): Henderson, Uniform, biweight, Trapezoidal, Triweight, Tricube, "Gaussian", Triangular, Parabolic (= Epanechnikov)  
-  - `rkhs_filter()` Reproducing Kernel Hilbert Space (RKHS) of Dagum and Bianconcini (2008) with same kernels  
-  - `fst_filter()` FST approach of Grun-Rehomme, Guggemos, and Ladiray (2018)  
-  - `dfa_filter()` derivation of AST approach of Wildi and McElroy (2019)
-
-. . .
-
-- \bclampe change the filter used in X-11 for TC extraction
+- \bclampe Lots of complicated and interesting things around trend-cycle estimates
 
 
-```{r, include = FALSE}
-library(rjdfilters)
-```
-
-### Create moving average `moving_average()` {.allowframebreaks}
-
-\footnotesize
-
-(Recall: $B^iX_t=X_{t-p}$ and $F^iX_t=X_{t+p}$)
-```{r}
-library(rjdfilters)
-m1 = moving_average(rep(1,3), lags = 1); m1 # Forward MA
-m2 = moving_average(rep(1,3), lags = -1); m2 # centered MA
-m1 + m2
-m1 - m2
-m1 * m2
-```
-
-Can be used to create all the MA of X-11:
-```{r}
-e1 <- moving_average(rep(1,12), lags = -6)
-e1 <- e1/sum(e1)
-e2 <- moving_average(rep(1/12, 12), lags = -5)
-# used to have the 1rst estimate of the trend
-tc_1 <- M2X12 <- (e1 + e2)/2
-coef(M2X12) |> round(3)
-si_1 <- 1 - tc_1
-M3 <- moving_average(rep(1/3, 3), lags = -1)
-M3X3 <- M3 * M3
-# M3X3 moving average applied to each month
-coef(M3X3) |> round(3)
-M3X3_seasonal <- to_seasonal(M3X3, 12)
-coef(M3X3_seasonal) |> round(3)
-s_1 = M3X3_seasonal * si_1
-s_1_norm = (1 - M2X12) * s_1
-sa_1 <- 1 - s_1_norm
-henderson_mm = moving_average(lp_filter(horizon = 6)$
-                                  filters.coef[, "q=6"],
-                              lags = -6)
-tc_2 <- henderson_mm * sa_1
-si_2 <- 1 - tc_2
-M5 <- moving_average(rep(1/5, 5), lags = -2)
-M5X5_seasonal <- to_seasonal(M5 * M5, 12)
-s_2 = M5X5_seasonal * si_2
-s_2_norm = (1 - M2X12) * s_2
-sa_2 <- 1 - s_2_norm
-tc_f <- henderson_mm * sa_2
-```
+See my presentation at **SAPW 2022** Concurrent Session 5b - Trends
+https://community.amstat.org/governmentstatisticssection/conferences/pastconference210/seasonal-adjustment-practitioners-workshop-2022
 
 
-```{r x11Filters,out.height="90%"}
-par(mai = c(0.3, 0.3, 0.2, 0))
-layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+## rjd3sts and rjd3bench
 
-plot_coef(tc_f);plot_coef(sa_2, col = "orange", add = TRUE)
-legend("topleft", 
-       legend = c("Final TC filter", "Final SA filter"),
-       col= c("black", "orange"), lty = 1)
-plot_gain(tc_f);plot_gain(sa_2, col = "orange", add = TRUE)
-plot_phase(tc_f);plot_phase(sa_2, col = "orange", add = TRUE)
-```
+### rjd3sts and rjd3bench
 
-```{r,include = FALSE}
-par(def.par)
-```
-
-### Apply a moving average
-
-\footnotesize
-```{r exApply,out.height="70%"}
-y <- retailsa$AllOtherGenMerchandiseStores
-trend <- y * tc_1
-sa <- y * sa_1
-plot(window(ts.union(y, trend, sa), start = 2000),
-     plot.type = "single",
-      col = c("black","orange", "lightblue"))
-```
-
-
-## rjd3sts
-
-### rjd3sts
-
-Interface to structural time series and state space models
+`rjd3sts` Interface to structural time series and state space models
 
 Several examples available here https://github.com/palatej/test_rjd3sts
 
-
-
-## rjd3bench
-### rjd3bench
-
-Benchmarking and temporal disaggregation
+`rjd3bench` Benchmarking and temporal disaggregation
 
 Several examples here: https://github.com/palatej/test_rjd3bench
 
@@ -532,7 +524,6 @@ With JDemetra+ 3.0, lots of new `r fa_r_project` packages are coming:
 
 - Allow to create new trainings thanks to a deeper acces to all the functionalities of JDemetra+
 
-. . .
 
 Many ways to contribute:
 

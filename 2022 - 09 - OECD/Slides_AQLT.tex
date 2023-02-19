@@ -268,7 +268,7 @@ Session 10: Seasonal and Calendar Adjustment}
 \begin{itemize}
 \tightlist
 \item
-  With the development of JDemetra+ 3.0, more than 12 \faIcon{r-project}
+  With the development of JDemetra+ 3.0, more than 13 \faIcon{r-project}
   packages are being developped! Not only on seasonal adjustment!
 \end{itemize}
 
@@ -300,6 +300,7 @@ They are all available in GitHub, currently:
 \NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"palatej/rjdfilters"}\NormalTok{)}
 \NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"palatej/rjd3sts"}\NormalTok{)}
 \NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"palatej/rjd3highfreq"}\NormalTok{)}
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"palatej/rjd3stl"}\NormalTok{)}
 \NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"palatej/rjd3bench"}\NormalTok{)}
 \NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"AQLT/ggdemetra3"}\NormalTok{)}
 \end{Highlighting}
@@ -310,7 +311,7 @@ They are all available in GitHub, currently:
 \protect\hypertarget{introduction-3}{}
 \includegraphics{img/diag.pdf}
 
-And it's just the beggining!
+And it's just the begining!
 \end{frame}
 
 \hypertarget{utility-packages}{%
@@ -334,9 +335,9 @@ and several functions to perform tests:
   (\texttt{testofruns()}) or up and down runs test
   (\texttt{testofupdownruns()})
 \item
-  autocorrelations function (usual, inverse, partial)
+  autocorrelation functions (usual, inverse, partial)
 \item
-  \texttt{aggregate} to aggregate a time serie to a higher frequency
+  \texttt{aggregate()} to aggregate a time serie to a higher frequency
 \end{itemize}
 \end{frame}
 
@@ -465,7 +466,7 @@ and several functions to perform tests:
   \texttt{calendar.new()} (create a new calendar),
   \texttt{calendar.holiday()} (add a specific holiday, e.g.~christmas),
   \texttt{calendar.easter()} (easter related day) and
-  calendar.fixedday()`
+  \texttt{calendar.fixedday()})
 \item
   \bclampe create outliers regressors (AO, LS, TC, SO, Ramp,
   intervention variables), calendar related regressors (stock, leap
@@ -475,6 +476,9 @@ and several functions to perform tests:
   \bclampe  Range-mean regression test (to choose log transformation),
   Canova-Hansen (\texttt{td.ch()}) and trading-days f-test
   (\texttt{td.f()})
+\item
+  specification functions for \texttt{rjd3x13} and
+  \texttt{rjd3tramoseats}
 \end{itemize}
 \end{frame}
 
@@ -709,8 +713,25 @@ packages}\label{seasonal-adjustment-packages}}
 
 \begin{frame}[fragile]{rjd3arima}
 \protect\hypertarget{rjd3arima-1}{}
-Utility functions used in \texttt{rjd3x13} and \texttt{rjd3tramoseats}
-to set the specification of the preprocessing:
+\texttt{rjd3arima} is devoted to formatting the output of Arima related
+results
+\end{frame}
+
+\hypertarget{rjd3x13-and-rjd3tramoseats}{%
+\subsection{rjd3x13 and
+rjd3tramoseats}\label{rjd3x13-and-rjd3tramoseats}}
+
+\begin{frame}[fragile]{Common functions}
+\protect\hypertarget{common-functions}{}
+In \texttt{RJDemetra} you have one function to set the specification
+(\texttt{regarima\_spec\_x13()}, \texttt{regarima\_spec\_tramo()},
+\texttt{x13\_spec()} and \texttt{tramoseats\_spec()}) now one function
+for each part of the specification
+
+\pause
+
+Common functions (defined in \texttt{rjd3modelling}) to set the
+specification of the preprocessing:
 
 \texttt{set\_arima()}, \texttt{set\_automodel()}, \texttt{set\_basic()},
 \texttt{set\_easter()}, \texttt{set\_estimate()},
@@ -720,24 +741,10 @@ to set the specification of the preprocessing:
 \texttt{remove}\_ramp()`
 
 \bcinterdit \texttt{add\_usrdefvar()} not yet available
-
-\pause
-
-Functions commons to RegARIMA and TRAMO
-
-\pause
-
-In \texttt{RJDemetra} you have one function to set the specification
-(\texttt{regarima\_spec\_x13()}, \texttt{regarima\_spec\_tramo()},
-\texttt{x13\_spec()} and \texttt{tramoseats\_spec()}) now one function
-for each part of the specification
 \end{frame}
 
-\hypertarget{rjd3x13}{%
-\subsection{rjd3x13}\label{rjd3x13}}
-
 \begin{frame}[fragile]{rjd3x13}
-\protect\hypertarget{rjd3x13-1}{}
+\protect\hypertarget{rjd3x13}{}
 Main functions:
 
 \begin{itemize}
@@ -765,6 +772,7 @@ Main functions:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rjd3modelling);}\FunctionTok{library}\NormalTok{(rjd3x13)}
 \NormalTok{y }\OtherTok{=}\NormalTok{ rjd3toolkit}\SpecialCharTok{::}\NormalTok{ABS}\SpecialCharTok{$}\NormalTok{X0.}\DecValTok{2}\NormalTok{.}\DecValTok{09}\NormalTok{.}\FloatTok{10.}\NormalTok{M}
 \NormalTok{spec }\OtherTok{=} \FunctionTok{spec\_x13\_default}\NormalTok{(}\StringTok{"rsa5c"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} \FunctionTok{set\_easter}\NormalTok{(}\AttributeTok{type =} \StringTok{"unused"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
   \FunctionTok{set\_outlier}\NormalTok{(}\AttributeTok{outliers.type =} \FunctionTok{c}\NormalTok{(}\StringTok{"AO"}\NormalTok{, }\StringTok{"LS"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
@@ -1109,11 +1117,11 @@ Functions to manipulate JDemetra+ workspaces:
 \end{itemize}
 \end{frame}
 
-\hypertarget{rjd3highfreq}{%
-\subsection{rjd3highfreq}\label{rjd3highfreq}}
+\hypertarget{rjd3highfreq-and-rjd3stl}{%
+\subsection{rjd3highfreq and rjd3stl}\label{rjd3highfreq-and-rjd3stl}}
 
-\begin{frame}{rjd3highfreq}
-\protect\hypertarget{rjd3highfreq-1}{}
+\begin{frame}[fragile]{rjd3highfreq and rjd3stl}
+\protect\hypertarget{rjd3highfreq-and-rjd3stl-1}{}
 Seasonal adjustment of high frequency data:
 
 \begin{itemize}
@@ -1121,9 +1129,9 @@ Seasonal adjustment of high frequency data:
   \bclampe fractional and multi airline decomposition
 \item
   \bclampe Extension of X-11 decomposition with non integer periodicity
-\item
-  STL/Loess
 \end{itemize}
+
+\texttt{rjd3stl} : STL, MSTL, ISTL, loess
 
 See Session 3: High Frequency Data and
 \url{https://github.com/palatej/test_rjd3hf}
@@ -1470,6 +1478,8 @@ Packages \faIcon{r-project}{}:
 \href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
 
 \href{https://github.com/palatej/rjd3sts}{\faGithub{} palatej/rjd3sts}
+
+\href{https://github.com/palatej/rjd3stl}{\faGithub{} palatej/rjd3stl}
 
 \href{https://github.com/palatej/rjd3highfreq}{\faGithub{} palatej/rjd3highfreq}
 
