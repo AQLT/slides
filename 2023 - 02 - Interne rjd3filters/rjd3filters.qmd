@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 `rjd3filters` est un package expérimental autour de JD+ 3.0 qui permet la manipulation de moyennes mobiles utilisées dans X-11 :
 
-- Permet d'étudier différentes méthodes pour l'extraction de la tendance-cycle et leur intégration dans X-11 et analyser des dernières estimations (`implicit_forecasts()`) : voir notamment présentation aux [SAPW](https://aqlt.github.io/slides/2022%20-%2006%20-%20SAPW/Slides_AQLT.pdf)
+- Permet d'étudier différentes méthodes pour l'extraction de la tendance-cycle et leur intégration dans X-11 et analyser des dernières estimations (`implicit_forecasts()`) : voir notamment présentation aux [SAPW](https://aqlt.github.io/slides/2022%20-%2006%20-%20SAPW/Slides_AQLT.pdf)
 
 - Différentes fonctions annexes ont été implémentées pour manipuler :
 
