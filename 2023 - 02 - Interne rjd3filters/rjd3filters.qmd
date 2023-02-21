@@ -1,5 +1,6 @@
 ---
 title: "rjd3filters"
+author: "Alain Quartier-la-Tente"
 lang: fr
 format:
   revealjs:
@@ -21,10 +22,10 @@ knitr::opts_chunk$set(echo = TRUE,
 
 - Permet d'étudier différentes méthodes pour l'extraction de la tendance-cycle et leur intégration dans X-11 et analyser des dernières estimations (`implicit_forecasts()`) : voir notamment présentation aux [SAPW](https://aqlt.github.io/slides/2022%20-%2006%20-%20SAPW/Slides_AQLT.pdf)
 
-- Différentes fonctions annexes ont été implémentées pour manipuler :
+- Différentes fonctions annexes ont été implémentées pour manipuler :
 
     - Les moyennes mobiles (`moving_average()`)
-    - Les filtres (`finite_filters`) : une `moving_average()` centrale ainsi qu'un ensemble de `moving_average()` utilisées pour les premières (`lfilters`) et dernières (`rfilters`) estimations.
+    - Les *filtres* (`finite_filters`) : une `moving_average()` centrale ainsi qu'un ensemble de `moving_average()` utilisées pour les premières (`lfilters`) et dernières (`rfilters`) estimations.
     
 ## Estimation en TR de la TC (1)
 
@@ -58,6 +59,17 @@ plot_coef(musgrave_f, q=c(0, 1, 2, 6), zeroAsNa = TRUE)
 jfilter(y, musgrave_f$filters.coef) |> round()
 ```
 
+## Discussion
+
+A modifier :
+
+- Changer l'ordre des coefficients dans la sortie des fonctions
+
+- Renvoyer un objet `finite_filters` ?
+
+- Renommer `jfilter` ?
+
+
 ## Moyennes mobiles
 
 La fonction `moving_average()` permet de créer des moyennes mobiles avec :
@@ -85,8 +97,18 @@ to_seasonal(M3X3, 12)
 ```
 
 ```{r}
+#| layout-ncol: 2
 plot_gain(M3X3, main = "M3X3 applied to each month")
 plot_gain(to_seasonal(M3X3, 12), main = "M3X3 applied to the global series")
+```
+
+## Moyennes mobiles (3)
+
+Pour appliquer la moyenne mobile :
+```{r}
+to_seasonal(M3X3, 12) * y
+# ou 
+jasym_filter(y, to_seasonal(M3X3, 12))
 ```
 
 ## Filtres (1)
@@ -95,7 +117,7 @@ plot_gain(to_seasonal(M3X3, 12), main = "M3X3 applied to the global series")
 
 ```{r}
 #| error: true
-M = finite_filters(sfilter = moving_average(rep(1, 3),-1)/3, 
+M <- finite_filters(sfilter = moving_average(rep(1, 3),-1)/3, 
                rfilters = list(moving_average(rep(1, 2),-1)/2))
 M
 M[1,1] # ce n'est pas une matrice
@@ -126,15 +148,15 @@ all.equal((M3X3 * m_f) * y, M3X3 * (m_f * y))
 
 ```{r}
 library(rjd3filters)
-y = rjd3toolkit::ABS$X0.2.09.10.M
+y <- rjd3toolkit::ABS$X0.2.09.10.M
 compare <- function(x, id){
-  res = cbind(na.omit(x), extract(id))
+  res <- cbind(na.omit(x), extract(id))
   all.equal(res[,1], res[,2])
 }
 extract <- function(id, x = x11_step){
   rjd3toolkit:::.proc_vector(x$java, id)
 }
-x11_step = rjd3filters::x11(y = y, trend.coefs = lp_filter(horizon = 6,ic = 3.5)$filters.coef,
+x11_step <- rjd3filters::x11(y = y, trend.coefs = lp_filter(horizon = 6,ic = 3.5)$filters.coef,
                             extreme.lsig = 300, extreme.usig = 400, mul = FALSE,
                             seas.s0 = "S3X3",
                             seas.s1 = "S3X5")
@@ -146,41 +168,54 @@ e1
 tc_1 <- M2X12 <- (e1 + e2)/2
 coef(M2X12) |> round(3)
 compare(M2X12 * y, "b2")
-si_1 <- 1 - tc_1
-compare(si_1 * y, "b3")
-
-M3X3 <- macurves("S3x3")
-M3X3_s <- to_seasonal(M3X3, 12)
 ```
 
 ## X-11 (2)
 
 ```{r}
-s_1 = M3X3_s * si_1
-s_1_norm = M2X12 * s_1
-s_1_norm = imput_last_obs(s_1_norm, n = 6, nperiod = 1)
-s_1_demean = s_1 - s_1_norm
-s_1_f = imput_last_obs(s_1_demean, n = 6, nperiod = 12)
+si_1 <- 1 - tc_1
+compare(si_1 * y, "b3")
+
+M3X3 <- macurves("S3x3")
+M3X3_s <- to_seasonal(M3X3, 12)
+s_1 <- M3X3_s * si_1
+s_1_norm <- M2X12 * s_1
+s_1_norm <- imput_last_obs(s_1_norm, n = 6, nperiod = 1)
+s_1_demean <- s_1 - s_1_norm
+s_1_f <- imput_last_obs(s_1_demean, n = 6, nperiod = 12)
 compare(s_1_f * y, "b5")
-sa_1 = 1- s_1_f
+sa_1 <- 1- s_1_f
 compare(sa_1 * y, "b6")
 
-h13 = finite_filters(lp_filter(ic = 3.5))
-tc_2 = h13 * sa_1
+h13 <- finite_filters(lp_filter(ic = 3.5))
+tc_2 <- h13 * sa_1
 compare(tc_2 * y, "b7")
 
 si_2 <- 1 - tc_2
 compare(si_2 * y, "b8")
+```
 
+
+
+## X-11 (3)
+
+```{r}
 M3X5 <- macurves("S3x5")
 M3X5_s <- to_seasonal(M3X5, 12)
-s_2 = M3X5_s * si_2
-s_2_norm = M2X12 * s_2
-s_2_norm = imput_last_obs(s_2_norm, n = 6, nperiod = 1)
-s_2_demean = s_2 - s_2_norm
-s_2_f = imput_last_obs(s_2_demean, n = 6, nperiod = 12)
+s_2 <- M3X5_s * si_2
+s_2_norm <- M2X12 * s_2
+s_2_norm <- imput_last_obs(s_2_norm, n = 6, nperiod = 1)
+s_2_demean <- s_2 - s_2_norm
+s_2_f <- imput_last_obs(s_2_demean, n = 6, nperiod = 12)
 compare(s_2_f * y, "b10")
-sa_2 = 1- s_2_f
+sa_2 <- 1- s_2_f
 compare(sa_2 * y, "b11")
 ```
 
+## Discussion
+
+- Renommer `jasym_filter()` ? (peut-être une seule fonction avec `jfilter()`)
+
+- Renommer `finite_filters` ?
+
+- Coder les fonctions `[` sur les `finite_filters` ? ou le `as.matrix()` suffisant ?
