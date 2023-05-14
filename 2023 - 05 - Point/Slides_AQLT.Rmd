@@ -1,0 +1,65 @@
+---
+title: |
+ | Estimation en temps réel de la tendance-cycle :
+ | Apport de l’utilisation des filtres asymétriques dans la détection des points de retournement
+subtitle: "Point Thèse"
+author: "Alain Quartier-la-Tente"
+departement: "16 Mai 2023"
+division: |
+    | 
+logo: "img/logobeamer.png"
+automaticcontents: false
+output:
+    beamer_presentation:
+        template: template_Beamer.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+        includes:
+          in_header: preamble_beamer.tex
+themeoptions: "coding=utf8,language=french"
+classoption: 'usepdftitle=false,french' #handout
+fontsize: 10pt
+bibliography: [biblio.bib]
+biblio-style: unsrtnat
+natbiboptions: [numbers]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      cache = F,
+                      fig.align = 'center',
+                      fig.path = "img/rmd-")
+library(knitr)
+library(kableExtra)
+library(rjd3filters)
+fig.ext <- "pdf"
+# load(file = "tables.RData")
+# mae <- readRDS("tables_revisions.RDS")$MAE
+```
+
+### Définition du sujet
+
+Point de retournement, lissage, X-13 ?
+
+### FST
+
+- Poids trouvés en minimisant le déphasage observé sur les séries simulées
+
+
+- Poids non normalisés peuvent avoir un avantage : on associe un poids décroissant à la *timeliness*
+
+
+
+### `rjd3filters`
+
+```{r, out.width="100%"}
+knitr::include_graphics("img/gain_lp.pdf")
+```
+
+### `rjd3filters`
+
+```{r, out.width="100%"}
+knitr::include_graphics("img/gain_autres.pdf")
+```
+

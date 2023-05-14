@@ -1,0 +1,17 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+*_cache
+*_files
+*DS_Store
+._.*
+*.out
+*.log
+*.toc
+*.vrb
+*.nav
+*.aux
+*.snm
+img/rmd-*
