@@ -20,7 +20,6 @@ output:
 themeoptions: "coding=utf8,language=french"
 classoption: 'usepdftitle=false,french' #handout
 fontsize: 10pt
-bibliography: [biblio.bib]
 biblio-style: unsrtnat
 natbiboptions: [numbers]
 ---
@@ -44,22 +43,45 @@ Point de retournement, lissage, X-13 ?
 
 ### FST
 
-- Poids trouvés en minimisant le déphasage observé sur les séries simulées
+- Poids trouvés en minimisant le déphasage observé sur les séries simulées : toujours du filtre préservant les polynômes de degré 2 avec $\alpha = 0,00$ (*fidelity*), $\beta  =0,05$ (*smoothness*) et $\gamma = 0,95$ (*timeliness*)
 
 
 - Poids non normalisés peuvent avoir un avantage : on associe un poids décroissant à la *timeliness*
 
+- Résultats [ici](https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#comparaison-des-filtres-polynomiaux-locaux-et-des-filtres-rkhs)
+
+. . .
+
+Non testé : méthodes des plus proches voisins pour la longueur des filtres 
 
 
-### `rjd3filters`
+### ex `rjd3filters` : filtres X-11
 
 ```{r, out.width="100%"}
 knitr::include_graphics("img/gain_lp.pdf")
 ```
 
-### `rjd3filters`
+### ex `rjd3filters` : filtres X-11
 
 ```{r, out.width="100%"}
 knitr::include_graphics("img/gain_autres.pdf")
 ```
 
+### Méthodes robustes
+
+Quel cadre ($\iff$ quels points atypiques) ? X-11 ou plus général (actuellement)
+
+- X-11 : plus simple que des AO, mais implique de corriger en amont des autres outliers.
+Permet de se rapprocher du NLDF.
+
+. . .
+
+Protocole ?
+
+- Série simulée : comment calibrer les points atypiques ? une date à la fois, plusieurs dates ?
+
+- Séries réelles : classer les points atypiques selon X-11, et comparer les résultats sur séries corrigées et séries non corrigées ? Suppose que l'on détecte tous les points atypiques.
+
+. . .
+
+Idée de supplémentaire par rapport à la littérature : étendre méthodes polynômiales en rajoutant des variables de contrôle ?
