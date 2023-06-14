@@ -1,0 +1,448 @@
+---
+title: |
+ | Manipuler les moyennes mobiles avec R et JDemetra+
+subtitle: "Rencontres R 2023"
+author: "Alain Quartier-la-Tente"
+departement: "INSEE, LEMNA"
+division: |
+    | 21 au 23 juin 2023
+logo: "img/logobeamer.png"
+automaticcontents: true
+output:
+    beamer_presentation:    
+        template: template_beamer.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+        includes:
+          in_header: preamble_beamer.tex
+themeoptions: "coding=utf8,language=french"
+classoption: 'usepdftitle=false,french' #handout
+fontsize: 10pt
+bibliography: [biblio.bib]
+biblio-style: unsrtnat
+natbiboptions: [numbers]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = F,
+                      fig.align = 'center',
+                      fig.path = "img/markdown-",
+                      out.width ="100%")
+library(knitr)
+library(kableExtra)
+library(rjd3filters)
+library(microbenchmark)
+library(ggplot2)
+library(patchwork)
+
+is_html <- knitr::is_html_output()
+is_latex <- knitr::is_latex_output()
+fig.ext = "pdf"
+if(is_html){
+    fa_arrow_circle_right <- '<i class="fas fa-arrow-circle-right"></i>'
+    fa_r_project <- '<i class="fab fa-r-project"></i>'
+}else {
+    if(is_latex){
+        fa_arrow_circle_right <- "\\faIcon{arrow-circle-right}"
+        fa_r_project <- "\\faIcon{r-project}"
+    }else {
+        fa_arrow_circle_right <- "->"
+        fa_r_project <- 'R'
+    }
+}
+
+if (!dir.exists("benchmark"))
+  dir.create("benchmark")
+
+f_bm_airline <- "benchmark/airline.RDS"
+f_bm_arima <- "benchmark/arima_complicated.RDS"
+f_bm_seasonal <- "benchmark/seasonal.RDS"
+if (!file.exists(f_bm_airline)) {
+  mairline = microbenchmark::microbenchmark("stats::arima" = {
+   m = arima(log(AirPassengers), order=c(0,1,1), seasonal = list(order=c(0,1,1), period=12))
+},
+"rjd3toolkit::sarima_estimate" = {
+  rjd3toolkit::sarima_estimate(log(AirPassengers), order=c(0,1,1), seasonal = list(order=c(0,1,1), period=12))
+})
+  # autoplot(mairline)
+  saveRDS(mairline, f_bm_airline)
+}
+if (!file.exists(f_bm_arima)) {
+  mcomplicates = microbenchmark::microbenchmark("stats::arima" = {
+  arima(log(AirPassengers), order=c(3,1,1), seasonal = list(order=c(1,1,1), period=12))
+},
+"rjd3toolkit::sarima_estimate" = {
+  rjd3toolkit::sarima_estimate(log(AirPassengers), order=c(3,1,1), seasonal = list(order=c(1,1,1), period=12))
+})
+  # autoplot(mcomplicates)
+  saveRDS(mcomplicates, f_bm_arima)
+}
+
+if (!file.exists(f_bm_seasonal)) {
+  mseasonal <- microbenchmark::microbenchmark(
+    "seasonal::seas" = seasonal::seas(AirPassengers, x11 = ""),
+    "RJDemetra::x13" = RJDemetra::x13(AirPassengers),
+    "rjd3x13::x13" = rjd3x13::x13(AirPassengers,"rsa5c")
+  )
+  # autoplot(mseasonal)
+  saveRDS(mseasonal,
+			f_bm_seasonal)
+}
+
+options(width = 60)
+def.par <- par(no.readonly = TRUE)
+```
+
+# Introduction
+
+
+### JDemetra+ ???
+
+JDemetra+ :
+
+- logiciel officiellement recommandé par Eurostat et la BCE pour la désaisonnalisation
+
+- un package \faRProject{} associé : `RJDemetra`
+
+- Nombreuses extensions qui permettent de traiter d'autres problèmes de séries temporelles : benchmarking, nowcasting, DFM, etc.
+
+. . .
+
+JDemetra+ 3.0 :
+
+- Refactorisation du code qui facilite l'accès au code via d'autres logiciels
+
+- Utilisation des Protocol Buffers pour accélérer l'interaction avec Java (`RProtoBuf`)
+
+- Développement $\simeq 10$ de package \faRProject{} autour de problèmes de séries temporelles
+
+- Aujourd'hui : focus sur un package (traitement des moyennes mobiles) et rapide présentation des autres
+
+# `rjd3filters` et les moyennes mobiles
+
+## Introduction aux moyennes mobiles
+
+### Introduction
+
+\highlight{Moyennes mobiles} (MM) omniprésentes dans les problèmes de séries temporelles :
+$$
+M_\theta(X_t)=\sum_{k=-p}^{+f}\theta_kX_{t+k}
+=\left(\sum_{k=-p}^{+f}\theta_kB^{-k}\right)X_{t}
+\text{ avec }B^k=X_{t-k}
+$$
+
+. . .
+
+Exemple :
+
+- Lissage : moyennes mobiles simples (ex : COVID), LOESS (`ggplot2::geom_smooth()`), régressions locale, etc.
+
+. . .
+
+- Prévisions : ARIMA
+
+. . .
+
+- Décomposition : désaisonnalisation (X-13ARIMA, STL), extraction de tendance-cycle (analyse du cycle des affaires)
+
+
+## Existant sous `r fa_r_project`
+
+### Qu'est-ce qui existe sous `r fa_r_project` ? (1)
+
+Pour la manipulation de MM :
+
+1. `stats::filter(., method= "recursive", sides = 2)`: MM symétriques ($p$ impair)
+$$
+y_t=f_1x_{t+\lceil (p-1)/2\rceil}+\dots+f_p x_{t+\lceil (p-1)/2\rceil-(p-1)}
+$$
+or `stats::filter(., method= "recursive", sides = 1)`: MM utilisées en temps-réel
+$$
+y_t=f_1x_{t}+\dots+f_p x_{t-(p-1)}
+$$
+
+. . .
+
+\faArrowCircleRight{} On peut ajouter des 0 pour généraliser mais on perd l'estimation des derniers points
+
+
+### Qu'est-ce qui existe sous `r fa_r_project` ? (2)
+
+Régression locale :
+
+2. `KernSmooth::locpoly()` régression locale avec noyau gaussien
+
+3. `locfit::locfit()` régression locale avec tricube, rectangulaire, triweight, triangulaire, epanechnikov, bisquare, gaussien
+
+4. `stats::loess()` noyau tricube
+
+. . .
+
+5. Désaisonnalisation : `stats`, `seasonal`, `RJDemetra`, `x12`: difficile d'isoler les étapes et les différentes moyennes mobiles utilisées
+
+. . .
+
+\bigskip 
+
+\faArrowCircleRight{} Aucune fonction pour manipuler facilement les MM et analyser leurs propriétés statistiques (gain, déphasage, etc.)
+
+\faArrowCircleRight{} Aucune moyen de créer les moyennes mobiles classiques liées à la désaisonnalisation : Henderson, Musgrave, Macurves, etc.
+
+## rjd3filters
+### `rjd3filters` (1)
+
+\footnotesize
+
+`rjd3filters`: package \faRProject{} basé sur les librairies \large\faJava{} \normalsize de JDemetra+ 3.0 qui permet de :
+
+- créer/combiner/appliquer facilement toutes les MM `moving_average()`
+
+. . .
+
+- créer/combiner/appliquer facilement un ensemble de MM : une MM centrale (estimations finales) et des MM lorsque les données ne sont pas disponibles `finite_filters()`
+
+. . .
+
+- étudier les propriétés des MM : courbe des coefficients (`plot_coef()`), gain (`plot_gain()`), déphasage (`plot_phase()`) et différentes statistiques (`diagnostic_matrix()`)
+
+. . .
+
+- différentes méthodes de construction de MM pour l'extraction de la tendance-cycle et "personnaliser" X-11
+
+### `rjd3filters` (2)
+
+Disponible sous \href{https://github.com/palatej/rjd3filters}{\faGithub{} palatej/rjd3filters}
+
+```{r, eval=FALSE}
+devtools::install_github("palatej/rjd3toolkit")
+devtools::install_github("palatej/rjd3filters")
+```
+
+
+### Création et manipulations `moving_average()` {.allowframebreaks}
+
+\footnotesize
+
+(Rappel : $B^iX_t=X_{t-p}$ et $F^iX_t=X_{t+p}$)
+```{r}
+library(rjd3filters)
+m1 = moving_average(rep(1,4), lags = -2)/4; m1 # MM simple d e4 termes
+m2 = moving_average(rep(1,3), lags = -1)/3; m2 # MM centrés 3 termes
+m1 + m2
+m1 - m2
+m1 * m2
+m1^2
+rev(m1)
+```
+
+```{r}
+library(rjd3filters)
+m1 = moving_average(rep(1,4), lags = -2)/4; m1 # MM simple d e4 termes
+m2 = moving_average(rep(1,3), lags = -1)/3; m2 # MM centrés 3 termes
+m1 + m2
+m1 - m2
+m1 * m2
+m1^2
+rev(m1)
+```
+
+```{r ex-filtres,out.height="50%"}
+y <- datasets::discoveries
+plot(y)
+lines(y * m1, col = "orange")
+lines(y * m2, col = "darkgreen")
+```
+
+
+```{r ex-filtres-stats,out.height="90%"}
+par(mai = c(0.3, 0.3, 0.2, 0))
+layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+plot_coef(m1, main = "Coef");plot_coef(m2, col = "orange", add = TRUE)
+plot_gain(m1, main = "Gain");plot_gain(m2, col = "orange", add = TRUE)
+plot_phase(m1, main = "Déphasage");plot_phase(m2, col = "orange", add = TRUE)
+```
+
+### A quoi ça sert ?
+
+- Dans les cas simples : inutile
+
+. . .
+
+- Dans les cas plus compliqués (ex : désaisonnalisation, lissage) :
+
+  - Aide à la formation (décomposition des étapes)
+  
+  - Aide à la recherche (modification de certaines étapes)
+
+
+- Exemple : désaisonnalisation avec X-11 (combinaison de nombreuses moyennes mobiles)
+
+### Exemple X-11 {.allowframebreaks}
+
+\scriptsize
+
+```{r}
+y <- log(AirPassengers)
+# On suppose Y = Tendance-Cycle (TC) + Saisonnalité (S) + Irrégulier (I)
+tc_1 <- M2X12 <- (simple_ma(12, - 6) + simple_ma(12, - 5))/2
+si_1 <- 1 - tc_1
+M3X3 <- macurves("S3x3")
+M3X3 # MM sym pour l'estimation finale et MMa pour les est intermédiaires
+M3X3_s <- to_seasonal(M3X3, 12)
+s_1 <- M3X3_s * si_1
+s_1_norm <- M2X12 * s_1
+s_1_norm <- impute_last_obs(s_1_norm, n = 6, nperiod = 1)
+s_1_demean <- s_1 - s_1_norm
+s_1_f <- impute_last_obs(s_1_demean, n = 6, nperiod = 12)
+sa_1 <- 1- s_1_f
+
+h13 <- lp_filter()
+tc_2 <- h13 * sa_1
+
+si_2 <- 1 - tc_2
+s_2 <- M3X3_s * si_2
+s_2_norm <- M2X12 * s_2
+s_2_norm <- impute_last_obs(s_2_norm, n = 6, nperiod = 1)
+s_2_demean <- s_2 - s_2_norm
+s_2_f <- impute_last_obs(s_2_demean, n = 6, nperiod = 12)
+sa_2 <- 1- s_2_f
+c(len = length(sa_2@sfilter), ub = upper_bound(sa_2@sfilter))
+```
+
+### Exemple X-11 (2)
+
+```{r, echo=FALSE, fig.show='animate', out.height="90%"}
+plot(y, main = "Série brute", col = "red")
+plot(tc_1 * y, main = "Tendance-cycle (1)", ylim = range(y)); lines(y, col = "red")
+plot(s_1_f * y, main = "Saisonnalité (1)")
+plot(sa_1 * y, main = "Série désaisonnalisée (1)", ylim = range(y)); lines(y, col = "red")
+
+plot(tc_2 * y, main = "Tendance-cycle (2)", ylim = range(y)); lines(y, col = "red")
+plot(s_2_f * y, main = "Saisonnalité (2)")
+plot(sa_2 * y, main = "Série désaisonnalisée (2)", ylim = range(y)); lines(y, col = "red")
+```
+
+# Autres packages
+
+## rjd3toolkit
+### rjd3toolkit
+
+- De nombreux tests (résidus, saisonnalité, effets jours ouvrables, etc.), non existants dans \faRProject{} : Jarque-Bera (plus de paramètres que  rapport à `tseries::jarque.bera.test()`), *runs tests* (caractère aléatoire des données), *range-mean regression test* (choisir la transformation en log), tests sur les JO (Canova-Hansen), tests de saisonnalité (dont test combiné de X-11 et periodogramme)
+
+- création de régresseurs liés aux points atypiques et liés au effets jours ouvrables (Pâques, année bissextile, stocks, variables trigonométriques, etc.)
+
+- création de régresseurs de calendrier en prenant en compte les spécificités des pays (jours fériés)
+
+
+- manipulation des modèles ARIMA (simulation, addition, décomposition, estimation)
+
+
+- autres fonctions autour du traitement des séries temporelles (transformation, stationnarisation, etc.)
+
+
+### Benchmark des estimations ARIMA
+
+En médiane 10 fois plus rapide avec ARIMA(0,1,1)(0,1,1) et 30 fois avec ARIMA(3,1,1)(1,1,1) !
+
+```{r performance-arima, echo = FALSE, out.height="85%", message=FALSE}
+m1 <- readRDS(f_bm_airline)
+m2 <- readRDS(f_bm_arima)
+(autoplot(m1, log = TRUE) + ggtitle("ARIMA(0,1,1)(0,1,1)")) /
+(autoplot(m2, log = TRUE) + ggtitle("ARIMA(3,1,1)(1,1,1)"))
+```
+
+## Désaisonnalisation
+### rjd3x13, rjd3tramoseats, rjdemetra3
+
+- différentes méthodes de modélisation de RegARIMA avec detections automatiques des points atypiques
+
+- méthodes "classiques de désaisonnalisation : X-13 et TRAMO-SEATS
+
+- gestion de workspaces (liés à JDemetra+)
+
+### Performance
+
+En médiane : `RJDemetra` 2 fois plus rapide que `seasonal` et `rj3x13` 10 fois plus rapide que `seasonal`!
+
+```{r performance, echo = FALSE, out.height="85%", message=FALSE}
+mseasonal <- readRDS(f_bm_seasonal)
+autoplot(mseasonal)+theme(axis.text=element_text(size=16),
+        axis.title=element_text(size=16))
+```
+
+## Autres expérimentations
+### rjd3highfreq et rjd3stl
+
+`rjd3highfreq` Désaisonnalisation des séries haute-fréquence (plus fines que mensuelles)
+
+- \bclampe fractional et multi airline decomposition 
+
+- \bclampe Extension de X-11 avec une saisonnalité non entière
+
+`rjd3stl` : STL, MSTL, ISTL, loess 
+
+Exemples : https://github.com/palatej/test_rjd3hf
+
+
+### rjd3sts and rjd3bench
+
+`rjd3sts` Interface simple autre des modèles espaces états et des *structural time series*
+
+Exemples : https://github.com/palatej/test_rjd3sts
+
+\faArrowCircleRight{} `tvCoef` permet de transformer des modèles `lm` en modèles à coefficients variant dans le temps
+
+`rjd3bench` Benchmarking (uni et multivarié) et temporal disaggregation
+
+Exemples : https://github.com/palatej/test_rjd3bench
+
+
+# Conclusion
+
+### Conclusion
+
+Avec JDemetra+ 3.0, de nombreux packages `r fa_r_project` sont développés :
+
+- Sur l'analyse des séries temporelles et les méthodes de désaisonnalisation (bien plus rapide qu'avec les packages actuels)
+
+- Développement de nouvelles méthodes (e.g. gestion des séries à haute-fréquence)
+
+- Permet de faciliter les formations en accédant à toutes les fonctionnalités de JDemetra+
+
+
+- Il faut \faJava{} $\geq$ 17 (non compatible avec tous les serveurs du CRAN) 
+
+### Merci de votre attention {.noframenumbering}
+
+Packages \faIcon{r-project}{} :
+
+::::{.columns}
+:::{.column width=40%}
+
+\href{https://github.com/palatej/rjd3toolkit}{\faGithub{} palatej/rjd3toolkit}
+
+\href{https://github.com/palatej/rjd3x13}{\faGithub{} palatej/rjd3x13}
+
+\href{https://github.com/palatej/rjd3tramoseats}{\faGithub{} palatej/rjd3tramoseats}
+
+\href{https://github.com/palatej/rjdemetra3}{\faGithub{} palatej/rjdemetra3}
+
+\href{https://github.com/palatej/rjd3filters}{\faGithub{} palatej/rjd3filters}
+
+:::
+:::{.column width=50%}
+
+\href{https://github.com/palatej/rjd3sts}{\faGithub{} palatej/rjd3sts}
+
+\href{https://github.com/AQLT/tvCoef}{\faGithub{} AQLT/tvCoef}
+
+\href{https://github.com/palatej/rjd3stl}{\faGithub{} palatej/rjd3stl}
+
+\href{https://github.com/palatej/rjd3highfreq}{\faGithub{} palatej/rjd3highfreq}
+
+\href{https://github.com/palatej/rjd3bench}{\faGithub{} palatej/rjd3bench}
+:::
+::::
+
