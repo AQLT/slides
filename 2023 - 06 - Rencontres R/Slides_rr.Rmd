@@ -19,7 +19,7 @@ output:
 themeoptions: "coding=utf8,language=french"
 classoption: 'usepdftitle=false,french' #handout
 fontsize: 10pt
-bibliography: [biblio.bib]
+# bibliography: [biblio.bib]
 biblio-style: unsrtnat
 natbiboptions: [numbers]
 ---
@@ -251,17 +251,17 @@ rev(m1)
 ```{r ex-filtres,out.height="50%"}
 y <- datasets::discoveries
 plot(y)
-lines(y * m1, col = "orange")
-lines(y * m2, col = "darkgreen")
+lines(y * m1, col = "#fdc538")
+lines(y * m2, col = "#2568b0")
 ```
 
 
 ```{r ex-filtres-stats,out.height="90%"}
 par(mai = c(0.3, 0.3, 0.2, 0))
 layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
-plot_coef(m1, main = "Coef");plot_coef(m2, col = "orange", add = TRUE)
-plot_gain(m1, main = "Gain");plot_gain(m2, col = "orange", add = TRUE)
-plot_phase(m1, main = "Déphasage");plot_phase(m2, col = "orange", add = TRUE)
+plot_coef(m1, main = "Coef");plot_coef(m2, col = "#fdc538", add = TRUE)
+plot_gain(m1, main = "Gain");plot_gain(m2, col = "#fdc538", add = TRUE)
+plot_phase(m1, main = "Déphasage");plot_phase(m2, col = "#fdc538", add = TRUE)
 ```
 
 ### A quoi ça sert ?
@@ -329,17 +329,17 @@ plot(sa_2 * y, main = "Série désaisonnalisée (2)", ylim = range(y)); lines(y,
 ## rjd3toolkit
 ### rjd3toolkit
 
-- De nombreux tests (résidus, saisonnalité, effets jours ouvrables, etc.), non existants dans \faRProject{} : Jarque-Bera (plus de paramètres que  rapport à `tseries::jarque.bera.test()`), *runs tests* (caractère aléatoire des données), *range-mean regression test* (choisir la transformation en log), tests sur les JO (Canova-Hansen), tests de saisonnalité (dont test combiné de X-11 et periodogramme)
+- Nombreux tests (résidus, saisonnalité, effets jours ouvrables, etc.), non existants dans \faRProject{} : Jarque-Bera (plus de paramètres que  rapport à `tseries::jarque.bera.test()`), *runs tests* (caractère aléatoire des données), *range-mean regression test* (choisir la transformation en log), tests sur les JO (Canova-Hansen), tests de saisonnalité (dont test combiné de X-11 et periodogramme)
 
-- création de régresseurs liés aux points atypiques et liés au effets jours ouvrables (Pâques, année bissextile, stocks, variables trigonométriques, etc.)
+- Création de régresseurs liés aux points atypiques et liés au effets jours ouvrables (Pâques, année bissextile, stocks, variables trigonométriques, etc.)
 
-- création de régresseurs de calendrier en prenant en compte les spécificités des pays (jours fériés)
-
-
-- manipulation des modèles ARIMA (simulation, addition, décomposition, estimation)
+- Création de régresseurs de calendrier en prenant en compte les spécificités des pays (jours fériés)
 
 
-- autres fonctions autour du traitement des séries temporelles (transformation, stationnarisation, etc.)
+- Manipulation des modèles ARIMA (simulation, addition, décomposition, estimation)
+
+
+-Aautres fonctions autour du traitement des séries temporelles (transformation, stationnarisation, etc.)
 
 
 ### Benchmark des estimations ARIMA

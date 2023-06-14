@@ -22,6 +22,10 @@
 \definecolor{redorange}{cmyk}{0,0.77,0.87,0}
 \definecolor{apricot}{cmyk}{0,0.32,0.52,0}
 
+\definecolor{rrb}{RGB}{37,104,176}
+\definecolor{rrjaune}{RGB}{253,197,56}
+
+
 \DeclareOptionBeamer{color}{\def\beamer@torinoth@defcolor{#1}}
 \ExecuteOptionsBeamer{color=blue}
 
@@ -31,21 +35,21 @@
 \def\beamer@torinoth@bluetext{blue}%
 \ifx\beamer@torinoth@defcolor\beamer@torinoth@bluetext%
 
-  \setbeamercolor*{palette primary}{fg=white,bg=processblue}
-  \setbeamercolor*{palette secondary}{fg=navyblue,bg=processblue!20}
+  \setbeamercolor*{palette primary}{fg=white,bg=rrb}
+  \setbeamercolor*{palette secondary}{fg=navyblue,bg=rrb!20}
   \setbeamercolor*{palette}{fg=navyblue,bg=white}
   \setbeamercolor*{section}{fg=white,bg=processblue}
   \setbeamercolor*{subsection}{fg=white,bg=processblue!20}
   \setbeamercolor*{section in toc}{fg=processblue}
   \setbeamercolor*{subsection in toc}{fg=processblue}
-  
+
   \setbeamercolor*{titlelike}{fg=white,bg=processblue}
   \setbeamercolor*{subtitlelike}{fg=processblue,bg=processblue!20}
   \setbeamercolor*{frametitle}{fg=black,bg=black}
   \setbeamercolor*{item}{fg=cerulean}
   \setbeamercolor*{alerted text}{fg=cerulean}
   \def\beamer@torinoth@color{cerulean}
-  
+
   \setbeamercolor{block body}{fg=black,bg=processblue!10}
   \setbeamercolor{block body alerted}{fg=black,bg=processblue!10}
   \setbeamercolor{block body example}{use=block title,fg=black,bg=processblue!10}
@@ -68,7 +72,7 @@
   \setbeamercolor*{item}{fg=forestgreen}
   \setbeamercolor*{alerted text}{fg=forestgreen}
   \def\beamer@torinoth@color{forestgreen}
-  
+
   \setbeamercolor{block body}{fg=black,bg= yellowgreen!20}
   \setbeamercolor{block body alerted}{fg=black,bg= yellowgreen!20}
   \setbeamercolor{block body example}{use=block title,fg=black,bg= yellowgreen!20}
@@ -91,7 +95,7 @@
   \setbeamercolor*{item}{fg=redorange}
   \setbeamercolor*{alerted text}{fg=redorange}
   \def\beamer@torinoth@color{redorange}
-  
+
    \setbeamercolor{block body}{fg=black,bg= apricot!20}
   \setbeamercolor{block body alerted}{fg=black,bg= apricot!20}
   \setbeamercolor{block body example}{use=block title,fg=black,bg= apricot!20}
