@@ -3,7 +3,7 @@ title: |
  | Manipuler les moyennes mobiles avec R et JDemetra+
 subtitle: "Rencontres R 2023"
 author: "Alain Quartier-la-Tente"
-departement: "INSEE, LEMNA"
+departement: "Insee, LEMNA"
 division: |
     | 21 au 23 juin 2023
 logo: "img/logobeamer.png"
@@ -106,7 +106,7 @@ JDemetra+ :
 
 - un package \faRProject{} associé : `RJDemetra`
 
-- Nombreuses extensions qui permettent de traiter d'autres problèmes de séries temporelles : benchmarking, nowcasting, DFM, etc.
+- Nombreux *plug-in* qui permettent de traiter d'autres problèmes de séries temporelles : benchmarking, nowcasting, DFM, etc.
 
 . . .
 
@@ -228,7 +228,7 @@ devtools::install_github("rjdemetra/rjd3filters")
 (Rappel : $B^iX_t=X_{t-p}$ et $F^iX_t=X_{t+p}$)
 ```{r}
 library(rjd3filters)
-m1 = moving_average(rep(1,4), lags = -2)/4; m1 # MM simple d e4 termes
+m1 = moving_average(rep(1,4), lags = -2)/4; m1 # MM simple de 4 termes
 m2 = moving_average(rep(1,3), lags = -1)/3; m2 # MM centrés 3 termes
 m1 + m2
 m1 - m2
@@ -239,7 +239,7 @@ rev(m1)
 
 ```{r}
 library(rjd3filters)
-m1 = moving_average(rep(1,4), lags = -2)/4; m1 # MM simple d e4 termes
+m1 = moving_average(rep(1,4), lags = -2)/4; m1 # MM simple de 4 termes
 m2 = moving_average(rep(1,3), lags = -1)/3; m2 # MM centrés 3 termes
 m1 + m2
 m1 - m2
@@ -289,7 +289,7 @@ y <- log(AirPassengers)
 tc_1 <- M2X12 <- (simple_ma(12, - 6) + simple_ma(12, - 5))/2
 si_1 <- 1 - tc_1
 M3X3 <- macurves("S3x3")
-M3X3 # MM sym pour l'estimation finale et MMa pour les est intermédiaires
+M3X3 # MM sym. pour l'estimation finale et MM asym. pour les est. intermédiaires
 M3X3_s <- to_seasonal(M3X3, 12)
 s_1 <- M3X3_s * si_1
 s_1_norm <- M2X12 * s_1
@@ -358,7 +358,7 @@ m2 <- readRDS(f_bm_arima)
 
 - différentes méthodes de modélisation de RegARIMA avec detections automatiques des points atypiques
 
-- méthodes "classiques de désaisonnalisation : X-13 et TRAMO-SEATS
+- méthodes "classiques" de désaisonnalisation : X-13 et TRAMO-SEATS
 
 - gestion de workspaces (liés à JDemetra+)
 
@@ -372,12 +372,12 @@ autoplot(mseasonal)+theme(axis.text=element_text(size=16),
         axis.title=element_text(size=16))
 ```
 
-## Autres expérimentations
+## Autres packages
 ### rjd3highfreq et rjd3stl
 
-`rjd3highfreq` Désaisonnalisation des séries haute-fréquence (plus fines que mensuelles)
+`rjd3highfreq` : désaisonnalisation des séries haute-fréquence (plus fines que mensuelles)
 
-- \bclampe *fractional* et *multi airline decomposition* 
+- \bclampe{}  *fractional* et *multi airline decomposition* 
 
 - \bclampe Extension de X-11 avec une saisonnalité non entière
 
@@ -446,3 +446,6 @@ Packages \faIcon{r-project}{} :
 :::
 ::::
 
+\footnotesize
+
+(transfert sous \faGithub{} rjdemetra/ en cours, quelques packages sont encore sous \faGithub{} palatej/)
