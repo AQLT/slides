@@ -270,7 +270,7 @@ In `RJDemetra` you have one function to set the specification (`regarima_spec_x1
 
 Common functions (defined in `rjd3modelling`) to set the specification of the preprocessing:
 
-`set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()` and `remove_outlier()`, `add_ramp()` and `remove`_ramp()`
+`set_arima()`, `set_automodel()`, `set_basic()`, `set_easter()`, `set_estimate()`, `set_outlier()`, `set_tradingdays()`, `set_transform()`, `add_outlier()` and `remove_outlier()`, `add_ramp()` and `remove_ramp()`
 
 \bcinterdit `add_usrdefvar()` not yet available
 
