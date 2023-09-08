@@ -1,0 +1,93 @@
+---
+title: |
+ | Estimation en temps réel de la tendance-cycle :
+ | Apport de l’utilisation des filtres asymétriques dans la détection des points de retournement
+subtitle: "Point Thèse"
+author: "Alain Quartier-la-Tente"
+departement: "08 septembre 2023"
+division: |
+    | 
+logo: "img/logobeamer.png"
+automaticcontents: false
+output:
+    beamer_presentation:
+        template: template_Beamer.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+        includes:
+          in_header: preamble_beamer.tex
+themeoptions: "coding=utf8,language=french"
+classoption: 'usepdftitle=false,french' #handout
+fontsize: 10pt
+biblio-style: unsrtnat
+natbiboptions: [numbers]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      cache = F,
+                      fig.align = 'center',
+                      fig.path = "img/rmd-")
+```
+
+### Nouveautés :
+
+- DT méthodologie en cours de finalisation
+
+
+Nouveautés :
+
+- Méthodes polynomiales locales : en fait ça marche, il y avait juste une erreur dans les graphiques
+  
+. . .
+
+- FST : 
+
+    - Poids trouvés en minimisant le déphasage observé sur les séries simulées : toujours du filtre préservant les polynômes de degré 2 avec $\alpha = 0,00$ (*fidelity*), $\beta  =0,05$ (*smoothness*) et $\gamma = 0,95$ (*timeliness*)
+
+
+    - Poids non normalisés peuvent avoir un avantage : on associe un poids décroissant à la *timeliness*
+
+Résultats : <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#comparaison>
+
+### Nouvelle Bibliographique
+
+Estela Bee Dagum & Silvia Bianconcini (June 2023): Monitoring the direction of the short-term trend of economic indicators
+
+- étudient le filtre cascade avec une approximation via les RKHS en utilisant noyau triangulaire (coefficients non retrouvé avec `rjd3filters`)
+
+- proposent deux tests statistiques pour comparer les méthodes en termes de révisions et de point de retournement
+
+- Comparent les méthodes en étudiant deux séries de la FRED
+
+### Suite du DT 
+
+Faire une soumission aux JOS ? Si oui sur quelle partie ?
+
+Contributions qui me semblent intéressantes :
+
+- Musgrave "local"
+
+- prévisions implicites / package
+
+### `rjd3filters`
+
+Permet de générer toutes les moyennes mobiles de X-11 (y compris asymétriques) et de les combiner pour en étudier les propriétés.
+
+Permet de refaire toutes les étapes de X-11 (y compris correction des points atypiques), voir : <https://github.com/rjdemetra/rjd3filters/blob/develop/vignettes/X11.Rmd>
+
+Pourrait permettre de faire un "Comprendre la méthode X-11 avec R"
+
+
+### ex `rjd3filters` : filtres X-11
+
+```{r, out.width="100%"}
+knitr::include_graphics("img/gain_lp.pdf")
+```
+
+### ex `rjd3filters` : filtres X-11
+
+```{r, out.width="100%"}
+knitr::include_graphics("img/gain_autres.pdf")
+```
