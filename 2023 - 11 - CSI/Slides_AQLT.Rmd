@@ -4,7 +4,7 @@ title: |
  | Apport de l’utilisation des filtres asymétriques dans la détection des points de retournement
 subtitle: "CSI"
 author: "Alain Quartier-la-Tente"
-departement: "20 septembre 2022"
+departement: "08 novembre 2023"
 division: ""
 logo: "img/logobeamer.png"
 automaticcontents: true
@@ -47,7 +47,7 @@ Ensai (2012-2015) puis Ensae (2019-2021) et inscription en thèse à temps parti
 
 . . .
 
-Passionné de R, développe et maintien plusieurs packages autour de la désaisonnalisation
+Passionné de \faIcon{r-project}, développe et maintien plusieurs packages autour de la désaisonnalisation
 
 ### Travaux effectués
 
@@ -115,7 +115,8 @@ $$
 
 . . . 
 
-Tendance-cycle publiée par peu d'instituts (~~Insee~~, ONS, Statistics Canada, ABS) mais volonté de faire des bonnes pratiques au niveau européen (Destatis).
+Tendance-cycle publiée par peu d'instituts (ONS, Statistics Canada, ABS) mais volonté de faire des bonnes pratiques au niveau européen (Destatis).
+Utile pour analyser le cycle des affaires.
 
 . . . 
 
@@ -218,13 +219,49 @@ Solution classique : prolonger la série par prévision et utiliser filtre symé
 \faArrowCircleRight{} revient à utiliser des filtres asymétriques optimisés avec certains critères   
 \faArrowCircleRight{} sous-optimal pour séries très variables
 
-### Illustration avec climats des affaires dans l'industrie manufacturière
+### Illustration avec climats des affaires dans les matériels de transport
 
 ```{r , echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/climats_ex.pdf")
+knitr::include_graphics("img/ex/tc_finale.pdf")
 ```
 \footnotesize 
 https://www.insee.fr/fr/statistiques/6522175
+
+
+### Évaluer la qualité des estimations avec prév. implicites
+
+Fonction `rjd3filters::implicit_forecast`
+
+$$
+\forall q, \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{lissage par }v\text{ de la série prolongée}}
+=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{lissage par }w^q\text{ de la série prolongée}}\text{ avec }\forall i > q,w_i^q=0
+$$
+Ce qui est équivalent à :
+$$
+\forall q, \quad \sum_{i=1}^h (v_i- w_i^q) y_i^*
+=\sum_{i=-h}^0 (w_i^q-v_i)y_i.
+$$
+Matriciellement :
+
+\begin{equation}
+\resizebox{\textwidth}{!}{$
+\begin{pmatrix}
+  v_1 & v_2 & \cdots & v_h \\
+  v_1 - w_1^1 & v_2 & \cdots & v_h \\
+  \vdots & \vdots & \cdots & \vdots \\
+   v_1 - w_1^{h-1} & v_2-w_2^{h-1} & \cdots & v_h
+\end{pmatrix}
+\begin{pmatrix}y_1^* \\ \vdots \\ y_h^*\end{pmatrix}=
+\begin{pmatrix}
+  w_{-h}^0 - v_{-h} & w_{-(h-1)}^0 - v_{-(h-1)} & \cdots & w_{0}^0 - v_{0} \\
+  w_{-h}^1 - v_{-h} & w_{-(h-1)}^1 - v_{-(h-1)} & \cdots & w_{0}^1 - v_{0} \\
+  \vdots & \vdots & \cdots & \vdots \\
+  w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
+\end{pmatrix}
+\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.$}
+\end{equation}
+
+
 
 ### Objectifs
 
@@ -242,7 +279,7 @@ Objectifs de cette étude :
 
 . . .
 
-- Présenter le package \faIcon{r-project} `rjd3filters` https://github.com/palatej/rjd3filters
+- Présenter le package \faIcon{r-project} `rjd3filters` https://github.com/rjdemetra/rjd3filters
 
 
 # Méthodes étudiées
@@ -335,6 +372,17 @@ $$
 knitr::include_graphics("img/coefs_lp.pdf")
 ```
 
+### Illustration (1)
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/ex/lp_es.pdf")
+```
+
+### Illustration (2)
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/ex/lp_if.pdf")
+```
 
 ## Filtres et Reproducing Kernel Hilbert Space (RKHS)
 
@@ -392,6 +440,11 @@ rkhs_optimal_bw()
 knitr::include_graphics("img/coefs_rkhs.pdf")
 ```
 
+### Illustration (1)
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/ex/rkhs.pdf")
+```
 
 
 ## Minimisation sous contrainte : FST et ATS
@@ -414,11 +467,11 @@ $F_g$ fidélité (*fidelity*, réduction de variance $\sum_{k=-p}^{+f} \theta_k^
 ::: {.summary data-latex=""}
 - \bcsmbh Solution unique
   
-- \bcsmbh Filtres asymétriques indépendants des données et du filtre symétrique
-  
-- \bcsmmh Poids non normalisés
-:::
+- \bcsmmh Poids non normalisés \bcsmbh
 
+- Filtres asymétriques indépendants des données et du filtre symétrique
+
+:::
 
 
 ### Approche ATS `rjd3filters::dfa_filter()` {.allowframebreaks}
@@ -475,6 +528,14 @@ Comment choisir les poids dans FST et AST (DFA) ?
 C'est ce qui est fait avec FST en prenant les poids qui minimisent le déphasage sur les séries simulées (avec différents niveaux de variabilité).
 Toujours du filtre préservant les polynômes de degré 2 avec $\alpha$=0,00 (fidelity), $\beta$=0,05 (smoothness) et $\gamma$=0,95 (timeliness).
 :::
+
+
+### Illustration FST
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/ex/fst.pdf")
+```
+
 
 # Extensions
 
@@ -558,12 +619,24 @@ $$
 $$
 
 ```{r, echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/local_ic_mm.pdf")
+knitr::include_graphics("img/mm_penteconcavite.pdf")
 ```
 
 Rmq: il y a (encore) de fortes révisions entre la première et deuxième estimation, on pourrait utiliser méthode QL pour avoir les estimateurs de la pente
 
 Spoil : marche plutôt bien
+
+### Illustration (1)
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/ex/lp_local_es.pdf")
+```
+
+### Illustration (2)
+
+```{r , echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/ex/lp_local_if.pdf")
+```
 
 
 # Comparaison des méthodes
@@ -641,43 +714,6 @@ Voir <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#comparaison>
 
 Voir <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#s%C3%A9rie-r%C3%A9elle>
 
-### Prévisions implicites
-
-Fonction `rjd3filters::implicit_forecast`
-
-$$
-\forall q, \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{lissage par }v\text{ de la série prolongée}}
-=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{lissage par }w^q\text{ de la série prolongée}}\text{ avec }\forall i > q,w_i^q=0
-$$
-Ce qui est équivalent à :
-$$
-\forall q, \quad \sum_{i=1}^h (v_i- w_i^q) y_i^*
-=\sum_{i=-h}^0 (w_i^q-v_i)y_i.
-$$
-Matriciellement :
-
-\begin{equation}
-\resizebox{\textwidth}{!}{$
-\begin{pmatrix}
-  v_1 & v_2 & \cdots & v_h \\
-  v_1 - w_1^1 & v_2 & \cdots & v_h \\
-  \vdots & \vdots & \cdots & \vdots \\
-   v_1 - w_1^{h-1} & v_2-w_2^{h-1} & \cdots & v_h
-\end{pmatrix}
-\begin{pmatrix}y_1^* \\ \vdots \\ y_h^*\end{pmatrix}=
-\begin{pmatrix}
-  w_{-h}^0 - v_{-h} & w_{-(h-1)}^0 - v_{-(h-1)} & \cdots & w_{0}^0 - v_{0} \\
-  w_{-h}^1 - v_{-h} & w_{-(h-1)}^1 - v_{-(h-1)} & \cdots & w_{0}^1 - v_{0} \\
-  \vdots & \vdots & \cdots & \vdots \\
-  w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
-\end{pmatrix}
-\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.$}
-\end{equation}
-
-
-### Prévisions implicites résultats
-
-Voir <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#s%C3%A9rie-r%C3%A9elle>
 
 ### Nouvelle Bibliographique
 
@@ -749,9 +785,23 @@ knitr::include_graphics("img/gain_autres.pdf")
 ```
 
 # Et maintenant ?
-### Suite
 
-Soumission d'un article "informatique" au Journal of Statistical Software.
+### Suite de l'étude actuelle
+
+Document de travail en cours de finalisation
+
+Soumission au JOS autour de la paramétrisation locale
+
+Objectif d'une soumission d'un article "informatique" au Journal of Statistical Software
+
+. . .
+
+Reste une autre étude. Projet de recherche :
+
+> Le second objectif de ce projet sera d’étudier l’impact de points atypiques sur les différentes méthodes d’extraction de cycle et sur la détection des points de retournement.
+
+> Cet objectif d’étude d’impact des points atypiques amènera à également s’intéresser à l’utilisation de méthodes robustes pour l’estimation de la tendance-cycle, par exemple par l’utilisation de médianes mobiles (Tukey, 1971), mais aussi dans les autres étapes de la désaisonnalisation (pré-ajustement, estimation de la composante saisonnière, etc.).
+
 
 ### Merci pour votre attention {.noframenumbering}
 
