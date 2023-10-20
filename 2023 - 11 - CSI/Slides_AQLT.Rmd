@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.path = "img/rmd-")
 library(knitr)
 library(kableExtra)
-library(rjdfilters)
+library(rjd3filters)
 fig.ext <- "pdf"
 # load(file = "tables.RData")
 # mae <- readRDS("tables_revisions.RDS")$MAE
@@ -57,9 +57,13 @@ Principalement autour de l'utilisation de moyennes mobiles asymétriques pour l'
 
 - Une soumission en cours au Journal of Official Statistics (JOS).
 
-- Un package `rjd3filters` pour créer et manipuler les moyennes mobiles, un projet de soumission au Journal of Statistical Software
+- Un package `rjd3filters` pour créer et manipuler les moyennes mobiles
 
 - Divers présentations sur le contenu statistique et informatique.
+
+. . .
+
+NB : études rédigées seul
 
 ### La tendance-cycle (1)
 
@@ -226,15 +230,19 @@ https://www.insee.fr/fr/statistiques/6522175
 
 Objectifs de cette étude :
 
--  Étudier et comparer des approches récentes pour l'extraction de la tendance-cycle en temps réel : Régression polynomiale locale (Proietti et Luati 2008); RKHS (Dagum et Bianconcini 2016) ; Optimisation sous contrainte d’une somme pondérée de critères (Grun-Rehomme *et ali* 2018, Wildi et McElroy, 2019)
+-  Étudier et comparer des approches récentes pour l'extraction de la tendance-cycle en temps réel : Régression polynomiale locale (Proietti et Luati 2008) ; RKHS (Dagum et Bianconcini 2016) ; Optimisation sous contrainte d’une somme pondérée de critères (Grun-Rehomme *et ali* 2018, Wildi et McElroy, 2019)
+
+- On se concentre uniquement sur les moyennes mobiles asymétriques et pas sur l'estimation finale
 
 . . .
 
-- Montrer qu'il est possible d'établir une théorie générale englobant toutes ces méthodes
+- Montrer qu'il est possible d'établir une théorie générale englobant toutes ces méthodes et expliquer les liens entre les méthodes.
+
+- Permet d'avoir une revue de la littérature de l'existant.
 
 . . .
 
-- Présenter le package \faIcon{r-project} `rjdfilters` https://github.com/palatej/rjdfilters
+- Présenter le package \faIcon{r-project} `rjd3filters` https://github.com/palatej/rjd3filters
 
 
 # Méthodes étudiées
@@ -248,7 +256,7 @@ Objectifs de cette étude :
 
 \footnotesize
 ```{r h13, out.height="0.4\\paperheight", fig.align="center"}
-library(rjdfilters)
+library(rjd3filters)
 f <- lp_filter(6, kernel = "Henderson")
 plot_coef(f, q = 6, legend = FALSE,
           main="Henderson 13 termes")
@@ -271,7 +279,7 @@ Sur séries mensuelles : MM de 13 termes généralement
 
 ## Polynômes Locaux
 
-### Polynômes Locaux : `rjdfilters::lp_filter()`
+### Polynômes Locaux : `rjd3filters::lp_filter()`
 
 Hypothèse : $y_t=\mu_t+\varepsilon_t$ avec $\varepsilon_t\overset{i.i.d}{\sim}\mathcal N(0,\sigma^2)$
 
@@ -289,7 +297,7 @@ $$
 $$
 \faArrowCircleRight{} Filtre de Henderson avec $d=3$ et noyau spécifique.
 
-### Filtres asymétriques : `rjdfilters::lp_filter()`
+### Filtres asymétriques : `rjd3filters::lp_filter()`
 
 1. Même méthode mais moins de données (DAF) $\iff$ minimiser les révisions sous mêmes contraintes polynomiales
 
@@ -315,7 +323,7 @@ $$
 
 \bcsmbh modèles simples facilement interprétables
 
-\bcsmmh Déphasage non contrôlé \faArrowCircleRight{} méthode étendue dans `rjdfilters::lp_filter()`
+\bcsmmh Déphasage non contrôlé \faArrowCircleRight{} méthode étendue dans `rjd3filters::lp_filter()`
 
 . . .
 
@@ -330,7 +338,7 @@ knitr::include_graphics("img/coefs_lp.pdf")
 
 ## Filtres et Reproducing Kernel Hilbert Space (RKHS)
 
-### Filtres RKHS : `rjdfilters::rkhs_filter()`
+### Filtres RKHS : `rjd3filters::rkhs_filter()`
 
 - Utilisation de la théorie des RKHS pour approcher le filtre d'Henderson
 
@@ -360,7 +368,7 @@ $$
 
 \footnotesize
 ```{r rkhstimeliness, out.height="0.4\\paperheight", fig.align="center"}
-library(rjdfilters)
+library(rjd3filters)
 fun <- rkhs_optimization_fun(horizon = 6,
             leads = 5, degree = 3,
             asymmetricCriterion = "Timeliness")
@@ -388,7 +396,7 @@ knitr::include_graphics("img/coefs_rkhs.pdf")
 
 ## Minimisation sous contrainte : FST et ATS
 
-### Approche FST : `rjdfilters::fst_filter()`
+### Approche FST : `rjd3filters::fst_filter()`
 
 Minimisation sous contrainte d'une somme pondérée de 3 critères :
 
@@ -413,7 +421,7 @@ $F_g$ fidélité (*fidelity*, réduction de variance $\sum_{k=-p}^{+f} \theta_k^
 
 
 
-### Approche ATS `rjdfilters::dfa_filter()` {.allowframebreaks}
+### Approche ATS `rjd3filters::dfa_filter()` {.allowframebreaks}
 
 Décomposition de l'EQM :
 \begin{align*}
@@ -463,276 +471,10 @@ Comment choisir les poids dans FST et AST (DFA) ?
 
 - Minimiser les révisions ? on néglige le déphasage
 
-- Garder les poids qui donnent des MM de meilleure qualité que les autres selon tous les critères ? Rien de satisfaisant
-
-- Faire quadrillage du plan et une analyse empirique du déphasage ? Difficile à analyser -> utiliser des méthodes de réduction de dimension ?
-
+- Faire quadrillage du plan et une analyse empirique du déphasage ? 
+C'est ce qui est fait avec FST en prenant les poids qui minimisent le déphasage sur les séries simulées (avec différents niveaux de variabilité).
+Toujours du filtre préservant les polynômes de degré 2 avec $\alpha$=0,00 (fidelity), $\beta$=0,05 (smoothness) et $\gamma$=0,95 (timeliness).
 :::
-
-
-# Comparaison des méthodes
-
-## Méthodologie
-### Méthodologie
-
-Comparaison des différentes méthodes sur séries simulées (avec 3 niveaux de variabilité) et séries réelles :
-
-1. Estimation de la tendance-cycle à chaque date en utilisant les différentes méthodes et un filtre symétrique de 13 termes
-
-. . .
-
-2. À chaque date, estimation des points de retournement :
-
-    - redressements : $y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}$
-
-    - ralentissements : $y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}$
-
-Déphasage = temps nécessaire pour détecter le bon point de retournement \highlight{sans révision}
-
-. . .
-
-
-3. Calcul des révisions avec deux critères :
-
-$$
-\mathbb E\left[
-\left|\frac{
-y_{t|t+q} - y_{t|last}
-}{
-y_{t|last}
-}\right|
-\right]\quad
-\text{ et }
-\quad
-\mathbb E\left[
-\left|\frac{
-y_{t|t+q} - y_{t|t+q+1}
-}{
-y_{t|t+q+1}
-}\right|
-\right]
-$$
-
-### Séries simulées {.allowframebreaks}
-
-De façon similaire à Darne et Dagum (2009), on simule $y_t= C_t+ T_t + I_t$ entre janvier 1960 et décembre 2020 :
-
-- $C_t = \rho [\cos (2 \pi t / \lambda) +\sin (2 \pi t / \lambda)]$, $\lambda=72$ (cycles de 6 ans, 19 points de retournement détectables) 
-
-- $T_t = T_{t-1} + \nu_t$ avec $\nu_t \sim \mathcal{N}(0, \sigma_\nu^2)$, $\sigma_\nu=0,08$
-
-- $I_t = e_t$ avec $e_t \sim \mathcal{N}(0, \sigma_e^2)$
-
-Niveau de variabilité :
-
-- variabilité faible (rapport signal/bruit fort) : $\sigma_e^2=0,2$ et $\rho = 3,0,\, 3,5$ ou $4,0$ (0,9 $\geq$ I-C ratio $\geq$ 0,7)
-
-- variabilité moyenne (rapport signal/bruit moyen) : $\sigma_e^2=0,3$ et $\rho = 1,5,\, 2,0$ ou $3,0$ (2,3 $\geq$ I-C ratio $\geq$ 1,4)
-
-- variabilité forte (rapport signal/bruit élevé) : $\sigma_e^2=0,4$ et $\rho = 0,5,\, 0,7$ ou $1,0$ (8,9 $\geq$ I-C ratio $\geq$ 5,2)
-
-
-```{r, echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/simul_data.pdf")
-```
-
-## Application sur séries simulées
-### Résultats sur le déphasage (séries simulées)
-
-```{r graphstpsimul, echo=FALSE, out.width="100%"}
-img <- sprintf("img/simul_phase_shift_norev.%s", fig.ext)
-knitr::include_graphics(img)
-```
-
-
-### Médiane des révisions (séries simulées)
-
-Pour les séries à variabilité **moyenne** :
-
-
-\begin{table}[!h]
-\centering \footnotesize
-\begin{tabular}{ccccccc}
-\toprule
-Méthode & $q=0$ & $q=1$ & $q=2$ & $q=3$ & $q=4$ & $q=5$\\
-\midrule
-\addlinespace[0.3em]
-\multicolumn{7}{l}{\cellc{1}\textbf{MAE entre $q$\ieme{} et la dernière estimation}}\\
-\cellc{1}\hspace{1em}LC & 0,21 & 0,10 & 0,03 & 0,03 & 0,03 & 0,01\\
-\hspace{1em}QL (rel) & 1,6 & 1,0 & 1,3 & 1,5 & 1,3 & 1,1\\
-\hspace{1em}CQ (rel) & 2,2 & 1,3 & 4,2 & 3,3 & 2,1 & 1,6\\
-\hspace{1em}DAF (rel) & 2,3 & 1,5 & 4,9 & 3,5 & 2,2 & 1,5\\
-\hspace{1em}$b_{q,\Gamma}$ (rel) & 3,1 & 2,3 & 1,1 & 3,6 & 3,5 & 3,9\\
-\cellc{3}\hspace{1em}$b_{q,G}$ (rel) & \cellc{3} 4,1 & \cellc{3} 4,0 & 1,1 & 3,6 & 3,5 & 4,0\\
-\cellc{2}\hspace{1em}$b_{q,\varphi}$ (rel) & 1,5 & 1,1 & 1,0 & 1,8 & 2,7 & \cellc{2} 8,7\\
-\hspace{1em}\cellc{4}ARIMA (rel) & 1,0 & 1,0 & 1,1 & 1,1 & 1,1 & 1,0\\
-\addlinespace[0.3em]
-\multicolumn{7}{l}{\cellc{1}\textbf{MAE entre $q$\ieme{} et la $q+1$\ieme{} estimation}}\\
-\cellc{1}\hspace{1em}LC & 0,19 & 0,10 & 0,02 & 0,01 & 0,07 & 0,01\\
-\cellc{2}\hspace{1em}QL (rel) & 1,6 & \cellc{2}43,2 & 0,1 & 3,1 & 0,9 & 1,1\\
-\hspace{1em}CQ (rel) & 2,3 & 0,2 & 4,3 & 7,3 & 1,4 & 1,6\\
-\cellc{2}\hspace{1em}DAF (rel) & 3,5 & 2,6 & 4,6 & \cellc{2} 12,9 & 1,3 & 1,5\\
-\cellc{2}\hspace{1em}$b_{q,\Gamma}$ (rel) & 2,1 & 2,9 & 3,7 & 0,3 & \cellc{2}16,2 & 3,9\\
-\cellc{2-3}\hspace{1em}$b_{q,G}$ (rel) & \cellc{3}3,7 & \cellc{3}4,7 & \cellc{3}4,3 & 0,5 & \cellc{2}17,0 & 4,0\\
-\cellc{2} \hspace{1em}$b_{q,\varphi}$ (rel) & 1,2 & 1,4 & 3,5 & 5,3 & 0,7 & \cellc{2}8,7\\
-\hspace{1em}\cellc{4}ARIMA (rel) & 1,1 & 1,3 & 0,8 & \cellc{4}1,8 & \cellc{4} 2,3 & 1,0\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-### Médiane des révisions (séries simulées)
-
-Pour les séries à variabilité **faible** :
-
-\begin{table}[!h]
-\centering\footnotesize
-\begin{tabular}{ccccccc}
-\toprule
-Méthode & $q=0$ & $q=1$ & $q=2$ & $q=3$ & $q=4$ & $q=5$\\
-\midrule
-\addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la dernière estimation}}}\\
-\hspace{1em}LC & 0,1 & 0,1 & 0,0 & 0,0 & 0,0 & 0,0\\
-\hspace{1em}QL (rel) & 1,7 & 1,1 & 1,2 & 1,1 & 1,0 & 0,9\\
-\hspace{1em}CQ (rel) & 2,1 & 1,7 & 4,9 & 3,1 & 1,8 & 1,1\\
-\hspace{1em}DAF (rel) & 2,2 & 2,0 & 5,8 & 3,6 & 2,0 & 1,3\\
-\hspace{1em}\cellc{1}$b_{q,\Gamma}$ (rel) & 6,6 & 5,0 & 1,3 & 6,1 & \cellc{1}7,3 & \cellc{1}7,5\\
-\hspace{1em}\cellc{1}$b_{q,G} (rel)$ & \cellc{1}8,8 & \cellc{1}8,9 & 1,1 & 6,2 & 7,3 & 7,5\\
-\hspace{1em}\cellc{1}$b_{q,\varphi}$ (rel) & 2,6 & 1,9 & 1,3 & 1,7 & 3,3 & \cellc{1}9,8\\
-\hspace{1em}ARIMA (rel) & 1,4 & 1,2 & 1,6 & 1,6 & 1,3 & 1,0\\
-\addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la $q+1$\ieme{} estimation}}}\\
-\hspace{1em}LC & 0,1 & 0,0 & 0,0 & 0,1 & 0,0 & 0,0\\
-\hspace{1em}QL (rel) & 1,4 & 1,3 & 0,0 & 1,8 & 1,5 & 0,9\\
-\hspace{1em}CQ (rel) & 2,3 & 0,3 & 5,4 & 5,2 & 2,0 & 1,1\\
-\hspace{1em}DAF (rel) & 1,6 & 0,7 & 5,8 & 7,8 & 2,2 & 1,3\\
-\hspace{1em}\cellc{1}$b_{q,\Gamma}$ (rel) & 3,4 & 22,8 & 8,7 & 0,5\cellc{1} & \cellc{1}12,8 & \cellc{1}7,5\\
-\hspace{1em}\cellc{1}$b_{q,G} (rel)$ & 13,7 & \cellc{1}10,2 & \cellc{1}11,6 & 0,8 & \cellc{1}9,1 & 7,5\\
-\hspace{1em}\cellc{1}$b_{q,\varphi}$ (rel) & 1,5 & 3,0 & 2,3 & 2,8 & 1,7 & \cellc{1}9,8\\
-\hspace{1em}ARIMA (rel) & 2,5 & 1,2 & 0,3 & 2,1 & 1,7 & 1,0\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-### Médiane des révisions (séries simulées)
-
-Pour les séries à variabilité **forte** :
-
-\begin{table}[!h]
-\centering\footnotesize
-\begin{tabular}{ccccccc}
-\toprule
-Méthode & $q=0$ & $q=1$ & $q=2$ & $q=3$ & $q=4$ & $q=5$\\
-\midrule
-\addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la dernière estimation}}}\\
-\hspace{1em}LC & 1,6 & 0,6 & 0,3 & 0,2 & 0,3 & 0,1\\
-\hspace{1em}QL (rel) & 1,8 & 1,2 & 1,1 & 1,5 & 1,4 & 1,4\\
-\hspace{1em}CQ (rel) & 2,1 & 2,2 & 5,0 & 4,1 & 2,7 & 2,1\\
-\hspace{1em}DAF (rel) & 2,4 & 2,3 & 4,6 & 4,3 & 2,5 & 2,3\\
-\hspace{1em}$b_{q,\Gamma}$ (rel) & 1,0 & 1,1 & 1,2 & 1,0 & 1,1 & 1,4\\
-\hspace{1em}$b_{q,G} (rel)$ & 1,2 & 1,2 & 1,1 & 1,0 & 1,1 & 1,4\\
-\hspace{1em}$b_{q,\varphi}$ (rel) & 1,2 & 1,2 & 1,2 & 1,9 & 3,4 & 10,7\\
-\hspace{1em}ARIMA (rel) & 1,0 & 1,2 & 1,0 & 1,1 & 0,8 & 0,9\\
-\addlinespace[0.3em]
-\multicolumn{7}{l}{\textbf{\textbf{MAE entre $q$\ieme{} et la $q+1$\ieme{} estimation}}}\\
-\hspace{1em}LC & 0,7 & 0,4 & 0,1 & 0,0 & 0,2 & 0,1\\
-\hspace{1em}QL (rel) & 2,0 & 1,5 & 0,1 & 3,5 & 2,5 & 1,4\\
-\hspace{1em}\cellc{1}CQ (rel) & 1,7 & 0,2 &\cellc{1} 19,1 & 9,2 & 1,4 & 2,1\\
-\hspace{1em}\cellc{1}DAF (rel) & \cellc{1}11,0 & 1,4 & 4,2 & \cellc{1}9,3 & 1,6 & 2,3\\
-\hspace{1em}$b_{q,\Gamma}$ (rel) & 1,0 & 1,3 & 1,3 & 0,2 & 0,9 & 1,4\\
-\hspace{1em}$b_{q,G} (rel)$ & 0,9 & 1,5 & 8,5 & 0,2 & 0,8 & 1,4\\
-\hspace{1em}\cellc{1}$b_{q,\varphi}$ (rel) & 1,2 & 1,6 & 3,3 & 4,3 & 1,0 & \cellc{1}10,7\\
-\hspace{1em}\cellc{1}ARIMA (rel) & \cellc{1}32,8 & 1,4 & 0,8 & 1,6 & 0,9 & 0,9\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-## Un exemple : série des ventes au détail des États-Unis (en log)
-
-### Estimations successives de la tendance-cycle (1)
-
-```{r retailxlp, echo=FALSE, out.width="100%"}
-series <- "RETAILx"
-img <- sprintf("img/nber/%s_%s.%s",tolower(series),
-               "lp",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-### Estimations successives de la tendance-cycle (2)
-
-```{r retailxrkhs, echo=FALSE, out.width="100%"}
-img <- sprintf("img/nber/%s_%s.%s",tolower(series),
-               "rkhs_arima",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-
-### Prévisions implicites
-
-Fonction `rjdfilters::implicit_forecast`
-
-$$
-\forall q, \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{lissage par }v\text{ de la série prolongée}}
-=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{lissage par }w^q\text{ de la série prolongée}}\text{ avec }\forall i > q,w_i^q=0
-$$
-Ce qui est équivalent à :
-$$
-\forall q, \quad \sum_{i=1}^h (v_i- w_i^q) y_i^*
-=\sum_{i=-h}^0 (w_i^q-v_i)y_i.
-$$
-Matriciellement :
-
-\begin{equation}
-\resizebox{\textwidth}{!}{$
-\begin{pmatrix}
-  v_1 & v_2 & \cdots & v_h \\
-  v_1 - w_1^1 & v_2 & \cdots & v_h \\
-  \vdots & \vdots & \cdots & \vdots \\
-   v_1 - w_1^{h-1} & v_2-w_2^{h-1} & \cdots & v_h
-\end{pmatrix}
-\begin{pmatrix}y_1^* \\ \vdots \\ y_h^*\end{pmatrix}=
-\begin{pmatrix}
-  w_{-h}^0 - v_{-h} & w_{-(h-1)}^0 - v_{-(h-1)} & \cdots & w_{0}^0 - v_{0} \\
-  w_{-h}^1 - v_{-h} & w_{-(h-1)}^1 - v_{-(h-1)} & \cdots & w_{0}^1 - v_{0} \\
-  \vdots & \vdots & \cdots & \vdots \\
-  w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
-\end{pmatrix}
-\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.$}
-\end{equation}
-
-
-### Prévisions implicites (1)
-
-```{r retailxiplp, echo=FALSE, out.width="100%"}
-series <- "RETAILx"
-img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
-               "lp",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-### Prévisions implicites (2)
-
-```{r retailxiprkhs, echo=FALSE, out.width="100%"}
-img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
-               "rkhs_arima",
-               fig.ext)
-knitr::include_graphics(img)
-```
-
-
-### Retour sur les climats des affaires dans l'industrie
-
-```{r , echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/climats_prev_impl.pdf")
-```
-
-\footnotesize
-
-Méthode utilisée : LC avec IC-Ratio fixé
 
 # Extensions
 
@@ -781,7 +523,7 @@ $$
 \forall j\in\left\llbracket -h,h\right\rrbracket : y_{t+j}=\sum_{i=0}^{d}\beta_{i}j^{i}+\varepsilon_{t+j}
 $$
 
-Estimation en utilisant les WLS avec *noyaux*: $\hat{\beta}=(X'KX)^{1}X'Ky$ et
+Estimation en utilisant les WLS avec *noyaux* : $\hat{\beta}=(X'KX)^{1}X'Ky$ et
 $$
 \hat{m}_{t}=\hat\beta_0=e_1'\hat{\beta} =w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}\text{ avec }
 e_1=\begin{pmatrix}1\\ 0\\\vdots\\0\end{pmatrix}
@@ -821,39 +563,136 @@ knitr::include_graphics("img/local_ic_mm.pdf")
 
 Rmq: il y a (encore) de fortes révisions entre la première et deuxième estimation, on pourrait utiliser méthode QL pour avoir les estimateurs de la pente
 
-### Résultats (1)
+Spoil : marche plutôt bien
+
+
+# Comparaison des méthodes
+
+## Méthodologie
+### Méthodologie
+
+Comparaison des différentes méthodes sur séries simulées (avec 3 niveaux de variabilité) et séries réelles :
+
+1. Estimation de la tendance-cycle à chaque date en utilisant les différentes méthodes et un filtre symétrique de 13 termes
+
+. . .
+
+2. À chaque date, estimation des points de retournement :
+
+    - redressements : $y_{t-3}\geq y_{t-2}\geq y_{t-1}<y_t\leq y_{t+1}$
+
+    - ralentissements : $y_{t-3}\leq y_{t-2}\leq y_{t-1}>y_t\geq y_{t+1}$
+
+Déphasage = temps nécessaire pour détecter le bon point de retournement \highlight{sans révision} ($\ne$ des papiers classiques)
+
+. . .
+
+
+3. Calcul des révisions avec deux critères :
+
+$$
+\mathbb E\left[
+\left|\frac{
+y_{t|t+q} - y_{t|last}
+}{
+y_{t|last}
+}\right|
+\right]\quad
+\text{ et }
+\quad
+\mathbb E\left[
+\left|\frac{
+y_{t|t+q} - y_{t|t+q+1}
+}{
+y_{t|t+q+1}
+}\right|
+\right]
+$$
+
+### Séries simulées {.allowframebreaks}
+
+De façon similaire à Darne et Dagum (2009), on simule $y_t= C_t+ T_t + I_t$ entre janvier 1960 et décembre 2020 :
+
+- $C_t = \rho [\cos (2 \pi t / \lambda) +\sin (2 \pi t / \lambda)]$, $\lambda=72$ (cycles de 6 ans, 19 points de retournement détectables) 
+
+- $T_t = T_{t-1} + \nu_t$ avec $\nu_t \sim \mathcal{N}(0, \sigma_\nu^2)$, $\sigma_\nu=0,08$
+
+- $I_t = e_t$ avec $e_t \sim \mathcal{N}(0, \sigma_e^2)$
+
+Niveau de variabilité :
+
+- variabilité faible (rapport signal/bruit fort) : $\sigma_e^2=0,2$ et $\rho = 3,0,\, 3,5$ ou $4,0$ (0,9 $\geq$ I-C ratio $\geq$ 0,7)
+
+- variabilité moyenne (rapport signal/bruit moyen) : $\sigma_e^2=0,3$ et $\rho = 1,5,\, 2,0$ ou $3,0$ (2,3 $\geq$ I-C ratio $\geq$ 1,4)
+
+- variabilité forte (rapport signal/bruit élevé) : $\sigma_e^2=0,4$ et $\rho = 0,5,\, 0,7$ ou $1,0$ (8,9 $\geq$ I-C ratio $\geq$ 5,2)
+
 
 ```{r, echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/simul_phase_shift_localic_norev.pdf")
+knitr::include_graphics("img/simul_data.pdf")
 ```
 
+## Application
+### Résultats sur séries simulées
 
-### Résultats (2)
+Voir <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#comparaison>
 
-Sur la série étudiée, les résultats sont très proches :
+### Résultats sur des séries réelles
 
-```{r , echo=FALSE, out.width="100%"}
-img <- sprintf("img/nber/%s_%s.%s",tolower(series),
-               "localic",
-               fig.ext)
-knitr::include_graphics(img)
-```
+Voir <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#s%C3%A9rie-r%C3%A9elle>
 
-### Résultats (3)
+### Prévisions implicites
 
-```{r , echo=FALSE, out.width="100%"}
-series <- "RETAILx"
-img <- sprintf("img/nber/%s_%s_implicit_forecast.%s",tolower(series),
-               "localic",
-               fig.ext)
+Fonction `rjd3filters::implicit_forecast`
 
-knitr::include_graphics(img)
-```
+$$
+\forall q, \underbrace{\sum_{i=-h}^0 v_iy_i + \sum_{i=1}^h v_iy_i*}_{\text{lissage par }v\text{ de la série prolongée}}
+=\underbrace{\sum_{i=-h}^0 w_i^qy_i + \sum_{i=1}^h w_i^qy_i*}_{\text{lissage par }w^q\text{ de la série prolongée}}\text{ avec }\forall i > q,w_i^q=0
+$$
+Ce qui est équivalent à :
+$$
+\forall q, \quad \sum_{i=1}^h (v_i- w_i^q) y_i^*
+=\sum_{i=-h}^0 (w_i^q-v_i)y_i.
+$$
+Matriciellement :
 
+\begin{equation}
+\resizebox{\textwidth}{!}{$
+\begin{pmatrix}
+  v_1 & v_2 & \cdots & v_h \\
+  v_1 - w_1^1 & v_2 & \cdots & v_h \\
+  \vdots & \vdots & \cdots & \vdots \\
+   v_1 - w_1^{h-1} & v_2-w_2^{h-1} & \cdots & v_h
+\end{pmatrix}
+\begin{pmatrix}y_1^* \\ \vdots \\ y_h^*\end{pmatrix}=
+\begin{pmatrix}
+  w_{-h}^0 - v_{-h} & w_{-(h-1)}^0 - v_{-(h-1)} & \cdots & w_{0}^0 - v_{0} \\
+  w_{-h}^1 - v_{-h} & w_{-(h-1)}^1 - v_{-(h-1)} & \cdots & w_{0}^1 - v_{0} \\
+  \vdots & \vdots & \cdots & \vdots \\
+  w_{-h}^{h-1} - v_{-h} & w_{-(h-1)}^{h-1} - v_{-(h-1)} & \cdots & w_{0}^{h-1} - v_{0}
+\end{pmatrix}
+\begin{pmatrix}y_{-h} \\ \vdots \\ y_0\end{pmatrix}.$}
+\end{equation}
+
+
+### Prévisions implicites résultats
+
+Voir <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#s%C3%A9rie-r%C3%A9elle>
+
+### Nouvelle Bibliographique
+
+Estela Bee Dagum & Silvia Bianconcini (June 2023): Monitoring the direction of the short-term trend of economic indicators
+
+- étudient le filtre cascade avec une approximation via les RKHS en utilisant noyau triangulaire (coefficients non retrouvé avec `rjd3filters`)
+
+- proposent deux tests statistiques pour comparer les méthodes en termes de révisions et de point de retournement
+
+- Comparent les méthodes en étudiant deux séries de la FRED
 
 # Conclusion
 
 ## Conclusion
+
 ### Conclusion
 
 - Dans la construction des filtres asymétriques:
@@ -873,7 +712,7 @@ knitr::include_graphics(img)
 
 . . .
 
-- Dans certains cas des méthodes alternatives à la prévision ARIMA peuvent être utilisées \faIcon{arrow-circle-right} `rjdfilters` peut aider à comparer les résultats (`rjdfilters::x11()` pour les intégrer dans X-11)
+- Dans certains cas des méthodes alternatives à la prévision ARIMA peuvent être utilisées \faIcon{arrow-circle-right} `rjd3filters` peut aider à comparer les résultats (`rjd3filters::x11()` pour les intégrer dans X-11)
 
 
 ### What next\bcquestion
@@ -889,12 +728,30 @@ knitr::include_graphics(img)
 - Impact des points atypiques ? quid des méthodes robustes ?
 
 
+### `rjd3filters`
+
+Permet de générer toutes les moyennes mobiles de X-11 (y compris asymétriques) et de les combiner pour en étudier les propriétés.
+
+Permet de refaire toutes les étapes de X-11 (y compris correction des points atypiques), voir : <https://github.com/rjdemetra/rjd3filters/blob/develop/vignettes/X11.Rmd>
+
+
+
+### ex `rjd3filters` : filtres X-11
+
+```{r, out.width="100%"}
+knitr::include_graphics("img/gain_lp.pdf")
+```
+
+### ex `rjd3filters` : filtres X-11
+
+```{r, out.width="100%"}
+knitr::include_graphics("img/gain_autres.pdf")
+```
+
+# Et maintenant ?
+### Suite
+
+Soumission d'un article "informatique" au Journal of Statistical Software.
 
 ### Merci pour votre attention {.noframenumbering}
 
-Package \faIcon{r-project}{}:
-
-\href{https://github.com/palatej/rjdfilters}{\faGithub{} palatej/rjdfilters}
-
-Plus d'exemples sur le package, voir SAPW 2022 :
-https://community.amstat.org/governmentstatisticssection/conferences/pastconference210/seasonal-adjustment-practitioners-workshop-2022
