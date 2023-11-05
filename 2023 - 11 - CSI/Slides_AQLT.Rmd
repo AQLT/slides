@@ -133,10 +133,6 @@ Critères importants de la tendance-cycle :
 ### Estimations de la TC et moyennes mobiles (1)
 
 
-\bcattention Objectif différent de celui des méthodes d'analyse des cycles économiques
-
-. . .
-
 $TC_t$ généralement estimée sur une série \highlight{sans} saisonnalité
 
 . . .
@@ -221,11 +217,9 @@ Solution classique : prolonger la série par prévision et utiliser filtre symé
 
 ### Illustration avec climats des affaires dans les matériels de transport
 
-```{r , echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, out.width="100%"}
 knitr::include_graphics("img/ex/tc_finale.pdf")
 ```
-\footnotesize 
-https://www.insee.fr/fr/statistiques/6522175
 
 
 ### Évaluer la qualité des estimations avec prév. implicites
@@ -628,13 +622,13 @@ Spoil : marche plutôt bien
 
 ### Illustration (1)
 
-```{r , echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, out.width="100%"}
 knitr::include_graphics("img/ex/lp_local_es.pdf")
 ```
 
 ### Illustration (2)
 
-```{r , echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, out.width="100%"}
 knitr::include_graphics("img/ex/lp_local_if.pdf")
 ```
 
@@ -751,17 +745,17 @@ Estela Bee Dagum & Silvia Bianconcini (June 2023): Monitoring the direction of t
 - Dans certains cas des méthodes alternatives à la prévision ARIMA peuvent être utilisées \faIcon{arrow-circle-right} `rjd3filters` peut aider à comparer les résultats (`rjd3filters::x11()` pour les intégrer dans X-11)
 
 
-### What next\bcquestion
+<!-- ### What next\bcquestion -->
 
-- Etudes sur d'autres méthodes comme Vasyechko et Grun-Rehomme (2014) ou Feng et Schäfer (2021) ou l'extension des méthodes polynomiales avec $T_g$
+<!-- - Etudes sur d'autres méthodes comme Vasyechko et Grun-Rehomme (2014) ou Feng et Schäfer (2021) ou l'extension des méthodes polynomiales avec $T_g$ -->
 
-\bigskip
+<!-- \bigskip -->
 
-. . .
+<!-- . . . -->
 
 
 
-- Impact des points atypiques ? quid des méthodes robustes ?
+<!-- - Impact des points atypiques ? quid des méthodes robustes ? -->
 
 
 ### `rjd3filters`
@@ -774,13 +768,13 @@ Permet de refaire toutes les étapes de X-11 (y compris correction des points at
 
 ### ex `rjd3filters` : filtres X-11
 
-```{r, out.width="100%"}
+```{r, echo = FALSE, out.width="100%"}
 knitr::include_graphics("img/gain_lp.pdf")
 ```
 
 ### ex `rjd3filters` : filtres X-11
 
-```{r, out.width="100%"}
+```{r, echo = FALSE, out.width="100%"}
 knitr::include_graphics("img/gain_autres.pdf")
 ```
 
@@ -788,7 +782,7 @@ knitr::include_graphics("img/gain_autres.pdf")
 
 ### Suite de l'étude actuelle
 
-Document de travail en cours de finalisation
+Document de travail en cours de relecture pour publication finalisation
 
 Soumission au JOS autour de la paramétrisation locale
 
@@ -796,12 +790,31 @@ Objectif d'une soumission d'un article "informatique" au Journal of Statistical 
 
 . . .
 
-Reste une autre étude. Projet de recherche :
+Reste une autre étude.\
+Projet de recherche :
 
 > Le second objectif de ce projet sera d’étudier l’impact de points atypiques sur les différentes méthodes d’extraction de cycle et sur la détection des points de retournement.
 
 > Cet objectif d’étude d’impact des points atypiques amènera à également s’intéresser à l’utilisation de méthodes robustes pour l’estimation de la tendance-cycle, par exemple par l’utilisation de médianes mobiles (Tukey, 1971), mais aussi dans les autres étapes de la désaisonnalisation (pré-ajustement, estimation de la composante saisonnière, etc.).
 
+### Autour de la détection en temps réel des points atypiques ?
 
-### Merci pour votre attention {.noframenumbering}
+Buono et al(2016), Detecting outliers at the end of the series using forecast intervals
+
+<!-- https://fr.slideshare.net/DarioBuonoPhDinEcono/detecting-outliers-at-the-end-of-the-series-using-forecast-intervals -->
+
+Même idée que TERROR (CAPORELLO et MARAVALL 2004) mais en plus une caractérisation des points atypiques (AO, LS, TC)
+
+. . . 
+
+Rester autour de l'estimation de la tendance-cycle (reproduire en utiliser les estimations des IC et prévisions implicites) ou être sur des modèles plus généraux ?
+
+. . .
+
+Rapprocher à des travaux effectués en dehors de la thèse ?
+
+- Étude des modèles de régression linéaire avec des coefficients qui varient dans le temps (notamment modèles espace-état)\
+\faArrowCircleRight{} Repartir de là pour étude sur les points atypiques ? (ex : test sur la variance des coefficients)
+
+- [Non débuté] : Étude de construction de climats des affaires "prédictifs" (plutôt qu'analyse factorielle) ?
 

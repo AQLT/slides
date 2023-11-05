@@ -347,11 +347,6 @@ Critères importants de la tendance-cycle :
 
 \begin{frame}{Estimations de la TC et moyennes mobiles (1)}
 \protect\hypertarget{estimations-de-la-tc-et-moyennes-mobiles-1}{}
-\bcattention Objectif différent de celui des méthodes d'analyse des
-cycles économiques
-
-\pause
-
 \(TC_t\) généralement estimée sur une série \highlight{sans}
 saisonnalité
 
@@ -441,14 +436,11 @@ asymétriques optimisés avec certains critères\\
 de transport}
 \protect\hypertarget{illustration-avec-climats-des-affaires-dans-les-matuxe9riels-de-transport}{}
 \begin{center}\includegraphics[width=1\linewidth]{img/ex/tc_finale} \end{center}
-\footnotesize
-
-\url{https://www.insee.fr/fr/statistiques/6522175}
 \end{frame}
 
-\begin{frame}[fragile]{Évaluer la qualité des estimations avec
-prévisions implicites}
-\protect\hypertarget{uxe9valuer-la-qualituxe9-des-estimations-avec-pruxe9visions-implicites}{}
+\begin{frame}[fragile]{Évaluer la qualité des estimations avec prév.
+implicites}
+\protect\hypertarget{uxe9valuer-la-qualituxe9-des-estimations-avec-pruxe9v.-implicites}{}
 Fonction \texttt{rjd3filters::implicit\_forecast}
 
 \[
@@ -756,18 +748,12 @@ temporalité (\emph{timeliness}, déphasage
 \item
   \bcsmbh Solution unique
 \item
-  \bcsmbh Filtres asymétriques indépendants des données et du filtre
-  symétrique
+  \bcsmmh Poids non normalisés \bcsmbh
 \item
-  \bcsmmh Poids non normalisés
+  Filtres asymétriques indépendants des données et du filtre symétrique
 \end{itemize}
 
 \end{summary}
-\end{frame}
-
-\begin{frame}{Illustration (1)}
-\protect\hypertarget{illustration-1-2}{}
-\begin{center}\includegraphics[width=1\linewidth]{img/ex/fst} \end{center}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Approche ATS
@@ -826,6 +812,11 @@ Comment choisir les poids dans FST et AST (DFA) ?
   avec \(\alpha\)=0,00 (fidelity), \(\beta\)=0,05 (smoothness) et
   \(\gamma\)=0,95 (timeliness).
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Illustration FST}
+\protect\hypertarget{illustration-fst}{}
+\begin{center}\includegraphics[width=1\linewidth]{img/ex/fst} \end{center}
 \end{frame}
 
 \hypertarget{extensions}{%
@@ -913,7 +904,7 @@ Idée : paramétrisation locale \[
 \end{cases}
 \]
 
-\begin{center}\includegraphics[width=1\linewidth]{img/local_ic_mm} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{img/mm_penteconcavite} \end{center}
 
 Rmq: il y a (encore) de fortes révisions entre la première et deuxième
 estimation, on pourrait utiliser méthode QL pour avoir les estimateurs
@@ -923,7 +914,7 @@ Spoil : marche plutôt bien
 \end{frame}
 
 \begin{frame}{Illustration (1)}
-\protect\hypertarget{illustration-1-3}{}
+\protect\hypertarget{illustration-1-2}{}
 \begin{center}\includegraphics[width=1\linewidth]{img/ex/lp_local_es} \end{center}
 \end{frame}
 
@@ -1113,27 +1104,6 @@ direction of the short-term trend of economic indicators
 \end{itemize}
 \end{frame}
 
-\begin{frame}{What next\bcquestion}
-\protect\hypertarget{what-next}{}
-\begin{itemize}
-\tightlist
-\item
-  Etudes sur d'autres méthodes comme Vasyechko et Grun-Rehomme (2014) ou
-  Feng et Schäfer (2021) ou l'extension des méthodes polynomiales avec
-  \(T_g\)
-\end{itemize}
-
-\bigskip
-
-\pause
-
-\begin{itemize}
-\tightlist
-\item
-  Impact des points atypiques ? quid des méthodes robustes ?
-\end{itemize}
-\end{frame}
-
 \begin{frame}{\texttt{rjd3filters}}
 \protect\hypertarget{rjd3filters}{}
 Permet de générer toutes les moyennes mobiles de X-11 (y compris
@@ -1144,25 +1114,13 @@ points atypiques), voir :
 \url{https://github.com/rjdemetra/rjd3filters/blob/develop/vignettes/X11.Rmd}
 \end{frame}
 
-\begin{frame}[fragile]{ex \texttt{rjd3filters} : filtres X-11}
+\begin{frame}{ex \texttt{rjd3filters} : filtres X-11}
 \protect\hypertarget{ex-rjd3filters-filtres-x-11}{}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{include\_graphics}\NormalTok{(}\StringTok{"img/gain\_lp.pdf"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{center}\includegraphics[width=1\linewidth]{img/gain_lp} \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{ex \texttt{rjd3filters} : filtres X-11}
+\begin{frame}{ex \texttt{rjd3filters} : filtres X-11}
 \protect\hypertarget{ex-rjd3filters-filtres-x-11-1}{}
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{include\_graphics}\NormalTok{(}\StringTok{"img/gain\_autres.pdf"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{center}\includegraphics[width=1\linewidth]{img/gain_autres} \end{center}
 \end{frame}
 
@@ -1171,7 +1129,7 @@ points atypiques), voir :
 
 \begin{frame}{Suite de l'étude actuelle}
 \protect\hypertarget{suite-de-luxe9tude-actuelle}{}
-Document de travail en cours de finalisation
+Document de travail en cours de relecture pour publication finalisation
 
 Soumission au JOS autour de la paramétrisation locale
 
@@ -1180,7 +1138,8 @@ Statistical Software
 
 \pause
 
-Reste une autre étude. Projet de recherche :
+Reste une autre étude.\\
+Projet de recherche :
 
 \begin{quote}
 Le second objectif de ce projet sera d'étudier l'impact de points
@@ -1198,8 +1157,35 @@ saisonnière, etc.).
 \end{quote}
 \end{frame}
 
-\begin{frame}[noframenumbering]{Merci pour votre attention}
-\protect\hypertarget{merci-pour-votre-attention}{}
+\begin{frame}{Autour de la détection en temps réel des points atypiques
+?}
+\protect\hypertarget{autour-de-la-duxe9tection-en-temps-ruxe9el-des-points-atypiques}{}
+Buono et al(2016), Detecting outliers at the end of the series using
+forecast intervals
+
+Même idée que TERROR (CAPORELLO et MARAVALL 2004) mais en plus une
+caractérisation des points atypiques (AO, LS, TC)
+
+\pause
+
+Rester autour de l'estimation de la tendance-cycle (reproduire en
+utiliser les estimations des IC et prévisions implicites) ou être sur
+des modèles plus généraux ?
+
+\pause
+
+Rapprocher à des travaux effectués en dehors de la thèse ?
+
+\begin{itemize}
+\item
+  Étude des modèles de régression linéaire avec des coefficients qui
+  varient dans le temps (notamment modèles espace-état)\\
+  \faArrowCircleRight{} Repartir de là pour étude sur les points
+  atypiques ? (ex : test sur la variance des coefficients)
+\item
+  {[}Non débuté{]} : Étude de construction de climats des affaires
+  ``prédictifs'' (plutôt qu'analyse factorielle) ?
+\end{itemize}
 \end{frame}
 
 \end{document}
