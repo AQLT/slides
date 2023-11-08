@@ -713,7 +713,7 @@ Voir <https://aqlt.github.io/DT-est-tr-tc/sec-comparison.html#s%C3%A9rie-r%C3%A9
 
 Estela Bee Dagum & Silvia Bianconcini (June 2023): Monitoring the direction of the short-term trend of economic indicators
 
-- étudient le filtre cascade avec une approximation via les RKHS en utilisant noyau triangulaire (coefficients non retrouvé avec `rjd3filters`)
+- étudient le filtre cascade avec une approximation via les RKHS en utilisant noyau triangulaire (coefficients non retrouvés avec `rjd3filters`)
 
 - proposent deux tests statistiques pour comparer les méthodes en termes de révisions et de point de retournement
 
@@ -727,22 +727,24 @@ Estela Bee Dagum & Silvia Bianconcini (June 2023): Monitoring the direction of t
 
 - Dans la construction des filtres asymétriques:
 
-1. on peut se restreindre à ceux qui conservent les polynômes de degré au plus 1 (et exclure les filtres QL, CQ et DAF)
+1. on peut se restreindre à ceux qui conservent les polynômes de degré au plus 2 (et exclure les filtres CQ et DAF)
+
+. . .
+
+
+2. paramétrer localement les filtres polynomiaux permet une détection plus rapide des points de retournement et des meilleures estimations en temps réel
+
+
+. . .
+
+3. pour la construction de MM, préférer différents critères pour les différentes horizons
+
 
 \bigskip
 
 . . .
 
-
-2. on peut utiliser le filtre LC pour les estimations proches de l'estimation finale
-
-
-
-\bigskip
-
-. . .
-
-- Dans certains cas des méthodes alternatives à la prévision ARIMA peuvent être utilisées \faIcon{arrow-circle-right} `rjd3filters` peut aider à comparer les résultats (`rjd3filters::x11()` pour les intégrer dans X-11)
+- Dans certains cas des méthodes alternatives à la prévision ARIMA peuvent être utilisées \faIcon{arrow-circle-right} `rjd3filters` peut aider à comparer les résultats (`rjd3x11plus::x11plus_trend()` pour les intégrer dans X-11)
 
 
 <!-- ### What next\bcquestion -->
@@ -762,8 +764,7 @@ Estela Bee Dagum & Silvia Bianconcini (June 2023): Monitoring the direction of t
 
 Permet de générer toutes les moyennes mobiles de X-11 (y compris asymétriques) et de les combiner pour en étudier les propriétés.
 
-Permet de refaire toutes les étapes de X-11 (y compris correction des points atypiques), voir : <https://github.com/rjdemetra/rjd3filters/blob/develop/vignettes/X11.Rmd>
-
+Permet de refaire toutes les étapes de X-11 (y compris correction des points atypiques), voir : <https://github.com/rjdemetra/rjd3x11plus/blob/develop/vignettes/X11.Rmd>
 
 
 ### ex `rjd3filters` : filtres X-11
@@ -799,7 +800,7 @@ Projet de recherche :
 
 ### Autour de la détection en temps réel des points atypiques ?
 
-Buono et al(2016), Detecting outliers at the end of the series using forecast intervals
+Buono et al (2016), Detecting outliers at the end of the series using forecast intervals
 
 <!-- https://fr.slideshare.net/DarioBuonoPhDinEcono/detecting-outliers-at-the-end-of-the-series-using-forecast-intervals -->
 
@@ -815,6 +816,4 @@ Rapprocher à des travaux effectués en dehors de la thèse ?
 
 - Étude des modèles de régression linéaire avec des coefficients qui varient dans le temps (notamment modèles espace-état)\
 \faArrowCircleRight{} Repartir de là pour étude sur les points atypiques ? (ex : test sur la variance des coefficients)
-
-- [Non débuté] : Étude de construction de climats des affaires "prédictifs" (plutôt qu'analyse factorielle) ?
 
