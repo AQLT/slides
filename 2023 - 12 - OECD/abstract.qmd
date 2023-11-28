@@ -1,0 +1,19 @@
+---
+# title: "Democratization of time-varying coefficients models with `tvCoef`"
+title: "{{< fa brands r-project >}} package `tvCoef`: implementing time-varying coefficients models has never been so easy"
+author: "Alain Quartier-la-Tente (INSEE)"
+format: pdf
+---
+
+# Abstract
+
+In official statistics, linear regressions are everywhere: trading-day adjustments and forecasting models rely on RegARIMA models and macroeconomic models use error correction models. 
+These methods generally provide reliable results and a straightforward interpretation.
+
+However, they assume that the relationships between the variables are fixed in time: this assumption may make sense in the short term, but is generally no longer valid when the models are estimated over a long period, which leads to sub-optimal modelling.
+
+Many authors have studied time-varying coefficients, but practical applications of these methods are note easily reproducible for the average user and even more difficult to set up in production.
+
+The goal of this study is to provide a new {{< fa brands r-project >}} tool, `tvCoef`, to easily select, implement and test time-varying regressions models. 
+This tool will particularly appeal to data analysts in official statistics branch but could also prove useful to any statistician using {{< fa brands r-project >}}. 
+It implements piecewise regression models, local regressions and state-space models using `rjd3sts`, the {{< fa brands r-project >}} interface to JDemetra+ state-space implementation.

@@ -1,0 +1,88 @@
+---
+title: "{{< fa brands r-project >}} package `tvCoef`, implementing time-varying coefficients models has never been so easy"
+subtitle: "Workshop on TSA and SDCM for Official Statistics"
+author: "Alain Quartier-la-Tente"
+format:
+  beamer:
+    template: template.tex
+    slide-level: 3
+    theme: TorinoTh
+    keep-tex: false
+    pdf-engine: pdflatex
+    include-in-header: preambule.tex
+fontsize: 10pt
+classoption: 'usepdftitle=false,french,handout'
+themeoptions: "coding=utf8,language=french"
+division: | 
+    | Insee (Joint work with Claire du Campe de Rosamel)
+    | Session 7: New tools for Seasonal Adjustment 2
+departement: "Friday 15 December 2023"
+logo: "img/logobeamer"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Introduction
+
+Over the long term, institutions, corporate norms and the behavior of economic agents evolve, leading to changes in the dynamics of the economic series studied.
+
+. . .
+
+Many models are based on linear regressions (WDA, forecasts, benchmark, etc.), which assume that relationships between variables are fixed over time.
+
+. . .
+
+Assumption true in the short term, but generally false in the long term or in the presence of structural changes (change of nomenclature, definition, COVID...).
+
+. . .
+
+Goal: 
+
+- to study methods of relaxing this constraint;
+
+- propose a simple way of implementing and comparing these methods (package {{< fa brands r-project >}} `tvCoef`).
+
+### Linear regression model
+
+General idea:
+
+$$
+y_t=\beta_0+\beta_1 x_{1,t}+\dots+\beta_p x_{p,t} +\varepsilon_t 
+$$
+
+$$
+y_t=\beta X_t+\varepsilon_t
+$$
+
+Estimated using the ordinary least squares method
+
+. . .
+
+Example: forecast of French production in other manufacturing using
+
+- IPI overhang
+
+- INSEE business climate
+
+- Balance of opinion published by INSEE and Banque de France
+
+
+### R code {.allowframebreaks}
+
+\footnotesize
+
+```{r}
+library(tvCoef)
+library(dynlm)
+data <- window(manufacturing, start = 1993, end = c(2019, 4))
+y <- data[, "prod_c5"]
+model_c5 <- dynlm(
+  formula = prod_c5 ~ overhang_ipi1_c5 + insee_bc_c5_m3 + insee_oscd_c5_m2
+  + diff(insee_tppre_c5_m3, 1) + diff(bdf_tuc_c5_m2, 1),
+  data = data
+)
+model_c5
+```
+

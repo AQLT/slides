@@ -1,0 +1,16 @@
+subtitle: "{{< var titre.pres >}}"
+author: "{{< var auteur >}}"
+format:
+  beamer:
+    template: template.tex
+    slide-level: 3
+    theme: TorinoTh
+    keep-tex: false
+    pdf-engine: pdflatex
+    include-in-header: preambule.tex
+fontsize: 10pt
+classoption: 'usepdftitle=false,french,handout'
+themeoptions: "coding=utf8,language=french"
+division: "{{< var sous-titre >}}"
+departement: ""
+logo: "img/logo"
