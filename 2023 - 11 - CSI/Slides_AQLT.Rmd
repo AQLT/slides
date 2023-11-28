@@ -727,17 +727,22 @@ Estela Bee Dagum & Silvia Bianconcini (June 2023): Monitoring the direction of t
 
 - Dans la construction des filtres asymétriques:
 
-1. on peut se restreindre à ceux qui conservent les polynômes de degré au plus 2 (et exclure les filtres CQ et DAF)
+1. Se restreindre à ceux qui conservent les polynômes de degré au plus 2 (et exclure les filtres CQ et DAF)
+
+. . .
+
+2. Adapter la longueur à la variabilité
+
 
 . . .
 
 
-2. paramétrer localement les filtres polynomiaux permet une détection plus rapide des points de retournement et des meilleures estimations en temps réel
+3. Paramétrer localement les filtres polynomiaux permet une détection plus rapide des points de retournement et des meilleures estimations en temps réel
 
 
 . . .
 
-3. pour la construction de MM, préférer différents critères pour les différents horizons
+4. Pour la construction de MM, préférer différents critères pour les différents horizons
 
 
 \bigskip
