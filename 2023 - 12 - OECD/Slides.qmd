@@ -11,18 +11,21 @@ format:
     pdf-engine: pdflatex
     include-in-header: preambule.tex
 fontsize: 10pt
-classoption: 'usepdftitle=false,french,handout'
+classoption: 'usepdftitle=false,french' # handout
 themeoptions: "coding=utf8,language=french"
 division: | 
     | Insee (Joint work with Claire du Campe de Rosamel)
     | Session 7: New tools for Seasonal Adjustment 2
 departement: "Friday 15 December 2023"
 logo: "img/logobeamer"
+freeze: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# Introduction
 
 ### Introduction
 
@@ -34,7 +37,7 @@ Many models are based on linear regressions (WDA, forecasts, benchmark, etc.), w
 
 . . .
 
-Assumption true in the short term, but generally false in the long term or in the presence of structural changes (change of nomenclature, definition, COVID...).
+Assumption **true** in the **short term**, but generally **false** in the **long term** or in the presence of structural changes (change of nomenclature, definition, COVID...).
 
 . . .
 
@@ -47,29 +50,32 @@ Goal:
 ### Linear regression model
 
 General idea:
+\begin{align*}
+y_t&=\beta_0+\beta_1 x_{1,t}+\dots+\beta_p x_{p,t} +\varepsilon_t \quad
+\varepsilon_t\sim \mathcal N(0,\sigma^2) \\
+\iff y_t&=\beta X_t+\varepsilon_t
+\end{align*}
 
-$$
-y_t=\beta_0+\beta_1 x_{1,t}+\dots+\beta_p x_{p,t} +\varepsilon_t 
-$$
-
-$$
-y_t=\beta X_t+\varepsilon_t
-$$
-
-Estimated using the ordinary least squares method
+$\beta$ estimated using the OLS
 
 . . .
 
-Example: forecast of French production in other manufacturing using
+Example: forecast of French production growth in other manufacturing using
 
 - IPI overhang
 
 - INSEE business climate
 
-- Balance of opinion published by INSEE and Banque de France
+- Balances of opinion published by INSEE and Banque de France
+
+Model estimated with `stats::lm()` or `dynlm::dynlm()`
+
+. . .
+
+Even if machine learning models can be used, linear models performs well and are often used as reference models
 
 
-### R code {.allowframebreaks}
+### {{< fa brands r-project >}} code {.allowframebreaks}
 
 \footnotesize
 
@@ -79,10 +85,463 @@ library(dynlm)
 data <- window(manufacturing, start = 1993, end = c(2019, 4))
 y <- data[, "prod_c5"]
 model_c5 <- dynlm(
-  formula = prod_c5 ~ overhang_ipi1_c5 + insee_bc_c5_m3 + insee_oscd_c5_m2
-  + diff(insee_tppre_c5_m3, 1) + diff(bdf_tuc_c5_m2, 1),
-  data = data
+    formula = prod_c5 ~ overhang_ipi1_c5 + insee_bc_c5_m3 +
+        + diff(insee_tppre_c5_m3, 1) + diff(bdf_tuc_c5_m2, 1),
+    data = data
 )
-model_c5
+summary(model_c5)
 ```
+
+### Goal
+
+Study different methods to estimate
+$$
+y_t=\beta_t X_t+\varepsilon_t
+$$
+
+. . .
+
+Idea: stay close to the case of linear regression so that results remain easily interpretable
+
+. . .
+
+Outline:
+
+1. Statistical tests
+1. Piecewise regressions
+1. Local regressions
+1. State-space models
+
+# Statistical tests
+
+## Bai Perron
+
+### Statistical tests: Bai and Perron
+
+Most famous test: Bai and Perron, closed to Chow test.\
+They propose an efficient algorithm for finding break dates (package `strucchange`). 
+Let the model be:
+
+$$
+y_t=\beta_0+\beta_1 x_{1,t}+\dots+\beta_p x_{p,t} +\varepsilon_t
+$$
+
+. . .
+
+We split it in two, around a date $t_1$, and obtain two sub-models:
+
+$$
+\forall t \leq t_1 :\quad y_t=\beta_0'+\beta_1' x_{1,t}+\dots+\beta_p' x_{p,t} +\varepsilon_t
+$$
+
+$$
+\forall t > t_1 :\quad y_t=\beta_0'+\beta_1' x_{1,t}+\dots+\beta_p' x_{p,t} +\varepsilon_t
+$$
+
+The null hypothesis assumes that $\beta_0' = \beta_0''$, $\beta_1' = \beta_1'',\dots \beta_p' = \beta_p''$
+
+### {{< fa brands r-project >}} code {.allowframebreaks}
+
+\footnotesize
+
+```{r}
+strucchange::breakdates(strucchange::breakpoints(
+    prod_c5 ~ overhang_ipi1_c5 + insee_bc_c5_m3
+    + `diff(insee_tppre_c5_m3, 1)` + `diff(bdf_tuc_c5_m2, 1)`, 
+    data = model_c5$model))
+```
+
+
+### Bai Perron's limitations
+
+- The break may only be on a subset of variables but in `strucchange` only global tests implemented.
+
+. . .
+
+- Instability in the choice of date and the break is not necessarily abrupt (e.g. slow evolution over time).
+
+. . .
+
+- Structural breaks are usually known
+
+. . .
+
+- Assume that there is a break date to be determined, we might just want to test whether the coefficients are constant or not
+
+
+## Nyblom and Hansen
+
+### Nyblom and Hansen
+
+$$
+\begin{cases}
+(H_0):&\text{constant coefficients}\\
+(H_1):&\text{coefficients follow a martingale}
+\end{cases}
+$$
+
+. . .
+
+Hansen limits:
+
+- Test for variance not stable (go through other tests)
+
+- Joint test does not apply to dummies
+
+- Applies only to stationary variables
+
+### {{< fa brands r-project >}} code {.allowframebreaks}
+
+{{< fa brands r-project >}} `tvCoef::hansen_test()`
+
+\footnotesize
+
+```{r}
+hansen_test(model_c5)
+```
+
+
+# Estimated models
+
+## Piecewise linear regressions
+### Piecewise linear regressions
+
+Associated to Bai Perron
+
+$$
+\exists t_1,\dots,t_{T-1}:\:
+\beta_t = \beta_1\mathrm 1_{t \leq t_1} + \beta_2 \mathrm 1_{t_1 < t \leq t_2} + \dots + \beta_T \mathrm 1_{t_{T-1} < t}
+$$
+
+. . .
+
+Estimated by:
+
+1. Dividing the regressors ($\mathbb V[\varepsilon_t]$ fixed in time)
+{{< fa brands r-project >}} `tvCoef::piece_reg()`
+
+2. Piecewise linear regressions ($\mathbb V[\varepsilon_t]$ varies by subperiod)
+{{< fa brands r-project >}} `tvCoef::bp_lm()`
+
+. . .
+
+{{< fa arrow-circle-right >}} use case 1 because gives a single regression output.
+
+In both cases, coefficient estimates remain the same, differences on variances and on real-time estimates.
+
+###
+
+{{< fa arrow-circle-right >}} Pros:
+
+- Simple to understand and implement
+
+- Easily combined with other types of models (local regressions)
+
+. . . 
+
+{{< fa arrow-circle-right >}} Cons:
+
+- Assumes the existence of an abrupt break
+
+- Imprecision in date selection
+
+
+### {{< fa brands r-project >}} code {.allowframebreaks}
+
+\footnotesize
+
+```{r}
+pwr_mod <- piece_reg(model_c5)
+summary(pwr_mod)
+```
+To only split the second variable:
+```{r}
+pwr_mod2 <- piece_reg(model_c5, break_dates = 2008.5, fixed_var = -2)
+summary(pwr_mod2)
+```
+
+
+
+## Local regressions
+### Local regressions: {{< fa brands r-project >}} `tvReg`
+
+Assumption $\beta_t = \beta(z_t)$ with default $z_t = t/T$ and $\beta()$ locally constant (Nadaraya-Watson) or locally linear.
+
+. . .
+
+$$
+\beta(z_t) = \underset{\theta_0}{argmin}\sum_{j=1}^T\left(y_{j}-x_j\theta_0\right)^2K_b(z_j-z_t)
+$$
+With $K_b(x)=\frac 1 b K(x/b)$ a kernel function to weight the observations.
+
+. . .
+
+Remark:
+
+- Bandwidth $b$ fixed or estimated.
+- If $b \geq1$ all data used for each estimate.
+- If $b \rightarrow 20$ the weight associated with each obs almost identical for all data $\simeq$ linear regression.
+
+###
+
+{{< fa arrow-circle-right >}} Pros:
+
+- Simple model
+
+
+{{< fa arrow-circle-right >}} Cons:
+
+- All coefficients vary
+- Problem of choosing $b$: by cross-validation (between 0 and 20) but not very discriminating.
+- Strong real-time revisions possible (in estimates of $b$ and due to the use of asymmetric kernel)
+
+. . .
+
+Note:
+
+- Possibility of combining previous models by estimating a local regression on cut data 
+
+- By performing two regressions, we can fix the coefficients of certain variables
+
+### {{< fa brands r-project >}} code {.allowframebreaks}
+
+\footnotesize
+
+```{r}
+lr_mod <- tvReg::tvLM(model_c5)
+summary(lr_mod)
+```
+
+
+
+## State-space models
+
+### State-space models
+
+State-space modeling = general methodology for dealing with a wide range of time-series problems
+
+. . .
+
+Hypothesis: problem determined by a series of *unobserved* vectors $\alpha_1,\dots,\alpha_n$ associated with observations $y_1,\dots,y_n$, the relationship between $\alpha_t$ and $y_t$ being specified by the state-space model.
+
+. . .
+
+Several forms of model are possible, the simplest being linear Gaussian models.
+Simplified version:
+
+$$
+\begin{cases}
+y_t=X_t\alpha_t+\varepsilon_t,\quad&\varepsilon_t\sim\mathcal N(0,\sigma^2)\\\
+\alpha_{t+1}=\alpha_t+\eta_t,\quad&\eta_t\sim\mathcal N(0,\sigma^2 Q)
+\end{cases},\text{ with }\eta_t\text{ and }\varepsilon_t\text{ independent}
+$$
+
+with $y_t$ of dimension $p\times 1$ vector of observations, and $\alpha_t$ of dimension $m \times 1$ vector of states (*state vector*). 
+
+. . .
+
+$\sigma^2$ a factor simplifying the estimates (*Concentration of loglikelihood*).
+
+### Back to linear regression
+
+Linear regression:
+$$
+\begin{cases}
+y_t=X_t\alpha+\varepsilon_t,\quad&\varepsilon_t\sim\mathcal N(0,\sigma^2)\\
+\alpha_{t+1}=\alpha_t=\dots=\alpha_0=\alpha
+\end{cases}
+$$
+
+### Kalman filter estimation
+
+
+Two classic operations: *filtering* and *smoothing*
+
+- Smoothing: estimates the coefficient at each date using all available information. 
+Close to the estimates in-sample forecasts.
+
+$$
+\hat \alpha_t = E[\alpha_t|y_0, \dots, y_n]
+$$
+Ex: linear regression: $\hat\alpha_t = \hat \alpha$
+
+. . . 
+
+- Filtering: estimates the next coefficient (in $t+1$) with the information known in $t$. Close to real-time (out-of-sample) forecasts.
+
+$$
+a_{t+1} = E[\alpha_{t+1}|y_0, \dots, y_t]
+$$
+
+Ex: linear regression: $a_{2010T2} = \hat \alpha$ estimated using data up to 2010T1
+
+### Implementation
+
+Usually the implementation can be difficult and variance has to be fixed...
+
+Can be implemented easily with `rjd3sts`
+
+`tvCoef::ssm_lm()` uses `rjd3sts::reg()` and `rjd3sts::locallevel()`.
+
+
+### {{< fa brands r-project >}} code {.allowframebreaks}
+
+\footnotesize
+
+```{r}
+ssm_mod <- ssm_lm(
+    model_c5, fixed_var_variables = FALSE, fixed_var_intercept = FALSE,
+    var_intercept = 0.01, var_variables = 0.01)
+summary(ssm_mod)
+```
+
+To fix all the variables except one:
+
+```{r}
+ssm_mod2 <- ssm_lm(
+    model_c5,
+    fixed_var_variables = c(FALSE, rep(TRUE, 5)),
+    var_variables = c(0.01, rep(0, 5))
+)
+summary(ssm_mod2)
+```
+
+### Results (1)
+
+```{r}
+#| out-width: 95%
+#| echo: false
+all_mods <- list(
+    "Piecewise regression" = coef(pwr_mod),
+    "Local regression" = coef(lr_mod),
+    "State space model" = coef(ssm_mod)
+)
+all_mods[[2]] <- ts(
+    all_mods[[2]],
+    start = start(all_mods[[1]]),
+    frequency = frequency(all_mods[[1]])
+)
+
+all_mods_fixed <- list(
+    "Piecewise regression" = coef(pwr_mod2),
+    "Local regression" = coef(lr_mod),
+    "State space model" = coef(ssm_mod2)
+)
+all_mods_fixed[[2]] <- ts(
+    all_mods_fixed[[2]],
+    start = start(all_mods_fixed[[3]]),
+    frequency = frequency(all_mods_fixed[[3]]))
+
+data_graph <- do.call(rbind, lapply(names(all_mods), function(name){
+    data <- data.frame(as.numeric(time(all_mods[[name]])),
+                       all_mods[[name]])
+    colnames(data) <- c("date", gsub("`", "", colnames(all_mods[[name]])))
+    data2 <- reshape2::melt(data, id="date")
+    data2$Model <- name
+    data2
+}))
+data_graph_fixed <- do.call(rbind, lapply(names(all_mods_fixed), function(name){
+    data <- data.frame(as.numeric(time(all_mods_fixed[[name]])),
+                       all_mods_fixed[[name]])
+    colnames(data) <- c("date", gsub("`", "", colnames(all_mods_fixed[[name]])))
+    data2 <- reshape2::melt(data, id="date")
+    data2$Model <- name
+    data2
+}))
+library(ggplot2)
+p1 <- ggplot(data = data_graph, mapping = aes(x = date, y = value, color = Model)) +
+    geom_line() +
+    facet_wrap(vars(variable),scales = "free") +
+    labs(x = NULL, y = NULL) + 
+    theme(legend.position = c(0.8, 0.3)) +
+    scale_color_discrete(breaks = names(all_mods))
+
+p2 <- ggplot(data = data_graph_fixed, mapping = aes(x = date, y = value, color = Model)) +
+    geom_line() +
+    facet_wrap(vars(variable),scales = "free") +
+    labs(x = NULL, y = NULL) + 
+    theme(legend.position = c(0.8, 0.3)) +
+    scale_color_discrete(breaks = names(all_mods_fixed))
+p1
+```
+
+### Results (2)
+
+
+```{r}
+#| out-width: 90%
+#| echo: false
+#| include: false
+f_pwr <- oos_prev(pwr_mod2)
+f_lr <- oos_prev(lr_mod, end = end(data), frequency = frequency(data), fixed_bw = FALSE)
+f_ssm <- ssm_mod$fitted[,"filtering"]
+y <- data[,"prod_c5"]
+data_p_f <- ts.intersect(y, f_pwr$prevision, f_lr$prevision, f_ssm)
+colnames(data_p_f) <- c(
+    "y",
+    "Piecewise regression",
+    "Local regression",
+    "State space model"
+)
+# AQLTools::graph_ts(data_p_f)
+# AQLTools::graph_ts(window(data_p_f, start = 2010))
+library(forecast)
+```
+
+```{r}
+#| out-width: 95%
+#| echo: false
+# AQLTools::graph_ts(window(data_p_f, start = 2010),n_xlabel = 6)
+autoplot(window(data_p_f[,-1], start = 2010), linetype = 2) +
+    autolayer(window(data_p_f[,1], start = 2010), series = "y", colour = FALSE) +
+    theme_bw() +
+    theme(panel.background = element_rect(fill = "white", colour = NA),
+          panel.border = element_rect(fill = NA, colour = "grey20"),
+          panel.grid.major = element_line(colour = "grey92"),
+          panel.grid.minor = element_line(colour = "grey92", size = 0.25),
+          strip.background = element_rect(fill = "grey85", colour = "grey20"),
+          complete = TRUE,
+          plot.title = element_text(hjust = 0.5),
+          legend.background = element_rect(fill = alpha('gray99', 0.4),
+                                           colour = "gray80", linetype = "solid"),
+          legend.justification = c(0,0),
+          legend.position = c(0,0),
+          legend.key = element_blank(),
+          legend.title = element_blank()
+    ) +
+    labs(title = NULL, subtitle = NULL,
+         x = NULL, y = NULL) +
+    scale_x_continuous(breaks = scales::pretty_breaks(n = 6))
+```
+
+
+
+
+## Conclusion
+
+
+- Many models can be estimated around linear regressions: the framework remains simple, but the modeling is more complex.
+{{< fa arrow-circle-right >}} modeling choices must be made
+
+
+. . .
+
+
+- Can improve the performance of "classical" models, they do not replace them.\
+(Study of $\sim 30$ forecasts models: in-sample and out-of-sample errors always reduced with state space models)
+
+. . .
+
+
+- Models sometimes complex to implement (especially state-space)
+{{< fa arrow-circle-right >}} `tvCoef` can help ({{< fa brands github >}} [InseeFrLab/tvCoef](https://github.com/InseeFrLab/tvCoef))
+
+See workshop for complete example: <https://aqlt.github.io/AteliertvCoef/>
+
+### Thanks for you attention 
+
+TODO for `tvCoef`: be able to handle AR-X models.
+
+{{< fa brands github >}} <https://github.com/InseeFrLab/tvCoef>
+
 
