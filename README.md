@@ -2,6 +2,8 @@
 
 ## 2023
 
+- December 2023: [OECD](https://aqlt.github.io/slides/2023%20-%2012%20-%20OECD/Slides.pdf)
+
 - June 2023: [Rencontres R](https://aqlt.github.io/slides/2023%20-%2006%20-%20Rencontres%20R/Slides_rr.pdf)
 
 ## 2022
