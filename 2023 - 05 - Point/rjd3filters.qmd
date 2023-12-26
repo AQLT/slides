@@ -1,0 +1,158 @@
+---
+title: "rjd3filters"
+format: pdf
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rjd3filters)
+```
+
+Mon objectif était d'ajouter dans `rjd3filters` de quoi manipuler facilement les moyennes mobiles mais aussi les `finite_filters` qui sont composées d'une moyenne mobile utilisée pour l'estimation finale et d'un ensemble de moyennes mobiles asymétriques utilisées pour les estimations intermédiaires.\
+Toutes fonctions générant des moyennes mobiles renvoient maintenant les objets précédents.
+
+# Les moyennes mobiles
+
+La fonction `moving_average()` permet de générer une moyenne mobile : l'objet stocké est un objet R mais une convertion java est faite pour les différentes opérations
+
+```{r}
+library(rjd3filters)
+M3 <- moving_average(rep(1/3, 3), lags = -1)
+# Objet R :
+unclass(M3)
+M3 # Affichage "Java"
+```
+
+Une fois les objets créés, on peut ensuite facilement les manipuler
+```{r}
+M3X3 <- M3 * M3 # ou M3 ^2
+coef(M3X3) # pour récupérer les coefficients
+M3X3[c(1,3)] # donne encore une moyenne mobile
+M3[3] <- 1
+M3
+1 - M3X3
+sum(M3X3)
+rev(moving_average(rep(1/3, 3), lags = -2)) # pour inverser
+is_symmetric(M3X3)
+# Pour avoir une MM que l'on applique à chaque période, ex: tous les trim
+to_seasonal(M3X3, 4)
+```
+
+Il y a aussi quelques fonctions graphiques :
+
+```{r}
+def.par <- par(no.readonly = TRUE)
+par(mai = c(0.5, 0.8, 0.3, 0))
+layout(matrix(c(1, 1, 2, 3), nrow = 2,byrow = TRUE))
+plot_coef(M3X3)
+plot_gain(M3X3)
+plot_phase(M3X3)
+```
+Et on peut directement récupérer les fonctions de transfert/gain/déphasage :
+
+```{r}
+gain <- get_properties_function(M3X3, "Symmetric Gain")
+phase <- get_properties_function(M3X3, "Symmetric Phase")
+frf <- get_properties_function(M3X3, "Symmetric transfer")
+frf(c(0, pi/12, pi/4))
+```
+À noter que pour le déphasage, c'est l'argument de la fonction de transfert ([cf code Java](https://github.com/jdemetra/jdplus-main/blob/9069076a32f8a54528b9e594273d85c15272e5b7/jdplus-main-base/jdplus-toolkit-base-parent/jdplus-toolkit-base-core/src/main/java/jdplus/toolkit/base/core/math/linearfilters/IFilter.java#L77)) et non l'inverse de l'argument.
+
+Pour appliquer les moyennes mobiles à une série il suffit d'utiliser la fonction `*` ou la fonction `filter` :
+
+```{r}
+y <- rjd3toolkit::ABS$X0.2.09.10.M
+e1 <- simple_ma(12, - 6)
+e2 <- simple_ma(12, - 5)
+M2X12 <- (e1 + e2)/2
+plot(y)
+lines(y * M2X12, col = "red")
+```
+
+
+# `finite_filters`
+
+```{r}
+h13 <- lp_filter()
+# Ressemble à une matrice mais c'est en fait
+# un ensemble de moyennes mobiles
+h13
+h13[,"q=6"] # récupère la moyenne mobile d'Henderson
+as.matrix(h13)[,"q=6"] # ici on a vraiment la matrice 
+```
+Ces objets peuvent également être combinés entre eux, ce qui permet notamment de reproduire tout X-11 :
+
+```{r}
+x11_step <- rjd3filters::x11(y, trend.coefs = lp_filter(horizon = 6, ic = 3.5),
+                            extreme.lsig = 300, extreme.usig = 400, mul = FALSE,
+                            seas.s0 = "S3X3",
+                            seas.s1 = "S3X5",
+                            userdefined = sprintf("b%i", 1:11))
+compare <- function(x, id, ...){
+  res = cbind(na.omit(x), x11_step$user_defined[[id]])
+  all.equal(res[,1], res[,2], ...)
+}
+compare(y, "b1")
+
+e1 <- simple_ma(12, - 6)
+e2 <- simple_ma(12, - 5)
+# used to have the 1rst estimate of the trend
+tc_1 <- M2X12 <- (e1 + e2)/2
+# M2X12 * y # b2
+compare(M2X12 * y , "b2")
+si_1 <- 1 - tc_1
+# si_1 * y # b3
+compare(si_1 * y , "b3")
+
+M3X3 <- macurves("S3x3")
+M3X3_s <- to_seasonal(M3X3, 12)
+s_1 <- M3X3_s * si_1
+s_1_norm <- M2X12 * s_1
+# Il faut une fonction pour gérer les derniers points :
+# Ici les 6 premiers points non connus sont imputés en utilisé les précédentes valeurs
+s_1_norm <- impute_last_obs(s_1_norm, n = 6, nperiod = 1)
+s_1_demean <- s_1 - s_1_norm
+s_1_f <- impute_last_obs(s_1_demean, n = 6, nperiod = 12)
+# s_1_f * y # b5
+compare(s_1_f * y , "b5")
+sa_1 <- 1- s_1_f
+# sa_1 * y # b6
+compare(sa_1 * y , "b6")
+
+# Rmq : ic on devrait plutôt utiliser H23
+select_trend_filter(sa_1 * y)
+h13 <- lp_filter(horizon = 6, ic = 3.5)
+tc_2 <- h13 * sa_1
+# tc_2 * y # b7
+compare(tc_2 * y , "b7")
+
+si_2 <- 1 - tc_2
+# si_2 * y # b8
+compare(si_2 * y , "b8")
+
+M3X5 <- macurves("S3x5")
+M3X5_s <- to_seasonal(M3X5, 12)
+s_2 <- M3X5_s * si_2
+s_2_norm <- M2X12 * s_2
+s_2_norm <- impute_last_obs(s_2_norm, n = 6, nperiod = 1)
+s_2_demean <- s_2 - s_2_norm
+s_2_f <- impute_last_obs(s_2_demean, n = 6, nperiod = 12)
+# s_2_f * y # b10
+compare(s_2_f * y , "b10")
+sa_2 <- 1 - s_2_f
+# sa_2 * y # b11
+compare(sa_2 * y , "b11")
+```
+On maintenant également étudier les différentes fonctions (gain, déphasage, etc.) :
+
+```{r}
+#| fig-height: 10
+#| fig-width: 14
+sa_2@sfilter@upper_bound 
+# On trace les graphiques pour q= 0 (filtre en temps-réel) et q=84 (filtre symétrique)
+par(mai = c(0.5, 0.8, 0.3, 0))
+layout(matrix(c(1, 1, 2, 3), nrow = 2,byrow = TRUE))
+plot_coef(sa_2, q = c(0, 84))
+plot_gain(sa_2, q = c(0, 84))
+plot_phase(sa_2, q = c(0, 84))
+```
