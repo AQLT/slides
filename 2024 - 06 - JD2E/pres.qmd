@@ -22,13 +22,13 @@ eval: false
 Points abordés :
 
 ::: {.incremental}
-- Me, myself and I
+- La reproductibilité pour les autres mais avant tout pour soi-même
 
 - Comment devenir le principal utilisateur de **son** étude ?
 
 - Comment gagner du temps pour relancer **ses** programmes de **son** étude ?
 
-- Accessoirement : comment développer un environnement reproductible associé à la publication de son étude, créable en un clic à partir du [Datalab](https://datalab.sspcloud.fr/) ?\
+- Comment développer un environnement reproductible associé à la publication de son étude, créable en un clic à partir du [Datalab](https://datalab.sspcloud.fr/) ?\
 [![Onyxia](https://img.shields.io/badge/Lancer-DT1-blue?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-est-tr-tc%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2FInseeFrLab%2FDT-est-tr-tc%2Fmaster%2Fsetup_onyxia.sh%C2%BB)
 [![Onyxia](https://img.shields.io/badge/Lancer-DT2-green?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABaqlt%2Fdt-way-to-net-zero%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Faqlt%2Fdt-way-to-net-zero%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB)
 [![Onyxia](https://img.shields.io/badge/Lancer-DT3-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABaqlt%2Fdt-tvcoef%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Faqlt%2Fdt-tvcoef%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB)
@@ -41,15 +41,18 @@ Points abordés :
 Outils utilisés :
 
 ::: {.incremental}
-- [`renv`](https://rstudio.github.io/renv/) pour la gestion des dépendances sous R (voir [cours ENSAE sur la reproductibilité](https://ensae-reproductibilite.github.io/website/) pour Python)
+- [Datalab](https://datalab.sspcloud.fr/) pour la création de l'environnement de travail  à partir d'une instance Docker
 
-- [Docker](https://hub.docker.com/) pour l'isolation des environnements
+- [Docker](https://hub.docker.com/) pour l'isolation des environnements (versions de R, packages, etc.)
 
-- GitHub pour l'initialisation des dépendances
+- [`renv`](https://rstudio.github.io/renv/) pour facilement gérer des dépendances et les versions des packages R 
 
-- [Datalab](https://datalab.sspcloud.fr/) pour la création de l'environnement à partir de Docker
+- [GitHub Actions](https://github.com/features/actions) pour mettre à jour l'instance Docker à partir de `renv`
 :::
 
+. . .
+
+Voir [cours ENSAE sur la reproductibilité](https://ensae-reproductibilite.github.io/website/) pour Python
 
 ## `renv` en théorie
 
@@ -78,6 +81,10 @@ Permet de créer des **env**ironnements **r**eproductibles en rendant les projet
 . . .
 
 `renv::init()` peut être utilisé dès le début du projet ou à la fin
+
+. . .
+
+L'utilisation de `renv` simplifie grandement la création de l'instance Docker
 
 ## `renv` en pratique
 
