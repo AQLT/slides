@@ -1,0 +1,288 @@
+---
+title: "Comment reproduire *mon* étude avec `renv`, Docker et le datalab ?"
+subtitle: "Journée du D2E"
+date: 07/02/2024
+date-format: |
+  | DD MMMM YYYY
+format:
+  revealjs:
+    slide-number: true
+    show-slide-number: print
+    theme: [default, theme.scss]
+    embed-resources: true
+    output-file: index.html
+author: Alain Quartier-la-Tente
+lang: fr
+echo: true
+eval: false
+---
+
+## Introduction
+
+Points abordés :
+
+::: {.incremental}
+- La reproductibilité pour les autres mais avant tout pour soi-même
+
+- Comment devenir le principal utilisateur de **son** étude ?
+
+- Comment gagner du temps pour relancer **ses** programmes de **son** étude ?
+
+- Comment développer un environnement reproductible associé à la publication de son étude, créable en un clic à partir du [Datalab](https://datalab.sspcloud.fr/) ?\
+[![Onyxia](https://img.shields.io/badge/Lancer-DT1-blue?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-est-tr-tc%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2FInseeFrLab%2FDT-est-tr-tc%2Fmaster%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+[![Onyxia](https://img.shields.io/badge/Lancer-DT2-green?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-way-to-net-zero%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-way-to-net-zero%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+[![Onyxia](https://img.shields.io/badge/Lancer-DT3-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-tvcoef%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-tvcoef%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+:::
+
+
+. . .
+
+
+Outils utilisés :
+
+::: {.incremental}
+- [Datalab](https://datalab.sspcloud.fr/) pour la création de l'environnement de travail  à partir d'une instance Docker
+
+- [Docker](https://hub.docker.com/) pour l'isolation des environnements (versions de R, packages, etc.)
+
+- [`renv`](https://rstudio.github.io/renv/) pour facilement gérer des dépendances et les versions des packages R 
+
+- [GitHub Actions](https://github.com/features/actions) pour mettre à jour l'instance Docker à partir de `renv`
+:::
+
+. . .
+
+Voir [cours ENSAE sur la reproductibilité](https://ensae-reproductibilite.github.io/website/) pour Python
+
+## `renv` en théorie
+
+Permet de créer des **env**ironnements **r**eproductibles en rendant les projets R plus isolés, portables et reproductibles :
+
+::: {.incremental}
+- **Isolé** : chaque projet a son propre environnement (l'installation ou la mise à jour d'un package ne perturbera pas les autres projets)
+
+- **Portable** : les dépendances sont stockées dans le projet, ce qui permet de les partager avec d'autres utilisateurs ou de les réinstaller facilement
+
+- **Reproductible** : les versions des packages sont figées, ce qui permet de reproduire l'environnement exactement tel qu'il était lors de la création du projet
+:::
+
+## `renv` en pratique
+
+::: {.incremental}
+- `renv::init()` pour initialiser le projet : crée un fichier `renv.lock` qui contient les versions des packages installés et un fichier `.Rprofile` qui s'assure de l'utilisation de `renv` dans le projet
+
+- `install.packages()` pour installer les packages et `renv::update()` pour mettre à jour les packages
+
+- `renv::snapshot()` pour valider les nouveaux packages/mises à jour une fois que l'on a testé (mettre à jour le fichier `renv.lock`)
+
+- `renv::restore()` pour revenir aux versions/packages de `renv.lock`
+:::
+
+. . .
+
+`renv::init()` peut être utilisé dès le début du projet ou à la fin
+
+. . .
+
+L'utilisation de `renv` simplifie grandement la création de l'instance Docker
+
+## `renv` en pratique
+
+![](img/renv.gif)
+
+## Docker et `Dockerfile`
+
+Docker : logiciel de conteneurisation (boite contenant tout ce qui est nécessaire pour exécuter une application)
+
+`Dockerfile` : fichier indiquant comment construire une image Docker
+
+. . .
+
+```shell
+# Base image
+FROM inseefrlab/onyxia-rstudio:r4.4.0 # <1>
+
+ENV RENV_VERSION 1.0.7 # <2>
+RUN R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))" # <2>
+RUN R -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')" # <2>
+
+WORKDIR ${HOME}/DT-way-to-net-zero # <3>
+COPY renv.lock renv.lock # <4>
+
+ENV RENV_PATHS_LIBRARY renv/library
+
+RUN R -e "renv::restore()"
+```
+1. `FROM` : spécifie l'image de base, voir <https://hub.docker.com/u/inseefrlab>
+2. `RUN` : lance une commande Linux. Ici, utilise renv, on peut ajouter d'autres commandes
+3. `WORKDIR` : spécifie le répertoire de travail de l'image
+4. `COPY` : copie un fichier local sur l'image `Docker`
+
+
+## `Dockerfile` autre exemple
+
+```shell
+# Base image
+FROM inseefrlab/onyxia-rstudio:r4.4.0
+
+# Install required linux librairies for rjd3filters
+RUN apt-get update --yes && \ # <1>
+    apt-get install --yes libprotoc-dev libprotobuf-dev protobuf-compiler openjdk-17-jdk && \ # <1>
+    R CMD javareconf # <1>
+    
+RUN apt-get install --yes cmake # <2>
+
+ENV RENV_VERSION 1.0.7
+RUN R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))"
+RUN R -e "remotes::install_github('rstudio/renv@${RENV_VERSION}')"
+
+WORKDIR ${HOME}/DT-tvcoef
+COPY renv.lock renv.lock
+
+ENV RENV_PATHS_LIBRARY renv/library
+
+RUN R -e "renv::restore()"
+```
+1. Installation de Java 17 et de librairies protobuf
+2. Installation de cmake... J'y reviendrai
+
+## Github Actions
+
+GitHub Actions = service d'intégration et de déploiement continu (CI/CD) permettant d'automatiser, de personnaliser et d'exécuter des workflows de développement directement dans les dépôts GitHub
+
+. . .
+
+GitHub Actions = permet de lancer des programmes quand il se passe quelque chose sur le dépôt GitHub
+
+. . .
+
+Il faut créer dans la racine du repo un dossier `.github` contenant un dossier `workflows` et un fichier `docker.yml` (ou autre nom)
+
+. . .
+
+Exemple :
+
+## 
+
+```shell
+name: Dockerize # <1>
+
+on:
+  workflow_dispatch: # <2>
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker meta
+        id: docker_meta
+        uses: docker/metadata-action@v3
+        with:
+          images: inseefrlab/dt-way-to-net-zero # <3>
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }} # <4>
+          password: ${{ secrets.DOCKERHUB_TOKEN }} # <4>
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./.github/Dockerfile #<5>
+          push: true
+          tags: |
+            ${{ steps.docker_meta.outputs.tags }}
+            ${{ github.ref == 'refs/heads/master' && 'inseefrlab/dt-way-to-net-zero:latest' || '' }} # <3>
+          labels: ${{ steps.docker_meta.outputs.labels }}
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+```
+1. Nom de la GitHub Actions
+2. Ne se lance que si je l'autorise manuellement
+3. Image docker à modifier
+4. Identifiants DockerHub (autorisation pour modifier l'image)
+5. Chemin vers le fichier `Dockerfile` (attention à la casse)
+
+## Lancement de la GitHub Actions
+
+Il faut :
+
+::: {.incremental}
+- Créer un conteneur Docker : <https://hub.docker.com/>
+
+- Créer un token pour DockerHub : <https://hub.docker.com/settings/security> (non utile si conteneur et repo sur InseeFrLab)
+
+- Sur dépôt GitHub, dans `Settings > Secrets and variables > Actions` créer deux `Repository secrets` : `DOCKERHUB_USERNAME` (identifiant) et `DOCKERHUB_TOKEN` (token) (non utile si conteneur et repo sur InseeFrLab)
+
+- **Attention** : si l'on a commencé par testé sur son compte personnel en initialisant `DOCKERHUB_USERNAME` et `DOCKERHUB_TOKEN`, penser à supprimer ces secrets pour que cela marche sur inseeFrLab !
+
+- Dans Github > Actions > Dockerize > Run workflow > Run workflow
+:::
+
+
+
+## Bugs classiques
+
+::: {.incremental}
+- Windows non sensible à la casse contrairement à Linux
+
+- Parfois des bugs d'installation alors que le `install.packages()` fonctionne sur le datalab : <https://github.com/InseeFrLab/DT-tvcoef/actions/workflows/docker.yml>  
+![](img/install_package.png)
+
+- Provient du fait que `renv` stocke le serveur utilisé pour l'installation des packages (`getOption("repos")`)
+:::
+
+
+## Configuration du datalab (1)
+
+Créer une instance et :
+
+::: {.incremental}
+- changer les paramètres dans `Configuration Rstudio > Service`   
+![](img/datalab_service.png)
+- On peut éventuellement avoir un script d'initialisation (pour avoir l'URL, sélectionner le fichier sur GitHub puis cliquer sur "Raw")  
+![](img/datalab_script.png)
+
+
+
+:::
+
+## Configuration du datalab (2)
+
+- Il ne reste plus qu'à copier l'url  
+![](img/datalab_url.png)  
+[![Onyxia](https://img.shields.io/badge/Launch-Datalab-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-tvcoef%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-tvcoef%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+
+. . .
+
+Exemple de script d'initialisation :
+
+```shell
+#!/bin/sh # <1>
+
+PROJECT_DIR=~/work/DT-tvcoef
+git clone https://github.com/InseeFrLab/DT-tvcoef.git $PROJECT_DIR # <2>
+chown -R onyxia:users $PROJECT_DIR/
+cd $PROJECT_DIR
+```
+1.  Ligne obligatoire
+2.  Clonage du repo
+
+
+## Conclusion
+
+- La reproductibilité pour les autres mais aussi pour soi-même
+
+. . .
+
+- Le datalab couplé avec docker + renv + github actions permet un gain de temps considérable pour relancer ses programmes avec un coût limité
+
+. . .
+
+- Pas besoin d'être un as en informatique : repartir d'un projet existant et procéder par tâtonnement
