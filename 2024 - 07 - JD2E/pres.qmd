@@ -29,9 +29,9 @@ Points abordés :
 - Comment gagner du temps pour relancer **ses** programmes de **son** étude ?
 
 - Comment développer un environnement reproductible associé à la publication de son étude, créable en un clic à partir du [Datalab](https://datalab.sspcloud.fr/) ?\
-[![Onyxia](https://img.shields.io/badge/Lancer-DT1-blue?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-est-tr-tc%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2FInseeFrLab%2FDT-est-tr-tc%2Fmaster%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
-[![Onyxia](https://img.shields.io/badge/Lancer-DT2-green?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-way-to-net-zero%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-way-to-net-zero%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
-[![Onyxia](https://img.shields.io/badge/Lancer-DT3-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-tvcoef%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-tvcoef%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+[![](https://img.shields.io/badge/Lancer-DT1-blue?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-est-tr-tc%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2FInseeFrLab%2FDT-est-tr-tc%2Fmaster%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+[![](https://img.shields.io/badge/Lancer-DT2-green?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-way-to-net-zero%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-way-to-net-zero%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+[![](https://img.shields.io/badge/Lancer-DT3-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-tvcoef%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-tvcoef%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
 :::
 
 
@@ -41,18 +41,18 @@ Points abordés :
 Outils utilisés :
 
 ::: {.incremental}
-- [Datalab](https://datalab.sspcloud.fr/) pour la création de l'environnement de travail  à partir d'une instance Docker
+- [Datalab](https://datalab.sspcloud.fr/){target="_blank"} pour la création de l'environnement de travail  à partir d'une instance Docker
 
-- [Docker](https://hub.docker.com/) pour l'isolation des environnements (versions de R, packages, etc.)
+- [Docker](https://hub.docker.com/){target="_blank"} pour l'isolation des environnements (versions de R, packages, etc.)
 
-- [`renv`](https://rstudio.github.io/renv/) pour facilement gérer des dépendances et les versions des packages R 
+- [`renv`](https://rstudio.github.io/renv/){target="_blank"} pour facilement gérer des dépendances et les versions des packages R 
 
-- [GitHub Actions](https://github.com/features/actions) pour mettre à jour l'instance Docker à partir de `renv`
+- [GitHub Actions](https://github.com/features/actions){target="_blank"} pour mettre à jour l'instance Docker à partir de `renv`
 :::
 
 . . .
 
-Voir [cours ENSAE sur la reproductibilité](https://ensae-reproductibilite.github.io/website/) pour Python
+Voir [cours ENSAE sur la reproductibilité](https://ensae-reproductibilite.github.io/website/){target="_blank"} pour Python
 
 ## `renv` en théorie
 
@@ -93,6 +93,8 @@ L'utilisation de `renv` simplifie grandement la création de l'instance Docker
 ## Docker et `Dockerfile`
 
 Docker : logiciel de conteneurisation (boite contenant tout ce qui est nécessaire pour exécuter une application)
+
+. . .
 
 `Dockerfile` : fichier indiquant comment construire une image Docker
 
@@ -148,7 +150,7 @@ RUN R -e "renv::restore()"
 
 ## Github Actions
 
-GitHub Actions = service d'intégration et de déploiement continu (CI/CD) permettant d'automatiser, de personnaliser et d'exécuter des workflows de développement directement dans les dépôts GitHub
+[GitHub Actions](https://docs.github.com/fr/actions){target="_blank"} = service d'intégration et de déploiement continu (CI/CD) permettant d'automatiser, de personnaliser et d'exécuter des workflows de développement directement dans les dépôts GitHub
 
 . . .
 
@@ -220,7 +222,7 @@ Il faut :
 
 - Sur dépôt GitHub, dans `Settings > Secrets and variables > Actions` créer deux `Repository secrets` : `DOCKERHUB_USERNAME` (identifiant) et `DOCKERHUB_TOKEN` (token) (non utile si conteneur et repo sur InseeFrLab)
 
-- **Attention** : si l'on a commencé par testé sur son compte personnel en initialisant `DOCKERHUB_USERNAME` et `DOCKERHUB_TOKEN`, penser à supprimer ces secrets pour que cela marche sur inseeFrLab !
+- **Attention** : si l'on a commencé par tester sur son compte personnel en initialisant `DOCKERHUB_USERNAME` et `DOCKERHUB_TOKEN`, penser à supprimer ces secrets pour que cela marche sur InseeFrLab !
 
 - Dans Github > Actions > Dockerize > Run workflow > Run workflow
 :::
@@ -257,7 +259,12 @@ Créer une instance et :
 
 - Il ne reste plus qu'à copier l'url  
 ![](img/datalab_url.png)  
-[![Onyxia](https://img.shields.io/badge/Launch-Datalab-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-tvcoef%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-tvcoef%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}
+
+
+::: {style="font-size: 80%;"}
+[![](https://img.shields.io/badge/DT-modenvir-green?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-way-to-net-zero%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-way-to-net-zero%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"} = `[![](https://img.shields.io/badge/Launch-Datalab-orange?logo=R)](https://datalab.sspcloud.fr/launcher/ide/rstudio?autoLaunch=false&service.image.custom.enabled=true&service.image.pullPolicy=%C2%ABAlways%C2%BB&service.image.custom.version=%C2%ABinseefrlab%2Fdt-way-to-net-zero%3Alatest%C2%BB&init.personalInit=%C2%ABhttps%3A%2F%2Fraw.githubusercontent.com%2Finseefrlab%2Fdt-way-to-net-zero%2Fmaster%2F.github%2Fsetup_onyxia.sh%C2%BB){target="_blank"}`
+:::
+
 
 . . .
 
