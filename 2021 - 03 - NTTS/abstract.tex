@@ -1,85 +1,68 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 %
-\documentclass[
-  12pt,
-  ,
-  a4paper]{article}
-\def\thetitle{%
-Performance of asymmetric filters for trend-cycle extraction, application to the COVID-19 crisis%
-}
-\def\thekeywords{%
-%%
-trend-cycle extraction, asymmetric filters, R, seasonal adjustment%
-}
-\def\theauthors{%
-%
-}
+\documentclass[12pt,,a4paper]{article}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
+\usepackage{amssymb,amsmath,mathtools,multirow}
+\usepackage{float,hhline}
+\usepackage{tikz}
+\usepackage[tikz]{bclogo}
+\usepackage{mathtools}
 \usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-
-% Use upquote if available, for straight quotes in verbatim environments
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{ \usepackage{hyperref}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
 }
-\hypersetup{pdfauthor={\theauthors}, pdftitle={\thetitle},
-  pdflang={english},
-  pdfkeywords={trend-cycle extraction, asymmetric filters, R, seasonal adjustment},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
-%% PLEASE KEEP AT LIST THESE SETTINGS
-\def\thepaperheight{29.9cm} 	% original: {11.99in}
-\def\thepaperwidth{21.08cm} 	% 		{8.3in}
-\def\theleft{2.79cm} 			% 		{1.1in}
-\def\theright{2.99cm} 			%		{1.18in}
-\def\thetop{1.7cm} 			% 		{0.51in}
-\def\thebottom{1.6cm} 		% 		{0.71in}
-\def\theheadheight{2.54cm} 	% 		(1in}
-\usepackage[
-   a4paper,
-   paperheight=\thepaperheight,
-   paperwidth=\thepaperwidth,
-   left=\theleft,
-   right=\theright,
-   top=\thetop,
-   bottom=\thebottom,
-   headheight=\theheadheight
-]{geometry} % in particular, do not change the dimensions of the document
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={Performance of asymmetric filters for trend-cycle extraction, application to the COVID-19 crisis},
+            pdfkeywords={trend-cycle extraction, asymmetric filters, R, seasonal adjustment},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[true]{geometry}
 \usepackage{longtable,booktabs}
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
-\setlength{\emergencystretch}{3em} % prevent overfull lines
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+  %\setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+  }
 \setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
 \usepackage{fancyhdr}
 
 %\cfoot{ {\fontsize{8pt}{9.6pt}\selectfont 6\par}}
@@ -200,28 +183,29 @@ trend-cycle extraction, asymmetric filters, R, seasonal adjustment%
 \usepackage{stmaryrd}
 \DeclareMathOperator{\e}{e}
 \usepackage{animate, dsfont, here, xspace}
-\ifxetex
-  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,main=]{babel}
+\else
+  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[]{}
-\else
-  \usepackage[shorthands=off,main=]{babel}
 \fi
 \usepackage[numbers]{natbib}
 \bibliographystyle{unsrtnat}
 
-
+\title{Performance of asymmetric filters for trend-cycle extraction, application to the COVID-19 crisis}
 \date{}
 
+
+
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}[1]{\mathbb{E}\left[ #1 \right]}
+\newcommand{\V}[1]{\mathbb{V}\left[ #1 \right]}
+\newcommand{\cov}[2]{\Cov\left( #1\,,\,#2 \right)}
+
 \begin{document}
-\cfoot{\thepage} % keep pages numbered
-\sectionfont{\large\textsc}
-
-
 \maketitle
-
-{\fontsize{10pt}{12.0pt}\selectfont \textbf{\uline{Keywords}:} \thekeywords\par}\par
-
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -357,13 +341,13 @@ Consequently, there is no need to seek to preserve polynomial trends of degree m
 
 Only focusing on the timeliness criteria (FST filter), highly increases the variance of the estimates: a tradeoff with other criteria must be maid.
 
-Finally, for the last-points estimates of the trend-cycle component, the choice off the asymmetric filter should also take into account an economic analysis to decide which estimates are economically plausible.
+Finally, for the last-points estimates of the trend-cycle component, the choice of the asymmetric filter should also take into account an economic analysis to decide which estimates are economically plausible.
 
 This study could, for example, be extended in two ways.
 Firstly studying the impact of the different methods on the seasonal adjustment process.
 Secondly studying the impact of atypical points on the estimates and exploring new kinds of asymmetric filters based on robust methods (like robust local regressions).
 
 \renewcommand\refname{References}
-  \bibliography{biblio.bib}
+\bibliography{biblio.bib}
 
 \end{document}
