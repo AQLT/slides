@@ -1,0 +1,82 @@
+---
+title: |
+ | Détection en temps réels des points de retournement :
+ | Apport de l’utilisation des filtres asymétriques dans l’analyse conjoncturelle
+subtitle: "Point du 09/11/2021"
+author: "Alain Quartier-la-Tente"
+departement: ""
+division: ""
+logo: "img/logobeamer.png"
+automaticcontents: false
+output:
+    beamer_presentation:
+        template: template_Beamer.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+        includes:
+          in_header: preamble_beamer.tex
+themeoptions: "coding=utf8,language=french"
+classoption: 'usepdftitle=false,french'
+fontsize: 10pt
+bibliography: [biblio.bib]
+biblio-style: unsrtnat
+natbiboptions: [numbers]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = F,
+                      fig.align = 'center',
+                      fig.path = "img/")
+```
+
+# Travaux actuels
+
+###  Travaux actuels
+
+- Il est possible de mettre toutes les méthodes étudiées dans de la théorie générale de Grun-Rehomme et alii (2018)\pause  
+\faArrowCircleRight{} donne des diagrammes généraux plus ou moins lisibles\pause   
+\faArrowCircleRight{} permet de clarifier certains liens (ex : Proietti et RKHS)
+
+. . .
+
+- package \faIcon{r-project} `rjdfilters` \faArrowCircleRight{} réflexions autour d'une interface plus générale sur les filtres finis ou infinis pour faire facilement des opérations.
+
+. . .
+
+- Proposition de méthode une façon de f
+
+. . .
+
+
+- comparaison empirique sur séries d'IPI de l'UE : méthode actuelle de X-13ARIMA semble la plus performante
+
+
+
+###  Discussion
+
+- Faut-il...
+
+    - simplifier les applications en appliquant uniquement les méthodes sur les séries désaisonnalisées ?
+
+    - reestimer la série linéarisée à chaque date ? Quid de l'hypothèse d'orthogonalité entre les composantes ?
+
+. . .
+
+- Quel définition retenir pour le déphasage ? Utiliser des indicateurs statistiques ($\mathbb P$ détecter le point de retournement en $i$ mois) ? Révisions entre deux dates consécutives ?
+
+. . .
+
+- Fonction de gain et déphasage filtre final de X-11 ; *time path* de la *timeliness* pour comparer les méthodes ?
+
+
+. . .
+
+- Continuer la comparaison de différentes méthodes ? étudier d'autres séries ? Changer le filtre symétrique ?
+
+
+. . .
+
+
+- Tester des longueurs différentes pour les MM asymétriques ? I-C ratios locaux ?
