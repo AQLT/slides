@@ -1,0 +1,270 @@
+---
+title: |
+ | Estimation en temps réel de la TC :
+ | Apport de l'utilisation des filtres asymétriques dans l'analyse conjoncturelle
+subtitle: "CSI 5e année"
+author: "Alain Quartier-la-Tente"
+departement: "20 juin 2025"
+format:
+  beamer:
+    template: template.tex
+    slide-level: 3
+    theme: TorinoTh
+    keep-tex: false
+    pdf-engine: pdflatex
+    include-in-header: preamble_beamer.tex
+fontsize: 10pt
+classoption: 'usepdftitle=false,french' # handout
+themeoptions: "coding=utf8,language=french"
+logo: "img/logobeamer"
+freeze: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      cache = F,
+                      fig.align = 'center',
+                      fig.path = "img/rmd-")
+library(knitr)
+library(kableExtra)
+library(rjd3filters)
+gen_MM <- function(p=6, q=p, d=2, reg = NULL){
+  X_gen <- function(d = 1, p = 6, q = p){
+    sapply(0:d, function(exp) seq(-p, q)^exp)
+  }
+  k = rjd3filters::get_kernel("Henderson", h = p)
+  k = c(rev(k$coef[-1]), k$coef[seq(0,q)+1])
+  K = diag(k)
+  X = cbind(X_gen(d=d, p = p, q = q), reg)
+  e1 = matrix(0, ncol = 1, nrow = ncol(X))
+  e1[1] = 1
+  # Estimator of the constant
+  M1 = K %*% X %*% solve(t(X) %*% K %*% X, e1)
+  moving_average(M1, lags = -p)
+}
+fig.ext <- "pdf"
+# load(file = "tables.RData")
+# mae <- readRDS("tables_revisions.RDS")$MAE
+```
+
+# Introduction
+
+### Retour sur le passé
+
+Dernier CSI : 10 juin 2024
+
+- Soumission en cours au Journal of Official Statistics (JOS) sur la paramétrisation locale des filtres asymétriques -> publié en décembre 2024
+
+. . .
+
+- Travaux sur les points atypiques à partir de méthodes robustes  
+\faIcon{arrow-circle-right} Terminé
+
+. . .
+
+- Travaux sur la publication de la tendance-cycle
+\faIcon{arrow-circle-right} En cours
+. . .
+
+
+- Objectif : soutenir en début année scolaire 2025-2026
+
+# Estimation de la TC avec des méthodes robustes aux points atypiques
+
+### Introduction
+
+Que faire pendant les périodes de forte turbulence ? (ex : COVID)
+
+1. Ne rien publier (ex ABS)
+
+. . .
+
+2. Estimer les points atypiques via modèle ad-hoc (ex Reg-ARIMA)
+
+. . .
+
+3. Série segmentée d'un côté ou des deux côtés
+
+. . .
+
+Peut-on directement prendre en compte les chocs ?
+
+
+1. Utilisation d'un ensemble de méthodes robustes aux points atypiques
+
+
+2. Proposition d'une méthodologie pour construire des moyennes mobiles en modélisant des points atypiques
+
+. . .
+
+- Comparaison des estimations en temps réel sur :
+
+   - Sur des séries simulées (AO/LS)
+
+   - Sur des séries réelles (dont COVID et point de retournement sans point atypique)
+   
+
+### Henderson robuste
+
+Moyennes mobiles classiques peuvent être obtenues par analogie avec la régression polynomiale locale
+$$
+\forall j\in\left\llbracket -h,h\right\rrbracket : y_{t+j}=\underbrace{\sum_{i=0}^{d}\beta_{i,t}j^{i}}_{m_{t+j}}+\varepsilon_{t+j}
+$$
+
+Estimation en utilisant les WLS avec *noyaux*: $\hat{\beta_t}=(X'KX)^{1}X'Ky_t$ et
+$$
+\hat{m}_{t}=\hat\beta_{0,t}=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}
+$$
+
+. . .
+
+Idée : estimer le modèle 
+$$
+y_{t+j}=\sum_{i=0}^{d}\beta_{i,t}j^{i} + \boldsymbol O_{t+j} \boldsymbol\zeta_t+\varepsilon_{t+j}.
+$$
+
+### Musgrave robuste
+
+Moyenne mobile de Musgrave obtenue en écrivant :
+$$
+\boldsymbol y_t=\begin{pmatrix}\boldsymbol U &\boldsymbol Z\end{pmatrix}
+\begin{pmatrix}\boldsymbol \gamma_t \\ \boldsymbol \delta_t\end{pmatrix}+
+\boldsymbol \varepsilon_t =
+\boldsymbol U\boldsymbol \gamma_t + \boldsymbol Z \boldsymbol \delta_t +\boldsymbol \varepsilon_t,
+\quad
+\boldsymbol \varepsilon_t\sim\mathcal{N}(0,\boldsymbol D)
+$$
+En minimisant l'erreur quadratique de révision (à la moyenne mobile symétrique) sous contrainte $\transp{\boldsymbol U_p}\boldsymbol \theta^{(a)}=\transp{\boldsymbol U}\boldsymbol \theta$ (estimation sans biais de $\boldsymbol \gamma_t$).
+
+. . .
+
+Moyennes mobiles robustes :
+$$
+\boldsymbol y_t=\begin{pmatrix}\boldsymbol U & \mathcal O_{t}\end{pmatrix}\begin{pmatrix}\boldsymbol \gamma_t \\ \boldsymbol\zeta_t \end{pmatrix}+\boldsymbol Z\boldsymbol \delta_t+\boldsymbol \varepsilon_t,\quad
+\boldsymbol \varepsilon_t\sim\mathcal{N}(\boldsymbol 0,\boldsymbol D).
+$$
+Sous contraintes : 
+$$
+\transp{\begin{pmatrix}\boldsymbol U_{p} & \mathcal O_{p,t} \end{pmatrix}}\boldsymbol \theta^{(a)}=\transp{\begin{pmatrix}\boldsymbol U & \mathcal O_{t}\end{pmatrix}} \boldsymbol \theta_t^{(r)}.
+$$ 
+
+### Exemples de régresseurs 
+
+- Choc ponctuel associé à l'irrégulier : $O_t^{AO}=\1_{t=t_0}$  
+Exemple : <https://aqlt.github.io/robustMA/#fig-robust-ao>
+
+- Choc ponctuel associé à la tendance-cycle : $O_{t+j}=O_{t+j}^{AO}=\1_{t+j= t_0}$ lorsque $t< t_0$ ou $t=t_0+h$ et $O_{t+j}=1-O_{t+j}^{AO}=\1_{t+j\ne t_0}$ lorsque $t_0\leq t < t_0+h$ 
+
+- Choc en niveau associé à la tendance-cycle : $O_{t+j}=1-\1_{t+j< t_0}$ si $t\leq t_0$ (l'estimation de $\beta_{0,t}$ ne prend pas en compte le choc en niveau) et $O_{t+j}=\1_{t+j\geq t_0}$ si $t_0<t$ (l'estimation de $\beta_{0,t}$ prend en compte le choc en niveau)
+
+
+### Comment valider la modélisation ?
+
+- Utiliser l'expertise de la série ou un module externe de détection de points atypiques.
+
+. . .
+
+Construction d'un intervalle de confiance et comparaison avec l'estimation sans choc :
+
+- Simplification des formules utilisées en régression polynomiale locale
+
+. . .
+
+- Simplification computationnelle (0,31 milliseconde vs 0,11 secondes)
+
+
+### Résultat
+
+- Beaucoup de volatilité en temps réel dans les méthodes non linéaires robustes
+
+. . .
+    
+- Méthodes linéaires (CLF, Henderson) sensibles aux points atypiques : points atypiques non détectés à la bonne date
+
+. . .
+    
+
+- CLF très proche de Henderson
+
+. . .
+    
+
+- L'extension proposée :
+
+    - Minimise les révisions et permet une bonne détection des points de retournements
+    
+    - Pas d'impact de la modélisation d'un choc non existant
+    
+    - Si on ne sait pas si le choc est temporaire (irrégulier) ou permanent (tendance-cycle), il faut mieux ne rien faire
+    
+    - Par rapport à des modules ad-hoc, révisions ne dépendent pas d'autres paramètres (longueur de la série, etc.)
+
+
+# Et si l'on publait la tendance-cycle ?
+
+### Introduction (1/3)
+
+- Pourquoi et comment publier la tendance-cycle ? Quelles sont les recommandations ? Quelles méthodes utilisées et comment mettre en application ?
+
+. . .
+
+- Un package `publishTC` permettant :
+
+   - D'appliquer les CLF (Statistique Canada) et Henderson/Musgrave (ABS)
+   
+   - De réaliser une estimation locale de Musgrave (article 2), de modéliser des points atypiques (article 3) et de combiner les deux
+   
+   - Faire facilement des graphiques (dont intervalles de confiance/prévisions implicites) et de calculer quelques statistiques (I/C ratios, MCD)
+
+
+### Introduction (2/3)
+
+Rédaction d'un document de travail (en cours) expliquant :
+
+- Pourquoi publier la tendance-cycle ?
+
+. . .
+   
+- Comment estimer une tendance-cycle (méthodes du package)
+
+. . .
+   
+- Recommandations de publications (graphiques, analyse des révisions, etc.)
+
+. . .
+   
+- Comment mettre en place une chaine de production automatique ?
+   Création d'un template simple de production automatique, création de rapports, etc.
+   
+
+### Introduction (3/3)
+
+<https://aqlt.github.io/publishTC.wp/> :
+
+- Mise en production automatique (Docker + GitHub Actions) pour 10 publications de l'Insee ($\simeq$ 80 series)
+
+. . .
+
+- Rapports automatiques avec :
+
+    - Différents graphiques pour chaque méthode
+    
+    - Comparaison des méthodes
+    
+    - Analyse des révisions (graphiques, tableaux et décomposition des révisions)
+    
+    - Quelques statistiques (I/C ratios, MCD, etc.), autres idées ?
+
+. . .
+    
+- Ajout de nouvelles séries de façon simple, exemple : <https://github.com/AQLT/publishTC.wp/blob/master/data/CONJ_COMD.yml>
+
+# Conclusion
+
+- Thèse à articles avec 4 chapitres
+
+- Objectif de soutenir en novembre ou décembre
+
+- Jury encore à constituer
+
+- Quelques soumissions prévues post-thèse (construction des intervalles de confiance, moyennes mobiles "robustes", publication de la tendance-cycle)
