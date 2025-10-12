@@ -64,6 +64,7 @@ Dernier CSI : 10 juin 2024
 
 - Travaux sur la publication de la tendance-cycle
 \faIcon{arrow-circle-right} En cours
+
 . . .
 
 
