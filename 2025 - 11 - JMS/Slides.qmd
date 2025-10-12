@@ -1,0 +1,207 @@
+---
+title: |
+ | Et si l'on publiait la tendance-cycle ?
+subtitle: "JMS 2025"
+author: "Alain Quartier-la-Tente"
+departement: "10 novembre 2025"
+format:
+  beamer:
+    template: template.tex
+    slide-level: 3
+    theme: TorinoTh
+    keep-tex: false
+    pdf-engine: pdflatex
+    include-in-header: preamble_beamer.tex
+fontsize: 10pt
+classoption: 'usepdftitle=false,french' # handout
+themeoptions: "coding=utf8,language=french"
+logo: "img/logobeamer"
+freeze: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      cache = F,
+                      fig.align = 'center',
+                      fig.path = "img/rmd-")
+library(knitr)
+library(kableExtra)
+library(rjd3filters)
+library(publishTC)
+library(ggplot2)
+library(ggdemetra)
+y <- etip
+h13_tppre <- henderson_smoothing(y)
+fig.ext <- "pdf"
+options(is_french = TRUE)
+if (getOption("is_french")) {
+	current_local <- Sys.getlocale("LC_TIME")
+	Sys.setlocale("LC_TIME","fr_FR.UTF-8")
+	options(OutDec = ",")
+}
+palette_coef <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
+				  "#0072B2", "#D55E00", "#CC79A7", "#999999")
+# load(file = "tables.RData")
+# mae <- readRDS("tables_revisions.RDS")$MAE
+```
+
+# Introduction
+
+### Introduction
+
+::: {.incremental}
+- Courant de construire des séries « CVS-CJO»
+- Permet une analyse en glissement mensuel/trimestriel (détection plus rapide des points de retournement)
+- Améliore le diagnostic conjoncturel (mise en évidence de ce qui est nouveau)
+- Permet une comparaison spatiale
+- Vient en complément de la publication de la série brute
+:::
+
+```{r}
+spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
+p_sa <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
+    geom_line(color =  "#F0B400") +
+    labs(title = "IPI CZ France",
+         x = NULL, y = NULL) +
+    geom_sa(component = "sa", color = "#155692",frequency = 12)
+p_sa +
+    coord_cartesian(xlim = c(2000, 2020))
+```
+
+
+### Hypothèse de travail de la desaisonnalisation 
+
+Séries de décomposent en 3 composantes inobservables :
+
+::: {.incremental}
+- effets saisonniers (y.c. calendrier) : variations régulières le même mois chaque année
+
+- tendance-cycle ou « tendance de court terme » : combinaison de la tendance (évolutions de long terme) et du cycle (évolutions de court terme autour de la tendance)
+
+- irrégulier : fluctuations inattendues (chocs économiques non prévus, bruit...)
+:::
+
+
+
+###
+
+
+Irrégulier pertinent pour l'analyse conjoncturel (ex : période COVID)...
+... Mais peut perturber l'analyse de la tendance sous-jacente et les points de retournement 
+
+. . . 
+
+[United Kingdom Statistics Authority (2008)](https://osr.statisticsauthority.gov.uk/publication/volatility-of-the-retail-sales-index/) : utilisateurs accordent trop d'importance aux variations mensuelles de la série CVS-CJO de l'indice des ventes au détail (pas une bonne indication de la tendance de long terme en période de forte volatilité)
+
+```{r}
+spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
+p_sa2 <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
+    # geom_line(color =  "#F0B400") +
+    labs(title = "IPI CZ France",
+         x = NULL, y = NULL) +
+    geom_sa(component = "CVS-CJO", color = "#1E6C0B",frequency = 12) +
+    geom_sa(component = "Tendance-cycle", color = "#155692",frequency = 12)
+p_sa +
+    coord_cartesian(xlim = c(2000, 2020))
+```
+
+
+### Objectifs
+
+- Souligner pourquoi la publication de la tendance-cycle (en plus de la série CVS-CJO est pertinente
+
+- Expliquer comment l'estimer et présenter les résultats grâce au package `publishTC`
+
+- Montrer comment mettre en place une chaîne de production automatique, appliquée à 10 enquêtes de l'Insee ([aqlt.github.io/publishTC.wp](https://aqlt.github.io/publishTC.wp))
+
+
+### Trois principales raisons de publier la tendance-cycle
+
+1. Réduire le risque que les utilisateurs tirent des conclusions inappropriées sur la base de mouvements liés à l’irrégulier.
+
+2. Permettre une comparaison appropriée dans le temps en réduisant l’impact des évènements ponctuels.
+
+3. Améliorer la compréhension et la détection des points de retournement.
+
+```{r}
+autoplot(
+    h13_tppre, xlim = c(2021.1, 2024.7),
+    legend_sa = "CVS-CJO",
+    legend_tc = "Tendance-cycle",
+    col_tc = "#1E6C0B",
+    col_sa = "#155692"
+) + 
+    theme_bw() +
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 0.01),
+        legend.justification = c(0, 0),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    )
+```
+
+
+# Qui le fait et comment ?
+
+::: {.incremental}
+
+- [FMI (2017)](https://www.imf.org/external/pubs/ft/qna/pdf/2017/QNAManual2017FRE.pdf) et [Eurostat (2024)](https://ec.europa.eu/eurostat/documents/3859598/19355229/KS-GQ-24-012-EN-N.pdf/be954db6-64f5-c1a2-a0b8-0b4de2a5c707?version=1.0&t=1718182927069) recommandent de publier la tendance-cycle en plus de la série CVS-CJO...
+
+- ... Mais seul deux instituts publient régulièrement la tendance-cycle : Statistique Canada (SC) et Australian Bureau of Statistics (ABS)
+
+- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée : CLF et Henderson (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO)
+
+$$
+TC_t= \sum_{i=-6}^{+6}\theta_i SA_{t+i}
+$$
+
+- L'estimation en temps réel doit s'appuyer sur des moyennes mobiles asymétriques ce qui créera des révisions : « couper-et-normaliser » pour SC et Musgrave pour ABS
+::: 
+
+
+## Quid des estimations en temps réel
+
+R1 : 
+::: {.incremental}
+- L'utilisation de moyennes mobiles asymétriques pour l'estimation en temps réel entrainera *de facto* des révisions...
+
+- ... Ces révisions sont moindres que celles sur la série desaisonnalisees mais concentrées sur les 3 derniers mois !
+:::
+
+R1 : mettre en avant l'incertitude des dernières estimations via des pointillés ou la construction de prévisions implicites 
+
+### Graphique simple
+
+### Prévisions implicites
+
+### Construction d'intervalles de confiance
+
+# Extensions
+
+### Musgrave et régression locale
+
+### Impact des points atypiques
+
+### Publications automatiques
+
+- [Climats des affaires France](https://aqlt.github.io/publishTC.wp/CONJ_FRANCE.html) (2 séries)
+
+- [Enquête de conjoncture dans l'Industrie](https://aqlt.github.io/publishTC.wp/CONJ_INDUSTRIE.html) (11 séries)
+
+- [Enquête de conjoncture dans les services](https://aqlt.github.io/publishTC.wp/CONJ_SERV.html) (7 séries)
+
+- [Enquête de conjoncture dans le commerce de détail et l'automobile](https://aqlt.github.io/publishTC.wp/CONJ_COMD.html) (5 séries)
+
+- [Enquête de conjoncture auprès des ménages](https://aqlt.github.io/publishTC.wp/ICAM.html) (13 séries)
+
+- [Consommation mensuelle des ménages en biens](https://aqlt.github.io/publishTC.wp/CONSO.html) (16 séries)
+
+- [Nombre de créations d'entreprises](https://aqlt.github.io/publishTC.wp/CREATION_ENT.html) (14 séries)
+
+- [Indice de chiffre d'affaires](https://aqlt.github.io/publishTC.wp/ICA_ind.html) (5 séries)
+
+- [Indice de production industrielle](https://aqlt.github.io/publishTC.wp/IPI.html) (5 séries)
+
+- [Indice de volume des ventes](https://aqlt.github.io/publishTC.wp/IVV.html) (4 séries)
