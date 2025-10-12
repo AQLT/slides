@@ -1,5 +1,9 @@
 # Slides
 
+## 2025
+
+- November 2025: [JMS](https://aqlt.github.io/slides/2025%20-%2011%20-%20JMS/Slides.pdf)
+
 ## 2023
 
 - December 2023: [OECD](https://aqlt.github.io/slides/2023%20-%2012%20-%20OECD/Slides.pdf)
@@ -18,7 +22,7 @@
 
 - May 2022: [Journée Econometrie Appliquée Michel Terraza](https://aqlt.github.io/slides/2022%20-%2005%20-%20JEAMT/Slides_AQLT.pdf)
 
-- March 2022: [JMS](https://aqlt.github.io/slides/2021%20-%2010%20-%20TSACE/calendars_doc.pdf)
+- March 2022: [JMS](https://aqlt.github.io/slides/2022%20-%2003%20-%20JMS/Slides_AQLT.pdf)
 
 ## 2021
 
