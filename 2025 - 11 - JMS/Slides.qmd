@@ -3,15 +3,17 @@ title: |
  | Et si l'on publiait la tendance-cycle ?
 subtitle: "JMS 2025"
 author: "Alain Quartier-la-Tente"
-departement: "10 novembre 2025"
+departement: "25-27 novembre 2025"
 format:
   beamer:
     template: template.tex
+    toc: true
     slide-level: 3
     theme: TorinoTh
     keep-tex: false
     pdf-engine: pdflatex
     include-in-header: preamble_beamer.tex
+    output-file: "S14_PRES_quartierlatente_JMS2025"
 fontsize: 10pt
 classoption: 'usepdftitle=false,french' # handout
 themeoptions: "coding=utf8,language=french"
@@ -29,9 +31,11 @@ library(kableExtra)
 library(rjd3filters)
 library(publishTC)
 library(ggplot2)
+library(patchwork)
 library(ggdemetra)
 y <- etip
 h13_tppre <- henderson_smoothing(y)
+clf_tppre <- clf_smoothing(y)
 fig.ext <- "pdf"
 options(is_french = TRUE)
 if (getOption("is_french")) {
@@ -41,6 +45,9 @@ if (getOption("is_french")) {
 }
 palette_coef <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", 
 				  "#0072B2", "#D55E00", "#CC79A7", "#999999")
+col_y <- "#F0B400"
+col_sa <- "#155692"
+col_tc <- "#1E6C0B"
 # load(file = "tables.RData")
 # mae <- readRDS("tables_revisions.RDS")$MAE
 ```
@@ -50,7 +57,7 @@ palette_coef <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 ### Introduction
 
 ::: {.incremental}
-- Courant de construire des séries « CVS-CJO»
+- Courant de construire des séries CVS-CJO
 - Permet une analyse en glissement mensuel/trimestriel (détection plus rapide des points de retournement)
 - Améliore le diagnostic conjoncturel (mise en évidence de ce qui est nouveau)
 - Permet une comparaison spatiale
@@ -58,14 +65,33 @@ palette_coef <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442",
 :::
 
 ```{r}
+#| label: ffig-ipi-france
+#| fig-height: 4
 spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
 p_sa <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
-    geom_line(color =  "#F0B400") +
+    geom_line(aes(color =  "IPI brut")) +
+    theme_classic() +
     labs(title = "IPI CZ France",
          x = NULL, y = NULL) +
-    geom_sa(component = "sa", color = "#155692",frequency = 12)
+    geom_sa(component = "sa", aes(color = "CVS-CJO"), frequency = 12) + 
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 0.01),
+        legend.justification = c(0, 0),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    ) +
+		ggplot2::scale_color_manual(
+			values = c(col_y, col_sa),
+			breaks = c("IPI brut", "CVS-CJO")
+		)
+
 p_sa +
-    coord_cartesian(xlim = c(2000, 2020))
+    coord_cartesian(
+        xlim = c(2000, 2020),
+        ylim = range(ipi_c_eu_df[ipi_c_eu_df$date>=2000,"FR"])
+    )
 ```
 
 
@@ -81,29 +107,44 @@ Séries de décomposent en 3 composantes inobservables :
 - irrégulier : fluctuations inattendues (chocs économiques non prévus, bruit...)
 :::
 
+. . .
+
+Série CVS-CJO contient donc l'effet de la tendance-cycle **ET** de l'irrégulier
+
+. . .
+
+Irrégulier pertinent pour l'analyse conjoncturel (ex : période COVID)...
+Mais peut perturber l'analyse de la tendance sous-jacente et les points de retournement 
 
 
 ###
 
+```{r}
+#| label: ffig-ipi-france-sa
+#| fig-height: 4
+p_sa2 <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
+    theme_classic() +
+    labs(title = "IPI CZ France CVS-CJO",
+         x = NULL, y = NULL) +
+    geom_sa(component = "sa", color = col_sa, frequency = 12) + 
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 0.01),
+        legend.justification = c(0, 0),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    )
+p_sa2 +
+    coord_cartesian(
+        xlim = c(2000, 2020),
+        ylim = c(90, NA)
+    )
+```
 
-Irrégulier pertinent pour l'analyse conjoncturel (ex : période COVID)...
-... Mais peut perturber l'analyse de la tendance sous-jacente et les points de retournement 
-
-. . . 
+. . .
 
 [United Kingdom Statistics Authority (2008)](https://osr.statisticsauthority.gov.uk/publication/volatility-of-the-retail-sales-index/) : utilisateurs accordent trop d'importance aux variations mensuelles de la série CVS-CJO de l'indice des ventes au détail (pas une bonne indication de la tendance de long terme en période de forte volatilité)
-
-```{r}
-spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
-p_sa2 <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
-    # geom_line(color =  "#F0B400") +
-    labs(title = "IPI CZ France",
-         x = NULL, y = NULL) +
-    geom_sa(component = "CVS-CJO", color = "#1E6C0B",frequency = 12) +
-    geom_sa(component = "Tendance-cycle", color = "#155692",frequency = 12)
-p_sa +
-    coord_cartesian(xlim = c(2000, 2020))
-```
 
 
 ### Objectifs
@@ -124,14 +165,16 @@ p_sa +
 3. Améliorer la compréhension et la détection des points de retournement.
 
 ```{r}
+#| label: ffig-tendance-cycle
+#| fig-height: 4
 autoplot(
     h13_tppre, xlim = c(2021.1, 2024.7),
     legend_sa = "CVS-CJO",
     legend_tc = "Tendance-cycle",
-    col_tc = "#1E6C0B",
-    col_sa = "#155692"
-) + 
-    theme_bw() +
+    col_tc = col_tc,
+    col_sa = col_sa
+) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière")
+    theme_classic() +
     theme(
         legend.title = element_blank(),
         legend.position = "inside",
@@ -143,7 +186,7 @@ autoplot(
 ```
 
 
-# Qui le fait et comment ?
+### Qui le fait et comment ?
 
 ::: {.incremental}
 
@@ -151,40 +194,383 @@ autoplot(
 
 - ... Mais seul deux instituts publient régulièrement la tendance-cycle : Statistique Canada (SC) et Australian Bureau of Statistics (ABS)
 
-- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée : CLF et Henderson (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO)
+- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO) : CLF (`clf_smoothing()`) et Henderson (`henderson_smoothing()`)
 
 $$
 TC_t= \sum_{i=-6}^{+6}\theta_i SA_{t+i}
 $$
 
-- L'estimation en temps réel doit s'appuyer sur des moyennes mobiles asymétriques ce qui créera des révisions : « couper-et-normaliser » pour SC et Musgrave pour ABS
+- L'estimation en temps réel doit s'appuyer sur des moyennes mobiles (MM) asymétriques : « couper-et-normaliser » pour SC et Musgrave pour ABS
+
+- Entraine *de facto* des révisions concentrées sur les 3 derniers mois sont moindres que celles sur la série desaisonnalisees  !
 ::: 
 
 
-## Quid des estimations en temps réel
+### Recommandations
 
-R1 : 
+
+- Recommandation 1 : Présenter la TC avec la série CVS-CJO
+
+. . .
+
+- Recommandation 2 : mettre en avant l'incertitude des dernières estimations
+
+   - pointillés (SC)
+   
+   - prévisions implicites ([AQLT 2024](https://inseefrlab.github.io/DT-est-tr-tc/))
+   
+   - construction d'intervalles de confiance ([AQLT 2025](https://aqlt.github.io/robustMA/))
+
+### Graphique simple ou en bâtonnet (*lollypop*)
+
+*Lollypop* : proposé par [McLaren et Zhang (2010)](http://www.revista-eea.net/documentos/28312.pdf) pour mettre l'accent sur la tendance-cycle et le niveau de l’irrégulier 
+
+```{r}
+#| label: ffig-lollypop
+#| fig-height: 5
+(autoplot(
+    h13_tppre, xlim = c(2022, NA),
+    legend_sa = "CVS-CJO",
+    legend_tc = "Tendance-cycle",
+    col_tc = col_tc,
+    col_sa = col_sa
+) + labs(title = "plot() ou autoplot()") +
+    theme_classic() +
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 0.01),
+        legend.justification = c(0, 0),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    )) /
+    (gglollypop(
+    h13_tppre, xlim = c(2022, NA),
+    legend_sa = "CVS-CJO",
+    legend_tc = "Tendance-cycle",
+    col_tc = col_tc,
+    col_sa = col_sa
+) + labs(title = "lollypop() ou gglollypop()") +
+    theme_classic() +
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 0.01),
+        legend.justification = c(0, 0),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    )) + 
+    plot_layout(axes = "collect") 
+```
+
+### Prévisions implicites (`ggimplicit_forecasts_plot()`)
+
+Estimation à la date $n$ par MM symétrique de la série étendue donne les mêmes résultats que l'estimation à la date $n$ par MM asymétriques
+
+```{r}
+#| label: ffig-implicit-forecasts
+#| fig-height: 5
+ggimplicit_forecasts_plot(
+    h13_tppre, xlim = c(2022, NA),
+    legend_sa = "CVS-CJO",
+    legend_tc = "Tendance-cycle",
+    legend_i_f = "Prévisions implicites",
+    col_tc = col_tc,
+    col_sa = col_sa
+) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière") +
+    theme_classic() +
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 0.01),
+        legend.justification = c(0, 0),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    )
+```
+
+
+
+### Construction d'intervalles de confiance (`ggconfint_plot()`)
+
 ::: {.incremental}
-- L'utilisation de moyennes mobiles asymétriques pour l'estimation en temps réel entrainera *de facto* des révisions...
+- Possibilité d'exploiter la modélisation polynomiale pour construire des intervalles de confiance ([AQLT 2025](https://aqlt.github.io/robustMA/))
 
-- ... Ces révisions sont moindres que celles sur la série desaisonnalisees mais concentrées sur les 3 derniers mois !
+- Inconvénient : laisse penser qu'il n'y a pas d'incertitude autour de la CVS-CJO
 :::
 
-R1 : mettre en avant l'incertitude des dernières estimations via des pointillés ou la construction de prévisions implicites 
+```{r}
+#| label: ffig-confint
+#| fig-height: 5
+ggconfint_plot(
+    h13_tppre, xlim = c(2022, NA),
+    legend_sa = "CVS-CJO",
+    legend_tc = "Tendance-cycle",
+    legend_confint = "IC 90%",
+    col_tc = col_tc,
+    col_sa = col_sa,
+    level = 0.90
+) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière") +
+    theme_classic() +
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 0.01),
+        legend.justification = c(0, 0),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    )
+```
 
-### Graphique simple
-
-### Prévisions implicites
-
-### Construction d'intervalles de confiance
 
 # Extensions
 
-### Musgrave et régression locale
+## Paramétrisation locale des MM asymétriques
 
-### Impact des points atypiques
+### MM et régression polynomiales locale (1/2)
+
+MM de Henderson obtenue par analogie avec la régression polynomiale locale
+$$
+\forall j\in\left\llbracket -h,h\right\rrbracket : y_{t+j}=\underbrace{\sum_{i=0}^{3}\beta_{i,t}j^{i}}_{TC_{t+j}}+\varepsilon_{t+j}
+$$
+
+Estimation en utilisant les WLS avec *noyaux*: $\hat{\beta_t}=(X'KX)^{1}X'Ky_t$ et
+$$
+\hat{TC}_{t}=\hat\beta_{0,t}=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}
+$$
+Avec des poids biens choisis on retrouve la MM de Henderson
+
+. . .
+
+Comment faire l'estimation en temps réel ?
+
+### MM et régression polynomiales locale (2/2)
+
+
+MM de Musgrave obtenue par compromis biais-variance
+
+$$
+\forall j\in\left\llbracket -h,f\right\rrbracket : y_{t+j}=\beta_0^f+\delta t+\varepsilon_{t+j}\quad\varepsilon_t\sim \mathcal N(0,\sigma^2).
+$$
+Coefficients obtenus en minimisant l'EQM de révision sous contrainte de préservation sans biais des constantes ($\beta_0^f$) : biais dans l'estimation de la pente ($\delta$)
+
+. . .
+
+MM dépend du rapport $|\delta/\sigma|$ défini par l'utilisateur.
+Si biais ($\delta$) constant dans le temps, tendance est linéaire, peut-être lié à l'I-C ratio ($R$)
+$$
+\left|\frac{\delta}{\sigma}\right|=\frac{2}{R\sqrt{\pi}}.
+$$
+
+. . .
+
+C'est ce qui fait dans X-13-ARIMA-SEATS en utilisant $R=3,5$ lorsque H-13 termes est utilisée (ABS)
+
+. . .
+
+Hypothèse généralement fausse notamment autour des points de retournement
+
+### Estimation locale de $|\delta/\sigma|$
+
+Une solution, est d'estimer localement $|\delta/\sigma|$ via une fenêtre glissante, voir [AQLT (2024)](https://inseefrlab.github.io/DT-est-tr-tc/)
+
+```{r}
+#| label: ffig-local-icr
+#| fig-height: 4
+td1 <- ts(1:13, frequency = 12, start = 2020)
+td1_h <- henderson_smoothing(td1, length = 13)$tc
+td1_h_localicr <- henderson_smoothing(td1, length = 13, local_icr = TRUE)$tc
+data <- ts.union(td1, td1_h, td1_h_localicr) 
+colnames(data) <- c(
+    "Tendance simulée",
+    "henderson_smoothing()",
+    "henderson_smoothing(local_icr = TRUE)"
+)
+data |>
+    autoplot() +
+    labs(x = NULL, y = NULL) +
+    theme_classic() +
+    theme(
+        legend.title = element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.01, 1),
+        legend.justification = c(0, 1),
+        legend.background = element_rect(
+            fill = alpha("gray99", 0.4))
+    ) +
+    ggplot2::scale_color_manual(values = palette_coef) +
+    ggplot2::scale_x_continuous(breaks = NULL) +
+    ggplot2::scale_y_continuous(breaks = NULL)
+```
+
+
+## Construction de MM « robustes »
+### Impact des points atypiques (1/3)
+
+::: {.incremental}
+- Par construction les MM sont sensibles aux points atypiques
+
+- Correction a priori via un modèle RegARIMA ? [Ladiray et QLT (2018)](https://journees-methodologie-statistique.insee.net/wp-content/uploads/2018/S05_1_ACTEv3_QUARTIERLATENTE_JMS2018.pdf) : il faut au moins 3 ans pour que les estimations convergent
+:::
+
+```{r}
+#| label: ffig-ex-simulchoc
+#| fig-height: 5
+x <- publishTC::simulated_data[,"ls_td1"]
+tc_h <- henderson_smoothing(x, length = 13)$tc
+tc_clf <- clf_smoothing(x)$tc
+tc_h_2s <- segmented_smoothing(x, breaks = list(2022), break_method = "two-sides", length = 13)$tc
+tc_h_rob <- henderson_robust_smoothing(x, ls = 2022)$tc
+data_ls1 <- ts.union(x, tc_h, tc_clf, tc_h_rob, tc_h_2s) 
+colnames(data_ls1) <- c(
+    "y",
+    "Henderson",
+    "CLF",
+    "Henderson robuste (LS-janv 2022)",
+    "Segmented Henderson"
+)
+
+x <- publishTC::simulated_data[,"ao_td0"]
+tc_h <- henderson_smoothing(x, length = 13)$tc
+tc_clf <- clf_smoothing(x)$tc
+tc_h_rob <- henderson_robust_smoothing(x, ao = 2022)$tc
+tc_h_2s <- segmented_smoothing(x, breaks = list(2022), break_method = "two-sides", length = 13)$tc
+data_ao0 <- ts.union(x, tc_h, tc_clf, tc_h_rob, tc_h_2s) 
+colnames(data_ao0) <- c(
+    "y",
+    "Henderson",
+    "CLF",
+    "Henderson robuste (A0-janv 2022)",
+    "Segmented Henderson"
+)
+ipi <- window(publishTC::french_ipi[, "manufacturing"], start = 2015)
+tc_h_ipi <- henderson_smoothing(ipi, length = 13)$tc
+tc_clf_ipi <- clf_smoothing(ipi)$tc
+tc_h_rob_ipi <- henderson_robust_smoothing(ipi, ls = c(2020+ (3-1)/12, 2020+ (4-1)/12))$tc
+tc_h_2s_ipi <- segmented_smoothing(ipi, breaks = list(c(2020, 3)), break_method = "two-sides", length = 13)$tc
+data_ipi <- ts.union(ipi, tc_h_ipi, tc_clf_ipi, tc_h_rob_ipi, tc_h_2s_ipi) 
+colnames(data_ipi) <- c(
+    "IPI CZ",
+    "Henderson",
+    "CLF",
+    "Henderson robuste (LS-mars et avril 2020)",
+    "Segmented Henderson"
+)
+ylim_ls <- c(1.28, 1.48)
+pao <-  autoplot(data_ao0[,-c(3,4,5)])  + 
+    labs(title = "Choc ponctuel(AO)") + 
+    coord_cartesian(xlim = c(2021.5, 2022.5))
+pls <-  autoplot(data_ls1[,-c(3,4,5)])  + 
+    labs(title = "Choc en niveau (LS)") + 
+    coord_cartesian(xlim = c(2021.5, 2022.5),
+                    ylim = ylim_ls)
+pipi <- autoplot(data_ipi[,-c(3,4,5)]) +
+    labs(title = "IPI Manuf FR") + 
+    coord_cartesian(xlim = c(2019.5, 2021))
+
+(((pao / pls)  + 
+    plot_layout(axes = "collect") | pipi) &
+    labs(x = NULL, y = NULL) &
+    theme_classic() &
+    theme(
+        legend.position = "none",#"bottom",
+        legend.title=element_blank()
+    ) &
+    ggplot2::scale_color_manual(values = palette_coef) &
+     scale_x_continuous(breaks = scales::pretty_breaks(n = 3), 
+        labels = zoo::as.yearmon)) + 
+    plot_layout(guides = "collect") 
+```
+
+### Impact des points atypiques (2/3)
+
+- Pour les ruptures en niveau (LS), possibilité d'une estimation segmentée (SC)
+
+```{r}
+#| label: ffig-ex-simulchoc2
+#| fig-height: 5
+i <- c(1, 5)
+pls <-  autoplot(data_ls1[, i])  + 
+    labs(title = "Choc en niveau (LS)") + 
+    coord_cartesian(xlim = c(2021.5, 2022.5),
+                    ylim = ylim_ls)
+pipi <- autoplot(data_ipi[, i]) +
+    labs(title = "IPI Manuf FR (seg. mars 2020)") + 
+    coord_cartesian(xlim = c(2019.5, 2021))
+
+((pls / pipi) &
+    labs(x = NULL, y = NULL) &
+    theme_classic() &
+    theme(
+        legend.position = "none",#"bottom",
+        legend.title=element_blank()
+    ) &
+    ggplot2::scale_color_manual(values = palette_coef) &
+     scale_x_continuous(breaks = scales::pretty_breaks(n = 3), 
+        labels = zoo::as.yearmon)) + 
+    plot_layout(guides = "collect") 
+```
+
+### Impact des points atypiques (3/3)
+
+::: {.incremental}
+- Avec la modélisation polynomiale, possibilité de construire des MM qui prennent en compte des régresseurs externes ([AQLT 2025](https://aqlt.github.io/robustMA/))
+
+- Réduit les révisions et rend bien compte des retournements
+:::
+
+```{r}
+#| label: ffig-ex-simulchoc4
+#| fig-height: 5
+i <- c(1, 4)
+pao <-  autoplot(data_ao0[, i])  + 
+    labs(title = "Choc ponctuel (AO)") + 
+    coord_cartesian(xlim = c(2021.5, 2022.5))
+pls <-  autoplot(data_ls1[, i])  + 
+    labs(title = "Choc en niveau (LS)") + 
+    coord_cartesian(xlim = c(2021.5, 2022.5),
+                    ylim = ylim_ls)
+pipi <- autoplot(data_ipi[, i]) +
+    labs(title = "IPI Manuf FR (LS-mars et avril 2020)") + 
+    coord_cartesian(xlim = c(2019.5, 2021))
+
+(((pao / pls)  + 
+    plot_layout(axes = "collect") | pipi) &
+    labs(x = NULL, y = NULL) &
+    theme_classic() &
+    theme(
+        legend.position = "none",#"bottom",
+        legend.title=element_blank()
+    ) &
+    ggplot2::scale_color_manual(values = palette_coef) &
+     scale_x_continuous(breaks = scales::pretty_breaks(n = 3), 
+        labels = zoo::as.yearmon)) + 
+    plot_layout(guides = "collect") 
+```
+
+
+
+# Passage en production
+
+::: {.incremental}
+- Le 
+
+- Correction a priori via un modèle RegARIMA ? [Ladiray et QLT (2018)](https://journees-methodologie-statistique.insee.net/wp-content/uploads/2018/S05_1_ACTEv3_QUARTIERLATENTE_JMS2018.pdf) : il faut au moins 3 ans pour que les estimations convergent
+:::
+
+### Mise en production automatique
+
+L'article propose un *template* simplifié de mise en production avec une création de rapports automatiques
+
+\only<1>{1. Choisir les méthodes d'estimation utilisées}
+
+
+\only<2>{2. Choisir les graphiques}
+
 
 ### Publications automatiques
+
+\footnotesize
 
 - [Climats des affaires France](https://aqlt.github.io/publishTC.wp/CONJ_FRANCE.html) (2 séries)
 
@@ -205,3 +591,7 @@ R1 : mettre en avant l'incertitude des dernières estimations via des pointillé
 - [Indice de production industrielle](https://aqlt.github.io/publishTC.wp/IPI.html) (5 séries)
 
 - [Indice de volume des ventes](https://aqlt.github.io/publishTC.wp/IVV.html) (4 séries)
+
+# Conclusion
+
+### Conclusion
