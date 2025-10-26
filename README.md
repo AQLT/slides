@@ -2,7 +2,11 @@
 
 ## 2025
 
-- November 2025: [JMS](https://aqlt.github.io/slides/2025%20-%2011%20-%20JMS/Slides.pdf)
+- November 2025: [JMS](https://aqlt.github.io/slides/2025%20-%2011%20-%20JMS/S14_PRES_quartierlatente_JMS2025.pdf)
+
+## 2024
+
+- July 2024 : [Journées du D2E](https://aqlt.github.io/slides/2024%20-%2007%20-%20JD2E)
 
 ## 2023
 
