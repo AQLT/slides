@@ -10,7 +10,7 @@ format:
     toc: true
     slide-level: 3
     theme: TorinoTh
-    keep-tex: false
+    keep-tex: true
     pdf-engine: pdflatex
     include-in-header: preamble_beamer.tex
     output-file: "S14_PRES_quartierlatente_JMS2025"
@@ -25,7 +25,7 @@ freeze: true
 knitr::opts_chunk$set(echo = FALSE,
                       cache = F,
                       fig.align = 'center',
-                      fig.path = "img/rmd-")
+                      fig.path = "img/slides-")
 library(knitr)
 library(kableExtra)
 library(rjd3filters)
@@ -117,7 +117,7 @@ Irrégulier pertinent pour l'analyse conjoncturel (ex : période COVID)...
 Mais peut perturber l'analyse de la tendance sous-jacente et les points de retournement 
 
 
-###
+### Et si l'irrégulier est important ?
 
 ```{r}
 #| label: ffig-ipi-france-sa
@@ -173,7 +173,7 @@ autoplot(
     legend_tc = "Tendance-cycle",
     col_tc = col_tc,
     col_sa = col_sa
-) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière")
+) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière") +
     theme_classic() +
     theme(
         legend.title = element_blank(),
@@ -188,22 +188,24 @@ autoplot(
 
 ### Qui le fait et comment ?
 
-::: {.incremental}
-
 - [FMI (2017)](https://www.imf.org/external/pubs/ft/qna/pdf/2017/QNAManual2017FRE.pdf) et [Eurostat (2024)](https://ec.europa.eu/eurostat/documents/3859598/19355229/KS-GQ-24-012-EN-N.pdf/be954db6-64f5-c1a2-a0b8-0b4de2a5c707?version=1.0&t=1718182927069) recommandent de publier la tendance-cycle en plus de la série CVS-CJO...
 
 - ... Mais seul deux instituts publient régulièrement la tendance-cycle : Statistique Canada (SC) et Australian Bureau of Statistics (ABS)
 
-- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO) : CLF (`clf_smoothing()`) et Henderson (`henderson_smoothing()`)
+. . .
 
+- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO) : CLF (`clf_smoothing()`) et Henderson (`henderson_smoothing()`)
 $$
 TC_t= \sum_{i=-6}^{+6}\theta_i SA_{t+i}
 $$
 
+. . .
+
 - L'estimation en temps réel doit s'appuyer sur des moyennes mobiles (MM) asymétriques : « couper-et-normaliser » pour SC et Musgrave pour ABS
 
+. . .
+
 - Entraine *de facto* des révisions concentrées sur les 3 derniers mois sont moindres que celles sur la série desaisonnalisees  !
-::: 
 
 
 ### Recommandations
@@ -301,7 +303,7 @@ ggimplicit_forecasts_plot(
 
 ```{r}
 #| label: ffig-confint
-#| fig-height: 5
+#| fig-height: 4
 ggconfint_plot(
     h13_tppre, xlim = c(2022, NA),
     legend_sa = "CVS-CJO",
@@ -552,25 +554,94 @@ pipi <- autoplot(data_ipi[, i]) +
 
 # Passage en production
 
-::: {.incremental}
-- Le 
-
-- Correction a priori via un modèle RegARIMA ? [Ladiray et QLT (2018)](https://journees-methodologie-statistique.insee.net/wp-content/uploads/2018/S05_1_ACTEv3_QUARTIERLATENTE_JMS2018.pdf) : il faut au moins 3 ans pour que les estimations convergent
-:::
 
 ### Mise en production automatique
 
-L'article propose un *template* simplifié de mise en production avec une création de rapports automatiques
+```{=latex}
+\only<1,6>{
+```
 
-\only<1>{1. Choisir les méthodes d'estimation utilisées}
+L'article décrit un *template* simplifié de mise en production avec une mise à jour automatique des données et une création de rapports automatiques appliqué à 10 publications de l'Insee ($\simeq 80$ séries) avec :
+
+```{=latex}
+}
+```
+
+```{=latex}
+\only<2,6>{
+```
+1. L'estimation selon plusieurs méthodes et plusieurs visualisations
+
+```{=latex}
+}
+\only<2>{
+```
+
+![](img/fig_1_graph.png){height=82%}
+
+```{=latex}
+}
+```
+
+```{=latex}
+\only<3,6>{
+```
+2. Une comparaison des estimations
+
+```{=latex}
+}
+\only<3>{
+```
+
+![](img/fig_2_comp.png){height=82%}
 
 
-\only<2>{2. Choisir les graphiques}
+```{=latex}
+}
+```
 
+```{=latex}
+\only<4,6>{
+```
+3. Une analyse des révisions de la série CVS-CJO et de la tendance-cycle
+
+```{=latex}
+}
+\only<4>{
+```
+
+![](img/fig_3_rev.png){height=82%}
+
+```{=latex}
+}
+```
+
+```{=latex}
+\only<5,6>{
+```
+4. Des statistiques générales
+
+```{=latex}
+}
+\only<5>{
+```
+
+![](img/fig_4_stat.png){width=90%}
+
+```{=latex}
+}
+\only<6>{
+```
+
+Très facile de contribuer et d'ajouter de nouvelles séries/enquêtes (cf [Article](https://aqlt.github.io/publishTC.wp/article.html))
+
+```{=latex}
+}
+```
 
 ### Publications automatiques
 
-\footnotesize
+Résultats disponibles sous <https://aqlt.github.io/publishTC.wp/> et mis à jour tous les 1^er^ du mois :
 
 - [Climats des affaires France](https://aqlt.github.io/publishTC.wp/CONJ_FRANCE.html) (2 séries)
 
@@ -595,3 +666,32 @@ L'article propose un *template* simplifié de mise en production avec une créat
 # Conclusion
 
 ### Conclusion
+
+- Publication de la tendance-cycle en plus de la série CVS-CJO pertinente pour l'analyse conjoncturelle
+
+- S'estime très facilement grâce à `publishTC`
+
+- Mise en production automatique possible et facile à adapter à d'autres enquêtes/instituts pour expérimenter les résultats
+
+. . .
+
+Quelle méthode retenir ? Recommandation ([AQLT 2025](https://aqlt.github.io/publishTC.wp/article.html)) : se baser sur la réalité économique plutôt que sur des critères ad hoc.
+
+Ex : CLF minimise les révisions et les ondulations indésirables mais estime sans biais que les tendances de degré 1 : biais de modélisation non mesuré !
+
+. . .
+
+Cas extrême : une méthode qui donnerait une tendance-cycle constante minimise les révisions et les ondulations indésirables !
+
+
+### Merci de votre attention {.noframenumbering}
+
+```{=latex}
+\begin{tikzpicture}[remember picture,overlay]
+\node[above right,inner sep=0pt, opacity = 0.3] at (current page.south west)
+   {
+   \includegraphics[width=1.05\paperwidth, height =1.05\paperheight]{img/fd.jpeg}
+  };
+\end{tikzpicture}
+```
+
