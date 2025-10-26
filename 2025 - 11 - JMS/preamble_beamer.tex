@@ -53,3 +53,12 @@
 %\newcommand{\rowc}[1]{{\rowcolor<#1>{processblue!30}}
 \newcommand{\cellc}[1]{\only<#1>{\cellcolor{processblue!40}}}
 \newcommand{\supsp}[1]{\visible<#1>{\\}}
+
+\addtobeamertemplate{title page}{
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[above right,inner sep=0pt, opacity = 0.3] at (current page.south west)
+    {
+      \includegraphics[width=1.05\paperwidth, height =1.05\paperheight]{img/fd.jpeg}
+    };
+  \end{tikzpicture}
+}{}
