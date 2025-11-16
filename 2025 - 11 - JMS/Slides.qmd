@@ -58,9 +58,8 @@ col_tc <- "#1E6C0B"
 
 ::: {.incremental}
 - Courant de construire des séries CVS-CJO
-- Permet une analyse en glissement mensuel/trimestriel (détection plus rapide des points de retournement)
-- Améliore le diagnostic conjoncturel (mise en évidence de ce qui est nouveau)
-- Permet une comparaison spatiale
+- Permet une analyse en glissement mensuel/trimestriel 
+- Améliore le diagnostic conjoncturel et permet une comparaison spatiale
 - Vient en complément de la publication de la série brute
 :::
 
@@ -97,7 +96,7 @@ p_sa +
 
 ### Hypothèse de travail de la desaisonnalisation 
 
-Séries de décomposent en 3 composantes inobservables :
+Série brute se décompose en 3 composantes inobservables :
 
 ::: {.incremental}
 - effets saisonniers (y.c. calendrier) : variations régulières le même mois chaque année
@@ -110,8 +109,6 @@ Séries de décomposent en 3 composantes inobservables :
 . . .
 
 Série CVS-CJO contient donc l'effet de la tendance-cycle **ET** de l'irrégulier
-
-. . .
 
 Irrégulier pertinent pour l'analyse conjoncturel (ex : période COVID)...
 Mais peut perturber l'analyse de la tendance sous-jacente et les points de retournement 
@@ -142,20 +139,44 @@ p_sa2 +
     )
 ```
 
-. . .
-
 [United Kingdom Statistics Authority (2008)](https://osr.statisticsauthority.gov.uk/publication/volatility-of-the-retail-sales-index/) : utilisateurs accordent trop d'importance aux variations mensuelles de la série CVS-CJO de l'indice des ventes au détail (pas une bonne indication de la tendance de long terme en période de forte volatilité)
 
 
-### Objectifs
+### Objectifs de l'article
 
-- Souligner pourquoi la publication de la tendance-cycle (en plus de la série CVS-CJO est pertinente
+- Souligner pourquoi la publication de la tendance-cycle (en plus de la série CVS-CJO) est pertinente
 
 - Expliquer comment l'estimer et présenter les résultats grâce au package `publishTC`
 
 - Montrer comment mettre en place une chaîne de production automatique, appliquée à 10 enquêtes de l'Insee ([aqlt.github.io/publishTC.wp](https://aqlt.github.io/publishTC.wp))
 
 
+# Pourquoi publier la tendance-cycle ?
+
+## Qui publie ?
+
+### Qui le fait et comment ?
+
+- [FMI (2017)](https://www.imf.org/external/pubs/ft/qna/pdf/2017/QNAManual2017FRE.pdf) et [Eurostat (2024)](https://ec.europa.eu/eurostat/documents/3859598/19355229/KS-GQ-24-012-EN-N.pdf/be954db6-64f5-c1a2-a0b8-0b4de2a5c707?version=1.0&t=1718182927069) recommandent de publier la tendance-cycle en plus de la série CVS-CJO...
+
+- ... Mais seul deux instituts publient régulièrement la tendance-cycle : Statistique Canada (SC) et Australian Bureau of Statistics (ABS)
+
+. . .
+
+- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO) : CLF (`clf_smoothing()`) et Henderson (`henderson_smoothing()`)
+$$
+TC_t= \sum_{i=-6}^{+6}\theta_i SA_{t+i}
+$$
+
+. . .
+
+- L'estimation en temps réel doit s'appuyer sur des moyennes mobiles (MM) asymétriques : « couper-et-normaliser » pour SC et Musgrave pour ABS
+
+. . .
+
+- Entraine *de facto* des révisions concentrées sur les 3 derniers (mais sont moindres que celles sur la série desaisonnalisees) !
+
+## Les raisons
 ### Trois principales raisons de publier la tendance-cycle
 
 1. Réduire le risque que les utilisateurs tirent des conclusions inappropriées sur la base de mouvements liés à l’irrégulier.
@@ -185,28 +206,7 @@ autoplot(
     )
 ```
 
-
-### Qui le fait et comment ?
-
-- [FMI (2017)](https://www.imf.org/external/pubs/ft/qna/pdf/2017/QNAManual2017FRE.pdf) et [Eurostat (2024)](https://ec.europa.eu/eurostat/documents/3859598/19355229/KS-GQ-24-012-EN-N.pdf/be954db6-64f5-c1a2-a0b8-0b4de2a5c707?version=1.0&t=1718182927069) recommandent de publier la tendance-cycle en plus de la série CVS-CJO...
-
-- ... Mais seul deux instituts publient régulièrement la tendance-cycle : Statistique Canada (SC) et Australian Bureau of Statistics (ABS)
-
-. . .
-
-- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO) : CLF (`clf_smoothing()`) et Henderson (`henderson_smoothing()`)
-$$
-TC_t= \sum_{i=-6}^{+6}\theta_i SA_{t+i}
-$$
-
-. . .
-
-- L'estimation en temps réel doit s'appuyer sur des moyennes mobiles (MM) asymétriques : « couper-et-normaliser » pour SC et Musgrave pour ABS
-
-. . .
-
-- Entraine *de facto* des révisions concentrées sur les 3 derniers mois sont moindres que celles sur la série desaisonnalisees  !
-
+## Recommandations de présentation
 
 ### Recommandations
 
@@ -265,7 +265,7 @@ $$
     plot_layout(axes = "collect") 
 ```
 
-### Prévisions implicites (`ggimplicit_forecasts_plot()`)
+### Prévisions implicites
 
 Estimation à la date $n$ par MM symétrique de la série étendue donne les mêmes résultats que l'estimation à la date $n$ par MM asymétriques
 
@@ -279,7 +279,7 @@ ggimplicit_forecasts_plot(
     legend_i_f = "Prévisions implicites",
     col_tc = col_tc,
     col_sa = col_sa
-) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière") +
+) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière (`ggimplicit_forecasts_plot()`)") +
     theme_classic() +
     theme(
         legend.title = element_blank(),
@@ -293,7 +293,7 @@ ggimplicit_forecasts_plot(
 
 
 
-### Construction d'intervalles de confiance (`ggconfint_plot()`)
+### Construction d'intervalles de confiance 
 
 ::: {.incremental}
 - Possibilité d'exploiter la modélisation polynomiale pour construire des intervalles de confiance ([AQLT 2025](https://aqlt.github.io/robustMA/))
@@ -312,7 +312,7 @@ ggconfint_plot(
     col_tc = col_tc,
     col_sa = col_sa,
     level = 0.90
-) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière") +
+) + labs(title = "Tendance prévue de la production dans l'industrie manufacturière (ggconfint_plot())") +
     theme_classic() +
     theme(
         legend.title = element_blank(),
@@ -336,7 +336,7 @@ $$
 \forall j\in\left\llbracket -h,h\right\rrbracket : y_{t+j}=\underbrace{\sum_{i=0}^{3}\beta_{i,t}j^{i}}_{TC_{t+j}}+\varepsilon_{t+j}
 $$
 
-Estimation en utilisant les WLS avec *noyaux*: $\hat{\beta_t}=(X'KX)^{1}X'Ky_t$ et
+Estimation en utilisant les WLS avec *noyaux*  $\hat{\beta_t}=(X'KX)^{1}X'Ky_t$ et
 $$
 \hat{TC}_{t}=\hat\beta_{0,t}=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}
 $$
@@ -359,7 +359,7 @@ Coefficients obtenus en minimisant l'EQM de révision sous contrainte de préser
 . . .
 
 MM dépend du rapport $|\delta/\sigma|$ défini par l'utilisateur.
-Si biais ($\delta$) constant dans le temps, tendance est linéaire, peut-être lié à l'I-C ratio ($R$)
+Si biais ($\delta$) constant et tendance est linéaire, peut-être lié à l'I-C ratio ($R$)
 $$
 \left|\frac{\delta}{\sigma}\right|=\frac{2}{R\sqrt{\pi}}.
 $$
@@ -374,7 +374,7 @@ Hypothèse généralement fausse notamment autour des points de retournement
 
 ### Estimation locale de $|\delta/\sigma|$
 
-Une solution, est d'estimer localement $|\delta/\sigma|$ via une fenêtre glissante, voir [AQLT (2024)](https://inseefrlab.github.io/DT-est-tr-tc/)
+Une solution, est d'estimer localement $|\delta/\sigma|$ via une fenêtre glissante, voir [AQLT (2024)](https://inseefrlab.github.io/DT-est-tr-tc/) : réduit révisions et le délai dans la détection des points de retournement
 
 ```{r}
 #| label: ffig-local-icr
@@ -412,12 +412,14 @@ data |>
 ::: {.incremental}
 - Par construction les MM sont sensibles aux points atypiques
 
-- Correction a priori via un modèle RegARIMA ? [Ladiray et QLT (2018)](https://journees-methodologie-statistique.insee.net/wp-content/uploads/2018/S05_1_ACTEv3_QUARTIERLATENTE_JMS2018.pdf) : il faut au moins 3 ans pour que les estimations convergent
+- Correction a priori via un modèle RegARIMA (X-13-ARIMA-SEATS et ABS sauf COVID-19) ?
+
+- Inconvénients : [Ladiray et QLT (2018)](https://journees-methodologie-statistique.insee.net/wp-content/uploads/2018/S05_1_ACTEv3_QUARTIERLATENTE_JMS2018.pdf) : il faut au moins 3 ans pour que les estimations convergent
 :::
 
 ```{r}
 #| label: ffig-ex-simulchoc
-#| fig-height: 5
+#| fig-height: 4
 x <- publishTC::simulated_data[,"ls_td1"]
 tc_h <- henderson_smoothing(x, length = 13)$tc
 tc_clf <- clf_smoothing(x)$tc
