@@ -517,11 +517,11 @@ pipi <- autoplot(data_ipi[, i]) +
 
 ### Impact des points atypiques (3/3)
 
-Objectif de l'article : étudier des approches alternatives :
+::: {.incremental}
+- Avec la modélisation polynomiale, possibilité de construire des MM qui prennent en compte des régresseurs externes ([AQLT 2025](https://aqlt.github.io/robustMA/))
 
-1. Étude de méthodes non-linéaires robustes
-
-2. Exploiter la modélisation polynomiale pour intégrer une information extérieure (choc ponctuel ou en niveau) afin d'améliorer la décomposition tendance-cycle/irrégulier
+- Réduit les révisions et rend bien compte des retournements
+:::
 
 
 ```{r}
@@ -689,3 +689,11 @@ Cas extrême : une méthode qui donnerait une tendance-cycle constante minimise 
 
 ### Merci de votre attention {.noframenumbering}
 
+```{=latex}
+\begin{tikzpicture}[remember picture,overlay]
+\node[above right,inner sep=0pt, opacity = 0.3] at (current page.south west)
+   {
+   \includegraphics[width=1.05\paperwidth, height =1.05\paperheight]{img/fd.jpeg}
+  };
+\end{tikzpicture}
+```
