@@ -336,9 +336,9 @@ $$
 \forall j\in\left\llbracket -h,h\right\rrbracket : y_{t+j}=\underbrace{\sum_{i=0}^{3}\beta_{i,t}j^{i}}_{TC_{t+j}}+\varepsilon_{t+j}
 $$
 
-Estimation en utilisant les WLS avec *noyaux*  $\hat{\beta_t}=(X'KX)^{1}X'Ky_t$ et
+Estimation en utilisant les WLS  $\hat{\beta_t}=(X'KX)^{1}X'Ky_t$ et
 $$
-\hat{TC}_{t}=\hat\beta_{0,t}=w'y=\sum_{j=-h}^{h}w_{j}y_{t-j}
+\hat{TC}_{t}=\hat\beta_{0,t}=\sum_{j=-h}^{h}w_{j}y_{t+j}
 $$
 Avec des poids biens choisis on retrouve la MM de Henderson
 
