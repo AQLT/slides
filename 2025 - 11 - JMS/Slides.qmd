@@ -94,7 +94,7 @@ p_sa +
 ```
 
 
-### Hypothèse de travail de la desaisonnalisation 
+### Hypothèse de travail de la désaisonnalisation 
 
 Série brute se décompose en 3 composantes inobservables :
 
@@ -163,7 +163,7 @@ p_sa2 +
 
 . . .
 
-- Appliquent une moyenne mobile de 13 termes sur la série desaisonnalisée (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO) : CLF (`clf_smoothing()`) et Henderson (`henderson_smoothing()`)
+- Appliquent une moyenne mobile de 13 termes sur la série désaisonnalisée (Cohérent avec X-13-ARIMA-SEATS utilisée pour la CVS-CJO) : CLF (`clf_smoothing()`) et Henderson (`henderson_smoothing()`)
 $$
 TC_t= \sum_{i=-6}^{+6}\theta_i SA_{t+i}
 $$
@@ -174,7 +174,7 @@ $$
 
 . . .
 
-- Entraine *de facto* des révisions concentrées sur les 3 derniers (mais sont moindres que celles sur la série desaisonnalisees) !
+- Entraine *de facto* des révisions concentrées sur les 3 derniers mois (mais sont moindres que celles sur la série désaisonnalisées) !
 
 ## Les raisons
 ### Trois principales raisons de publier la tendance-cycle
