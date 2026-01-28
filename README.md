@@ -67,7 +67,7 @@ RJDemetra: an R interface to JDemetra
 
 ## 2018
 
-- Septembre 2018: [SACE](2018%20-%2009%20-%20SACE/RegARIMA estimation/2018-10-04 \(In\)Stability of Reg-Arima Estimations.pdf), 
+- Septembre 2018: [SACE](2018%20-%2009%20-%20SACE/RegARIMAR%20estimation/2018-10-04R%20\(In\)StabilityR%20ofR%20Reg-ArimaR%20Estimations.pdf), 
 The (In)stability of Reg-Arima Estimations
 
 - Septembre 2018: [SACE](2018%20-%2009%20-%20SACE/R%20andR%20JD+/rjdemetra.pdf), 
